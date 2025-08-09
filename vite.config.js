@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import path from "path"
 import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
@@ -10,6 +11,8 @@ export default defineConfig({
     alias: {
       // eslint-disable-next-line no-undef
       "@": path.resolve(__dirname, "./src"),
+      "@components": path.resolve(__dirname, "./src/components"),
+      "@assets": path.resolve(__dirname, "./src/assets"),
     },
   },
 })

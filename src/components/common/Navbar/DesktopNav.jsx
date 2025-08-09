@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import Logo from '../Logo'
-import SearchBox from './SearchBox'
-import UserSection from './UserSection'
+import Logo from '@/components/common/Logo'
+import SearchBox from '@/components/common/Navbar/SearchBox'
+import UserNav from '@/components/common/Navbar//UserNav'
 
 const DesktopNav = () => {
     return (
@@ -25,7 +25,7 @@ const DesktopNav = () => {
                 </ul>
             </nav>
             <SearchBox />
-            <UserSection />
+            <UserNav />
         </div>
     )
 }

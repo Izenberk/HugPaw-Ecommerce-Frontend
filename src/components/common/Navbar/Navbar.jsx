@@ -1,5 +1,5 @@
-import DesktopNav from "./DesktopNav"
-import MobileNav from "./MobileNav"
+import DesktopNav from "@components/common/Navbar/DesktopNav"
+import MobileNav from "@components/common/Navbar/MobileNav"
 
 
 

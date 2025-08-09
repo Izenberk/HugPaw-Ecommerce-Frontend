@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const UserSection = () => {
+const UserNav = () => {
     return (
         <div>
             <ul className='flex items-center gap-4 text-primary-foreground'>
@@ -19,7 +19,7 @@ const UserSection = () => {
                     </Link>
                 </li>
                 <li className='flex items-center hover:opacity-80 cursor-pointer'>
-                    <Link>
+                    <Link to="user">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#3b2a18" fillRule="evenodd" d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10m-7-3a3 3 0 1 1-6 0a3 3 0 0 1 6 0m-3 11.5a8.46 8.46 0 0 0 4.807-1.489c.604-.415.862-1.205.51-1.848C16.59 15.83 15.09 15 12 15s-4.59.83-5.318 2.163c-.351.643-.093 1.433.511 1.848A8.46 8.46 0 0 0 12 20.5" clipRule="evenodd"/></svg>
                     </Link>
                 </li>
@@ -29,4 +29,4 @@ const UserSection = () => {
     )
 }
 
-export default UserSection
+export default UserNav
