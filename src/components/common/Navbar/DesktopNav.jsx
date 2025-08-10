@@ -14,7 +14,7 @@ const DesktopNav = () => {
                         </Link>
                     </li>
                     <li className='hover:text-white'>
-                        <Link>Catalog</Link>
+                        <Link to="catalog">Catalog</Link>
                     </li>
                     <li className='hover:text-white'>
                         <Link>Feature</Link>

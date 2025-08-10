@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/app/Layout'
 import Home from '@/pages/Home'
 import UserPage from '@/pages/userPage/UserPage';
-import ProductList from '@/pages/Product';
+import ProductCatalog from '@/pages/ProductCatalog';
 import ProductDetail from '@/pages/ProductDetail';
 import Login from '@/pages/auth/Login';
 
@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
         },
         {
             path: "catalog",
-            element: <ProductList />,
+            element: <ProductCatalog />,
         },
         {
             path: "product-customize",
