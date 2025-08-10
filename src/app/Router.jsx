@@ -2,9 +2,9 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/app/Layout'
 import Home from '@/pages/Home'
 import UserPage from '@/pages/userPage/UserPage';
-import ProductCatalog from '@/pages/ProductCatalog';
 import ProductDetail from '@/pages/ProductDetail';
 import Login from '@/pages/auth/Login';
+import ProductRoute from '@/pages/productCatalog/ProductRoute';
 
 
 export const router = createBrowserRouter([
@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
         },
         {
             path: "catalog",
-            element: <ProductCatalog />,
+            element: <ProductRoute />,
         },
         {
             path: "product-customize",
