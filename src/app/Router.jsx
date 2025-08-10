@@ -4,7 +4,7 @@ import Home from '@/pages/Home'
 import UserPage from '@/pages/userPage/UserPage';
 import ProductDetail from '@/pages/ProductDetail';
 import Login from '@/pages/auth/Login';
-import ProductRoute from '@/pages/productCatalog/ProductRoute';
+import ProductCatalogPage from '@/pages/productCatalog/ProductRoute';
 
 
 export const router = createBrowserRouter([
@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
         },
         {
             path: "catalog",
-            element: <ProductRoute />,
+            element: <ProductCatalogPage />,
         },
         {
             path: "product-customize",
