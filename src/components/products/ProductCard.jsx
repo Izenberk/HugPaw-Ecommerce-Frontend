@@ -28,7 +28,9 @@ const ProductCard = ({ id, name, price, imageUrl, description, to }) => {
                 </div>
             </CardHeader>
             <CardContent>
-                <p className="text-lg font-semibold">{formatTHB(price)}</p>
+                <div className="flex mx-4 gap-4">
+                    <span className="flex text-sm items-center">Starting price:</span><span className="text-lg font-semibold">{formatTHB(price)}</span>
+                </div>
                 <p
                     className="text-sm text-muted-foreground line-clamp-2"
                     title={description}
