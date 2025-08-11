@@ -4,7 +4,7 @@ export default function UserHeader({ avatar, name, role, bio, onEditProfile }) {
     const fallback = Blackcat;
 
     return (
-        <header className="flex items-center justify-center p-5 gap-5">
+        <header className="flex items-center gap-5">
         <div className="w-[100px] h-[100px] shrink-0">
             <img
             src={avatar || fallback}
