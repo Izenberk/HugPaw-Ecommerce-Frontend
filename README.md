@@ -1,8 +1,11 @@
-Peet Test
+# Project GitHub Structure
+## Branches
 
-test sp2
+    main: deployment
 
-hello world
+    develop: features merging
+
+    react-transform: convert jsDOM to react component
 
 Peet Test 2
 
