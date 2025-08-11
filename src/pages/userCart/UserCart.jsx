@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 
 export default function UserCart() {
   return (
@@ -128,9 +128,12 @@ export default function UserCart() {
                 <span>฿2,799</span>
               </div>
             </div>
-            <button className="w-full bg-primary text-onPrimary py-3 rounded-lg shadow hover:bg-primaryHover font-semibold">
-              Checkout
-            </button>
+            <Link
+            to="checkout"
+            className="block text-center  w-full bg-primary text-onPrimary py-3 rounded-lg shadow hover:bg-primaryHover font-semibold"
+          >
+            Checkout
+          </Link>
           </div>
         </div>
       </section>
@@ -208,9 +211,12 @@ export default function UserCart() {
               <span>฿2,799</span>
             </div>
           </div>
-          <button className="w-full bg-primary text-onPrimary py-3 rounded-lg shadow hover:bg-primaryHover font-semibold">
+          <Link
+            to="checkout"
+            className=" block text-center w-full bg-primary text-onPrimary py-3 rounded-lg shadow hover:bg-primaryHover font-semibold"
+          >
             Checkout
-          </button>
+          </Link>
         </div>
       </section>
     </>
