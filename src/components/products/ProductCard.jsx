@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card'
 import { Button } from '../ui/button'
 import { Link } from 'react-router-dom'
+import ProductTags from './ProductTags'
 
 function formatTHB(value) {
     if (value === undefined || value === null) return ""
@@ -12,11 +13,13 @@ function formatTHB(value) {
     }
 }
 
-const ProductCard = ({ id, name, price, imageUrl, description, to }) => {
+const ProductCard = ({ id, name, price, imageUrl, description, to, tags=[] }) => {
     return (
         <Card className="group h-full overflow-hidden transition-all hover:shadow-lg">
             <CardHeader className="space-y-2">
-                <CardTitle className="flex justify-center text-xl font-semi text-foreground leading-tight">{name}</CardTitle>
+                <CardTitle className="flex justify-center text-xl font-semi text-foreground leading-tight">
+                    {name}
+                </CardTitle>
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-white">
                     <img
                         src={imageUrl}
@@ -26,6 +29,9 @@ const ProductCard = ({ id, name, price, imageUrl, description, to }) => {
                         className="absolute inset-0 h-full w-full object-contain p-2"
                     />
                 </div>
+
+                <ProductTags tags={tags} maxVisible={3} align="center" overflow="tooltip" />
+
             </CardHeader>
             <CardContent>
                 <div className="flex mx-4 gap-4">

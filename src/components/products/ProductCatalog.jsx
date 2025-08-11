@@ -76,6 +76,7 @@ function normalizeProducts(arr = []) {
         imageUrl: p.imageUrl ?? p.image ?? p.thumbnailUrl ?? "/placeholder-product.png",
         description: p.description ?? p.summary ?? "",
         category: p.category ?? null,
+        tags: p.tags ?? p.attributes?.tags ?? [],
     }))
 }
 
