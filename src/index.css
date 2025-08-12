@@ -55,7 +55,7 @@
 
   /* Core surfaces */
   --background: #ffffff;
-  --foreground: #3b2a18;         /* onBackground */
+  --foreground: #3b2a18; /* onBackground */
 
   --card: #ffffff;
   --card-foreground: #3b2a18;
@@ -64,7 +64,7 @@
   --popover-foreground: #3b2a18;
 
   /* Brand */
-  --primary: #f58b05;            /* primary */
+  --primary: #f58b05; /* primary */
   --primary-foreground: #3b2a18; /* onPrimary (we want dark text on our warm primary) */
 
   /* Secondary */
@@ -72,11 +72,11 @@
   --secondary-foreground: #3b2a18;
 
   /* Subtle backgrounds / chips / skeletons */
-  --muted: #fdf9f4;              /* surface */
-  --muted-foreground: #5d3e21;   /* onWarning is a good soft contrast */
+  --muted: #fdf9f4; /* surface */
+  --muted-foreground: #5d3e21; /* onWarning is a good soft contrast */
 
   /* Accents for hovers / subtle highlights */
-  --accent: #fff7d1;             /* warningBackground (gentle highlight) */
+  --accent: #fff7d1; /* warningBackground (gentle highlight) */
   --accent-foreground: #3b2a18;
 
   /* Destructive */
@@ -86,7 +86,7 @@
   /* Borders / inputs / ring */
   --border: #e0d8cc;
   --input: #e0d8cc;
-  --ring: #e67e00;               /* primaryHover for focus rings */
+  --ring: #e67e00; /* primaryHover for focus rings */
 
   /* Optional chart colors (picked to match brand vibe) */
   --chart-1: #f58b05;
