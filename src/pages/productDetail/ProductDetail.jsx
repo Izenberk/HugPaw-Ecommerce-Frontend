@@ -1,3 +1,4 @@
+import { formatTHB } from "@/lib/formatters";
 import { calcPrice, getDefaultConfig, normalizeConfig, serializeConfig, toCartItem, validateConfig } from "@/lib/productOptions";
 import { assertProductShape } from "@/lib/productSchemas";
 import { useMemo, useState } from "react";
@@ -39,63 +40,87 @@ export default function ProductDetail({ product, onAddToCart, onSavePreset }) {
     };
 
     return (
-        <div className="mx-auto max-w-3xl p-4 space-y-6">
-            <header className="flex items-start justify-between gap-4">
-                <div>
-                    <h1 className="text-2xl font-semibold">
-                        {product.name}
-                    </h1>
-                    {product.description && <p className="text-sm text-muted-foreground">{product.description}</p>}
-                </div>
-                <div className="text-right">
-                    <div className="text-2xl font-bold">{price.toLocaleString()}</div>
-                    {!ok && <div className="text-xs text-red-500">Please complete required</div>}
-                </div>
-            </header>
+        <div className="mx-auto max-w-6xl p-4 lg:p-6">
+            <div className="grid gap-6 lg:gap-10 lg:grid-cols-12">
 
-            {/* Gallery */}
-            {product.images?.[0] && (
-                <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-full rounded-xl border"
-                />
-            )}
+                {/* LEFT: Gallery (desktop only) */}
+                <section className="hidden lg:block lg:col-span-7">
+                {product.images?.[0] && (
+                    <div className="w-full overflow-hidden rounded-xl border">
+                    <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="h-full w-full object-cover"
+                    />
+                    </div>
+                )}
+                </section>
 
-            {/* Option Groups */}
-            <section className="space-y-5">
-                {(product.optionGroups || []).map((g) => (
+                {/* RIGHT (desktop) / STACKED (mobile) */}
+                <aside className="lg:col-span-5 flex flex-col gap-6">
+
+                {/* Mobile Name */}
+                <h1 className="text-2xl font-semibold">{product.name}</h1>
+
+                {/* Mobile Image */}
+                <div className="w-full overflow-hidden rounded-xl border lg:hidden">
+                    {product.images?.[0] && (
+                    <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="h-full w-full object-cover"
+                    />
+                    )}
+                </div>
+
+                {/* Price */}
+                <div className="text-2xl font-bold">
+                    {formatTHB(price)}
+                    {!ok && (
+                    <div className="text-xs text-red-500">Please complete required</div>
+                    )}
+                </div>
+
+                {/* Description */}
+                {product.description && (
+                    <ReadMore text={product.description} initialLines={2}/>
+                )}
+
+                {/* Options */}
+                <section aria-label="Product options" className="space-y-5">
+                    {(product.optionGroups || []).map((g) => (
                     <Group
                         key={g.key}
                         group={g}
                         value={cfg[g.key]}
                         error={errors?.[g.key]}
                         onPick={(val) =>
-                            g.type === "single" ? setSingle(g.key, val) : toggleMulti(g.key, val)
+                        g.type === "single" ? setSingle(g.key, val) : toggleMulti(g.key, val)
                         }
                     />
-                ))}
-            </section>
+                    ))}
+                </section>
 
-            {/* Actions */}
-            <footer className="flex gap-3">
-                <button
+                {/* Actions */}
+                <footer className="flex gap-3">
+                    <button
                     onClick={handleAddToCart}
                     disabled={!ok}
-                    className="rounded-xl px-4 py-2 border bg-primary text-primary-foreground disabled:opacity-50"
-                >
+                    className="rounded-xl px-4 py-2 border bg-primary text-primary-foreground hover:cursor-pointer hover:border-primary-foreground disabled:opacity-50"
+                    >
                     Add to Cart
-                </button>
-                <button
-                onClick={handleSavePreset}
-                className="rounded-xl px-4 py-2 border"
-                >
+                    </button>
+                    <button
+                    onClick={handleSavePreset}
+                    className="rounded-xl px-4 py-2 border hover:cursor-pointer hover:border-primary-foreground"
+                    >
                     Save Preset
-                </button>
-            </footer>
-
+                    </button>
+                </footer>
+                </aside>
+            </div>
         </div>
-    )
+    );
 }
 
 function Group({ group, value, error, onPick }) {
@@ -113,7 +138,7 @@ function Group({ group, value, error, onPick }) {
                 <div className="flex flex-wrap gap-2">
                     {group.values.map((v) => {
                         const active = value === v.value;
-                        const base = "px-3 py-1.5 rounded-lg border";
+                        const base = "px-3 py-1.5 rounded-lg border hover:cursor-pointer hover:border-primary-foreground";
                         const cls = active ? `${base} bg-black text-white` : `${base} hover:bg-muted`;
                         return (
                             <button key={v.value} onClick={() => onPick(v.value)} className={cls} title={v.label}>
@@ -132,7 +157,7 @@ function Group({ group, value, error, onPick }) {
                 <div className="flex flex-wrap gap-2">
                     {group.values.map((v) => {
                         const checked = Array.isArray(value) && value.includes(v.value);
-                        const base = "px-3 py-1.5 rounded-lg border";
+                        const base = "px-3 py-1.5 rounded-lg border hover:cursor-pointer hover:border-primary-foreground";
                         const cls = checked ? `${base} bg-black text-white` : `${base} hover:bg-muted`;
                         return (
                             <button key={v.value} onClick={() => onPick(v.value)} className={cls}>
@@ -147,6 +172,24 @@ function Group({ group, value, error, onPick }) {
             )}
 
             {group.help && <p className={helpCls}>{group.help}</p>}
+        </div>
+    );
+}
+
+function ReadMore({ text, initialLines = 3 }) {
+    const [open, setOpen] = useState(false);
+    const cls = open ? "" : `line-clamp-${initialLines}`; // works if you enabled the line-clamp plugin
+    return (
+        <div>
+        <p className={`text-sm text-muted-foreground ${cls}`}>{text}</p>
+        {text.length > 120 && (
+            <button
+            onClick={() => setOpen((v) => !v)}
+            className="mt-1 text-xs underline hover:cursor-pointer hover:opacity-70"
+            >
+            {open ? "Read less" : "Read more"}
+            </button>
+        )}
         </div>
     );
 }
