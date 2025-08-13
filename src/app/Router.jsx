@@ -7,6 +7,7 @@ import Login from "@/pages/auth/Login";
 import ProductCatalogPage from "@/pages/productCatalog/ProductRoute";
 import Signup from "@/pages/auth/SignUp";
 import ForgotPassword from "@/pages/auth/ForgetPassword";
+import ProductDetailRoute from '@/pages/productDetail/ProductDetailRoute';
 
 export const router = createBrowserRouter([
   {
@@ -32,7 +33,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "product-customize",
-        element: <ProductDetail />,
+        element: <ProductDetailRoute />,
       },
       {
         path: "login",

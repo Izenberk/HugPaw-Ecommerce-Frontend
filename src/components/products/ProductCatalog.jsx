@@ -76,22 +76,23 @@ function normalizeProducts(arr = []) {
         imageUrl: p.imageUrl ?? p.image ?? p.thumbnailUrl ?? "/placeholder-product.png",
         description: p.description ?? p.summary ?? "",
         category: p.category ?? null,
+        tags: p.tags ?? p.attributes?.tags ?? [],
     }))
 }
 
 function toNumber(v) {
     const n = typeof v === "string" ? Number(v) : v
-    return Number.usFinite(n) ? n : 0
+    return Number.isFinite(n) ? n : 0
 }
 
 function applyFilterSort(items, { search = "", category = null, sort = "relevance" } = {}) {
-    const q = search.trim().toLowerCase()
+    const q = search.trim()
+
     let out = items.filter((p) => {
-        const okCategory = !category || category === "all" || p.category === category
+        const okCategory = !category || category === "all" || norm(p.category) === norm(category)
         if (!okCategory) return false
         if (!q) return true
-        const text = `${p.name} ${p.description}`.toLowerCase()
-        return text.includes(q)
+        return matchesSearch(p, q)
     })
 
     switch (sort) {
@@ -108,4 +109,28 @@ function applyFilterSort(items, { search = "", category = null, sort = "relevanc
         break
     }
     return out
+}
+
+function norm(s = "") {
+    return String(s)
+        .toLowerCase()
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[-_/]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+}
+
+function matchesSearch(p, query) {
+    const haystack = norm(
+        [
+            p.name,
+            p.description,
+            p.category,
+            ...(Array.isArray(p.tags) ? p.tags : []),
+        ].filter(Boolean).join(" ")
+    )
+
+    const tokens = norm(query).split(" ")
+    return tokens.every((t) => haystack.includes(t))
 }

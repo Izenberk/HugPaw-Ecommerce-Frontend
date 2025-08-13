@@ -35,6 +35,7 @@ export default function ProductList({
                 imageUrl={p.imageUrl}
                 description={p.description}
                 to={`${linkPrefix}/${id}`}
+                tags={p.tags}
                 />
             )
             })}
