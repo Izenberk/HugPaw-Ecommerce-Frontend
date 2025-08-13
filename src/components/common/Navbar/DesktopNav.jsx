@@ -18,10 +18,10 @@ const DesktopNav = () => {
             <Link>Promotion</Link>
           </li>
           <li className="hover:text-white">
-            <Link to="catalog">Shop</Link>
+            <Link to="catalog">Products</Link>
           </li>
           <li className="hover:text-white">
-            <Link>Contact</Link>
+            <Link>Promotion</Link>
           </li>
         </ul>
       </nav>

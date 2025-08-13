@@ -24,8 +24,9 @@ const Login = () => {
     console.log("Login data:", data);
   };
 
+  //clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
   const googleAuth = () => {
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+    <GoogleOAuthProvider>
       <div className="flex justify-center items-center h-screen">
         <GoogleLogin
           onSuccess={(credentialResponse) => {
