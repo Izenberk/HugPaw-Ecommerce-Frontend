@@ -96,20 +96,20 @@ const Login = () => {
             </a>
           </div>
 
-          <Button
+          <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded active:scale-95 active:bg-blue-600 transition transform"
+            className="w-full bg-blue-700 text-white py-2 rounded-full active:scale-95 active:bg-blue-600 transition transform"
           >
             Login
-          </Button>
+          </button>
 
-          <Button
+          <button
             type="button"
             onClick={googleAuth}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded active:scale-95 active:bg-blue-600 transition transform"
+            className="w-full bg-blue-700 text-white py-2 rounded-full gap-1 flex justify-center active:scale-95 active:bg-blue-600 transition transform"
           >
             <Fingerprint /> Login with Google
-          </Button>
+          </button>
         </form>
       </Form>
     </div>
