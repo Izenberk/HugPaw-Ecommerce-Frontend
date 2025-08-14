@@ -3,15 +3,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card
 import { Button } from '../ui/button'
 import { Link } from 'react-router-dom'
 import ProductTags from './ProductTags'
+import { formatTHB } from '@/lib/formatters'
 
-function formatTHB(value) {
-    if (value === undefined || value === null) return ""
-    try {
-        return new Intl.NumberFormat("th-TH", { style: "currency", currency: "THB", maximumFractionDigits: 0 }).format(value)
-    } catch {
-        return `${value} ฿`
-    }
-}
 
 const ProductCard = ({ id, name, price, imageUrl, description, to, tags=[] }) => {
     return (
