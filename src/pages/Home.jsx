@@ -5,7 +5,7 @@ import ReviewGrid from "@/components/home/ReviewGrid";
 
 export default function Home() {
   return (
-    <main className="space-y-16">
+    <main>
       <HeroSplit />
       <CategoryRow />
       <PromoStrip />

@@ -13,7 +13,7 @@ export default function PromoStrip() {
             shipping on your first order.
           </p>
         </div>
-        <Button asChild size="lg">
+        <Button asChild size="lg" variant="black">
           <a href="#">Claim Your Discount</a>
         </Button>
       </div>

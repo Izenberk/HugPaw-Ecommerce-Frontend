@@ -10,56 +10,61 @@ export default function CategoryRow() {
         <p className="text-sm text-muted-foreground"></p>
       </div>
       <div className="grid gap-4 md:grid-cols-3">
-          <Card className="text-center">
-            <img
-              src="/src/assets/images/products/collar.jpg"
-              alt="Pet Collar"
-              className="w-full h-48 object-contain p-4"
-            />
-            <CardHeader>
-              <CardTitle>Collar</CardTitle>
-              <p className="text-sm text-muted-foreground">More than just a collar-It's their identity</p>
-            </CardHeader>
-            <CardContent className="flex justify-center mt-auto">
-              <Button variant="accent" asChild className="bg-black hover:bg-purple-300 text-white">
-                <a href="#">Let’s Customize</a>
-              </Button>
-            </CardContent>
+        <Card className="text-center">
+          <img
+            src="/src/assets/images/products/collar.jpg"
+            alt="Pet Collar"
+            className="w-full h-48 object-contain p-4"
+          />
+          <CardHeader>
+            <CardTitle>Collar</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              More than just a collar-It's their identity
+            </p>
+          </CardHeader>
+          <CardContent className="flex justify-center mt-auto">
+            <Button variant="black" asChild>
+              <a href="#">Let’s Customize</a>
+            </Button>
+          </CardContent>
+        </Card>
+        <Card className="text-center">
+          <img
+            src="/src/assets/images/products/water-dispenser.jpg"
+            alt="Water Dispenser"
+            className="w-full h-48 object-contain p-4"
+          />
+          <CardHeader>
+            <CardTitle>Water Dispenser</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Their wellness starts with water
+            </p>
+          </CardHeader>
+          <CardContent className="flex justify-center mt-auto">
+            <Button variant="black" asChild>
+              <a href="#">Let’s Customize</a>
+            </Button>
+          </CardContent>
+        </Card>
 
-          </Card>
-           <Card className="text-center">
-             <img
-              src="/src/assets/images/products/water-dispenser.jpg"
-              alt="Water Dispenser"
-              className="w-full h-48 object-contain p-4"
-            />
-            <CardHeader>
-              <CardTitle>Water Dispenser</CardTitle>
-              <p className="text-sm text-muted-foreground">Their wellness starts with water</p>
-            </CardHeader>
-            <CardContent className="flex justify-center mt-auto">
-              <Button variant="secondary" asChild className="bg-black hover:bg-purple-300 text-white">
-                <a href="#">Let’s Customize</a>
-              </Button>
-            </CardContent>
-          </Card>
-
-           <Card className="text-center">
-             <img
-              src="/src/assets/images/products/feeder.jpg"
-              alt="Feeder"
-              className="w-full h-48 object-contain p-4"
-            />
-            <CardHeader>
-              <CardTitle>Feeder</CardTitle>
-              <p className="text-sm text-muted-foreground">Mealtime made personal</p>
-            </CardHeader>
-            <CardContent className="flex justify-center mt-auto">
-              <Button variant="secondary" asChild className="bg-black hover:bg-purple-300 text-white">
-                <a href="#">Let’s Customize</a>
-              </Button>
-            </CardContent>
-          </Card>
+        <Card className="text-center">
+          <img
+            src="/src/assets/images/products/feeder.jpg"
+            alt="Feeder"
+            className="w-full h-48 object-contain p-4"
+          />
+          <CardHeader>
+            <CardTitle>Feeder</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Mealtime made personal
+            </p>
+          </CardHeader>
+          <CardContent className="flex justify-center mt-auto">
+            <Button variant="black" asChild>
+              <a href="#">Let’s Customize</a>
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     </section>
   );
