@@ -21,7 +21,7 @@ export default function Home() {
       <HeroSplit
         title="More Than Pets — They’re Family"
         subtitle="Create unique items for your furry friends"
-        cta={{ label: "Shop Now", href: "/products" }}
+        cta={{ label: "Shop Now", href: "/catalog" }}
         imageSrc="/src/assets/images/home/pet-owner.png"
         imageAlt="Happy pet family"
       />
