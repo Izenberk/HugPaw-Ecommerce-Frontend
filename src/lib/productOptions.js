@@ -175,7 +175,7 @@ export const SAMPLE_COLLAR = {
     id: "collar-001",
     name: "HugPaw Smart Collar",
     basePrice: 400,
-    images: ["src/assets/images/products/Collar1.jpg"],
+    images: ["/public/images/Collar1.jpg"],
     description: "More than just a collar It's their identity… Give your pet a collar that reflects who they are. Customize the color, size, and even engrave their name. Want extra peace of mind? Add GPS tracking and app connectivity to keep them safe, wherever they roam.",
     optionGroups: [
         {
