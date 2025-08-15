@@ -9,17 +9,15 @@ const DesktopNav = () => {
       <nav>
         <ul className="hidden md:flex md:items-center-safe gap-4 ml-4">
           <li className="hover:text-white">
-            <Link>
-              <Logo />
-            </Link>
+            <Logo />
           </li>
 
           <li className="hover:text-white">
-            <Link>Promotion</Link>
-          </li>
-          <li className="hover:text-white">
             <Link to="catalog">Products</Link>
           </li>
+          {/* <li className="hover:text-white">
+            <Link>Contact</Link>
+          </li> */}
         </ul>
       </nav>
       <SearchBox />

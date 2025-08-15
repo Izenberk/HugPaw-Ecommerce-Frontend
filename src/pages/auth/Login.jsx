@@ -8,41 +8,28 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { Fingerprint } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { useAuth } from "./AuthContext";
 
 const Login = () => {
   const methods = useForm({
-    defaultValues: {
-      username: "",
-      password: "",
-    },
+    defaultValues: { username: "", password: "" },
   });
 
-  const onSubmit = (data) => {
-    console.log("Login data:", data);
-  };
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  //clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
-  const googleAuth = () => {
-    <GoogleOAuthProvider>
-      <div className="flex justify-center items-center h-screen">
-        <GoogleLogin
-          onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            console.log("Login Failed");
-          }}
-        />
-      </div>
-    </GoogleOAuthProvider>;
+  const onSubmit = (data) => {
+    console.log("Login data:", data); // mock login
+    login();
+    navigate("/");
   };
 
   return (
-    <div className="max-w-sm mx-auto my-10 p-6 rounded-xl shadow-md ">
-      <h2 className="text-2xl font-bold mb-4 flex justify-around py-3">
+    <div className="max-w-sm mx-auto my-10 p-6 rounded-xl shadow-md">
+      <h2 className="text-2xl font-bold mb-4 flex justify-center items-center gap-2 py-3">
         Login to HugPaw
       </h2>
 
@@ -88,12 +75,12 @@ const Login = () => {
           />
 
           <div className="text-sm text-right">
-            <a
-              href="/forgotpassword"
+            <Link
+              to="/forgotpassword"
               className="text-blue-500 text-[16px] font-semibold hover:underline flex justify-end mx-5"
             >
               Forgot password?
-            </a>
+            </Link>
           </div>
 
           <button
@@ -103,13 +90,21 @@ const Login = () => {
             Login
           </button>
 
-          <button
-            type="button"
-            onClick={googleAuth}
-            className="w-full bg-blue-700 text-white py-2 rounded-full gap-1 flex justify-center active:scale-95 active:bg-blue-600 transition transform"
-          >
-            <Fingerprint /> Login with Google
-          </button>
+
+            <GoogleOAuthProvider
+              clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+            >
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  console.log(credentialResponse);
+                  login();
+                  navigate("/");
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+              />
+            </GoogleOAuthProvider>
         </form>
       </Form>
     </div>

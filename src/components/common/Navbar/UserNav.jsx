@@ -1,48 +1,57 @@
-import { CircleUserRound, Heart, ShoppingCart } from "lucide-react";
-import React, { useState } from "react";
+import { useAuth } from "@/pages/auth/AuthContext";
+import { Heart, ShoppingCart, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
-import { set } from "zod";
+import DropdownAccout from "./DropdownAccout";
 
-const UserNav = () => {
-  const [isLoggedgin, setIsLoggedgin] = useState(false);
-  const toggleLogin = () => setIsLoggedin(!isLoggedIn);
+export default function UserNav() {
+  const { isLoggedIn, logout } = useAuth();
 
   return (
     <div>
-      {isLoggedgin ? (
-        <ul>
-          <li className="flex items-center hover:opacity-80 cursor-pointer">
-            <Link to="/">
+      {isLoggedIn ? (
+        <ul className="flex items-center gap-6">
+          <li className="flex items-center hover:opacity-80">
+            <Link to="/wishlist">
               <Heart />
             </Link>
           </li>
-          <li className="flex items-center hover:opacity-80 cursor-pointer">
-            <Link to="/">
+          <li className="flex items-center hover:opacity-80">
+            <Link to="/cart">
               <ShoppingCart />
             </Link>
           </li>
-          <li className="flex flex-row items-center hover:opacity-80 cursor-pointer">
-            <Link to="user" className="flex items-center gap-2">
-              <CircleUserRound />
-              <div>Account</div>
+          <li className="flex items-center hover:opacity-80">
+            <Link to="/user" className="flex items-center gap-2">
+              <span>Profile</span>
             </Link>
           </li>
+
+          {/* <li className="flex items-center">
+            <button
+              onClick={logout}
+              className="flex items-center gap-2 hover:text-red-500"
+            >
+              <LogOut size={20} />
+              <span>Logout</span>
+            </button>
+          </li> */}
+          <DropdownAccout />
         </ul>
       ) : (
         <ul className="flex items-center gap-4 text-primary-foreground">
-          <li className="hover:text-white" onClick={toggleLogin}>
+          <li className="flex items-center hover:opacity-80">
+            <Link to="/cart">
+              <ShoppingCart />
+            </Link>
+          </li>
+          <li className="hover:text-white">
             <Link to="/login">Login</Link>
           </li>
           <li className="hover:text-white">
             <Link to="/signup">Sign Up</Link>
           </li>
-          <li className="hover:text-white">
-            <Link to="/">Contact</Link>
-          </li>
         </ul>
       )}
     </div>
   );
-};
-
-export default UserNav;
+}
