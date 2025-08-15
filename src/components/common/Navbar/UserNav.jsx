@@ -10,17 +10,17 @@ export default function UserNav() {
     <div>
       {isLoggedIn ? (
         <ul className="flex items-center gap-6">
-          <li className="flex items-center hover:opacity-80">
+          <li className="flex items-center hover:text-gray-500">
             <Link to="/wishlist">
               <Heart />
             </Link>
           </li>
-          <li className="flex items-center hover:opacity-80">
+          <li className="flex items-center hover:text-gray-500">
             <Link to="/cart">
               <ShoppingCart />
             </Link>
           </li>
-          <li className="flex items-center hover:opacity-80">
+          <li className="flex items-center hover:text-gray-500">
             <Link to="/user" className="flex items-center gap-2">
               <span>Profile</span>
             </Link>
@@ -39,15 +39,15 @@ export default function UserNav() {
         </ul>
       ) : (
         <ul className="flex items-center gap-4 text-primary-foreground">
-          <li className="flex items-center hover:opacity-80">
+          <li className="flex items-center hover: text-gray-500">
             <Link to="/cart">
               <ShoppingCart />
             </Link>
           </li>
-          <li className="hover:text-white">
+          <li className="hover:text-gray-500">
             <Link to="/login">Login</Link>
           </li>
-          <li className="hover:text-white">
+          <li className="hover:text-gray-500">
             <Link to="/signup">Sign Up</Link>
           </li>
         </ul>

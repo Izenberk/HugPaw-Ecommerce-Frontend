@@ -16,7 +16,7 @@ const DropdownAccout = () => {
     <div>
       <DropdownMenu>
         <div className="flex items-center gap-2">
-          <DropdownMenuTrigger className="flex items-center gap-2">
+          <DropdownMenuTrigger className="flex items-center gap-2 hover:text-gray-500">
             <CircleUserRound />
             Account
           </DropdownMenuTrigger>

@@ -9,7 +9,9 @@ const Logo = () => {
         alt="HugPaw Logo"
         className="h-7 w-7 object-contain"
       />
-      <span className="text-onPrimary font-bold text-xl">HugPaw</span>
+      <span className="text-onPrimary font-bold text-xl hover:text-gray-500">
+        HugPaw
+      </span>
     </Link>
   );
 };

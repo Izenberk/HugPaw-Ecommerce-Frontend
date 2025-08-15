@@ -24,12 +24,12 @@ const MobileNav = () => {
       <div>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Menu />
+            <Menu className="hover:text-gray-500" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem>
               <Link
-                className="flex justify-between items-center gap-3"
+                className="flex justify-between items-center gap-3 hover:text-gray-500"
                 to="/catalog"
               >
                 <PawPrint /> Products
@@ -37,7 +37,7 @@ const MobileNav = () => {
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Link
-                className="flex justify-between items-center gap-3"
+                className="flex justify-between items-center gap-3 hover:text-gray-500"
                 to="/cart"
               >
                 <ShoppingCart /> My Cart
@@ -45,7 +45,7 @@ const MobileNav = () => {
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Link
-                className="flex justify-between items-center gap-3"
+                className="flex justify-between items-center gap-3 hover:text-gray-500"
                 to="/signup"
               >
                 <BookHeart /> Sign up
@@ -53,7 +53,7 @@ const MobileNav = () => {
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Link
-                className="flex justify-between items-center gap-3"
+                className="flex justify-between items-center gap-3 hover:text-gray-500"
                 to="/login"
               >
                 <KeyRound /> Login
@@ -61,7 +61,7 @@ const MobileNav = () => {
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Link
-                className="flex justify-between items-center gap-3"
+                className="flex justify-between items-center gap-3 hover:text-gray-500"
                 to="/contact"
               >
                 <Phone /> Contact
