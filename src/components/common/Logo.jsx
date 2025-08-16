@@ -1,12 +1,19 @@
-import BrandLogo from "../../assets/images/logo/brand-logo.png"
+import { Link } from "react-router-dom";
+import BrandLogo from "../../assets/images/logo/brand-logo.png";
 
 const Logo = () => {
-    return (
-        <div className="flex gap-2 m-4">
-            <img src={BrandLogo} alt="HugPaw Logo" className="h-7 w-7 object-contain" />
-            <div className="text-onPrimary font-bold text-xl">HugPaw</div>
-        </div>
-    )
-}
+  return (
+    <Link to="/" className="flex items-center gap-2">
+      <img
+        src={BrandLogo}
+        alt="HugPaw Logo"
+        className="h-7 w-7 object-contain"
+      />
+      <span className="text-onPrimary font-bold text-xl hover:text-gray-500">
+        HugPaw
+      </span>
+    </Link>
+  );
+};
 
-export default Logo
+export default Logo;
