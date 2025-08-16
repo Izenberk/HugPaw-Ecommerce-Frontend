@@ -107,13 +107,7 @@ export default function UserHeader({ user, onSave }) {
                         >
                         <Camera className="size-4" />
                         </button>
-                        <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        className="hidden"
-                        />
+                        <input id="avatarFile" ref={fileInputRef} type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
                     </div>
 
                     {/* 2) Ensure username shows, email below */}
@@ -146,124 +140,124 @@ export default function UserHeader({ user, onSave }) {
                     </DialogTrigger>
 
                     <DialogContent className="sm:max-w-[560px]">
-                    <DialogHeader>
-                        <DialogTitle>Edit profile</DialogTitle>
-                    </DialogHeader>
+                        <DialogHeader>
+                            <DialogTitle>Edit profile</DialogTitle>
+                        </DialogHeader>
 
-                    <div className="grid gap-6 py-2">
-                        {/* Avatar picker */}
-                        <div className="flex items-center gap-4">
-                            <div className="relative">
-                                <span className="absolute -top-2 -left-2 rounded-full bg-background px-2 py-0.5 text-xs text-foreground/70">
-                                Avatar
-                                </span>
+                        <div className="grid gap-6 py-2">
+                            {/* Avatar picker */}
+                            <div className="flex items-center gap-4">
                                 <div className="relative">
-                                <div className="h-[100px] w-[100px] overflow-hidden rounded-full ring-1 ring-border">
-                                    {avatarPreview ? (
-                                    <img
-                                        src={avatarPreview}
-                                        alt="Avatar preview"
-                                        className="h-full w-full object-cover"
-                                    />
-                                    ) : (
-                                    <div className="flex h-[100px] w-[100px] items-center justify-center rounded-full bg-surface">
-                                        <UserRound className="size-6" />
+                                    <Label htmlFor="avatarFile" className="mb-2 block text-xs text-muted-foreground">
+                                        Avatar
+                                    </Label>
+                                    <div className="relative">
+                                    <div className="h-[100px] w-[100px] overflow-hidden rounded-full ring-1 ring-border">
+                                        {avatarPreview ? (
+                                        <img
+                                            src={avatarPreview}
+                                            alt="Avatar preview"
+                                            className="h-full w-full object-cover"
+                                        />
+                                        ) : (
+                                        <div className="flex h-[100px] w-[100px] items-center justify-center rounded-full bg-surface">
+                                            <UserRound className="size-6" />
+                                        </div>
+                                        )}
                                     </div>
-                                    )}
+                                    <Button
+                                        type="button"
+                                        size="sm"
+                                        variant="outline"
+                                        className="absolute -bottom-2 left-1/2 -translate-x-1/2"
+                                        onClick={handlePickFile}
+                                    >
+                                        Upload
+                                    </Button>
+                                    </div>
                                 </div>
-                                <Button
-                                    type="button"
-                                    size="sm"
-                                    variant="outline"
-                                    className="absolute -bottom-2 left-1/2 -translate-x-1/2"
-                                    onClick={handlePickFile}
-                                >
-                                    Upload
-                                </Button>
+                            </div>
+
+                            {/* Name + Email */}
+                            <div className="grid gap-3 sm:grid-cols-2">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="displayName">Display name</Label>
+                                    <Input
+                                    id="displayName"
+                                    value={displayName}
+                                    onChange={(e) => setDisplayName(e.target.value)}
+                                    placeholder="Your name"
+                                    />
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="email">Email (read-only)</Label>
+                                    <Input id="email" value={user?.email || ""} readOnly />
+                                </div>
+                            </div>
+
+                            {/* Address */}
+                            <div className="grid gap-3">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="line1">Address line 1</Label>
+                                    <Input
+                                    id="line1"
+                                    value={addr.line1}
+                                    onChange={(e) => setAddr((s) => ({ ...s, line1: e.target.value }))}
+                                    placeholder="Street, house number"
+                                    />
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="line2">Address line 2 (optional)</Label>
+                                    <Input
+                                    id="line2"
+                                    value={addr.line2}
+                                    onChange={(e) => setAddr((s) => ({ ...s, line2: e.target.value }))}
+                                    placeholder="Apartment, suite, etc."
+                                    />
+                                </div>
+                                <div className="grid gap-3 sm:grid-cols-3">
+                                    <div className="grid gap-2">
+                                    <Label htmlFor="city">City</Label>
+                                    <Input
+                                        id="city"
+                                        value={addr.city}
+                                        onChange={(e) => setAddr((s) => ({ ...s, city: e.target.value }))}
+                                    />
+                                    </div>
+                                    <div className="grid gap-2">
+                                    <Label htmlFor="state">State/Province</Label>
+                                    <Input
+                                        id="state"
+                                        value={addr.state}
+                                        onChange={(e) => setAddr((s) => ({ ...s, state: e.target.value }))}
+                                    />
+                                    </div>
+                                    <div className="grid gap-2">
+                                    <Label htmlFor="postal">Postal</Label>
+                                    <Input
+                                        id="postal"
+                                        value={addr.postal}
+                                        onChange={(e) => setAddr((s) => ({ ...s, postal: e.target.value }))}
+                                    />
+                                    </div>
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="country">Country</Label>
+                                    <Input
+                                    id="country"
+                                    value={addr.country}
+                                    onChange={(e) => setAddr((s) => ({ ...s, country: e.target.value }))}
+                                    />
                                 </div>
                             </div>
                         </div>
 
-                        {/* Name + Email */}
-                        <div className="grid gap-3 sm:grid-cols-2">
-                            <div className="grid gap-2">
-                                <Label htmlFor="displayName">Display name</Label>
-                                <Input
-                                id="displayName"
-                                value={displayName}
-                                onChange={(e) => setDisplayName(e.target.value)}
-                                placeholder="Your name"
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Email (read-only)</Label>
-                                <Input id="email" value={user?.email || ""} readOnly />
-                            </div>
-                        </div>
-
-                        {/* Address */}
-                        <div className="grid gap-3">
-                            <div className="grid gap-2">
-                                <Label htmlFor="line1">Address line 1</Label>
-                                <Input
-                                id="line1"
-                                value={addr.line1}
-                                onChange={(e) => setAddr((s) => ({ ...s, line1: e.target.value }))}
-                                placeholder="Street, house number"
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="line2">Address line 2 (optional)</Label>
-                                <Input
-                                id="line2"
-                                value={addr.line2}
-                                onChange={(e) => setAddr((s) => ({ ...s, line2: e.target.value }))}
-                                placeholder="Apartment, suite, etc."
-                                />
-                            </div>
-                            <div className="grid gap-3 sm:grid-cols-3">
-                                <div className="grid gap-2">
-                                <Label htmlFor="city">City</Label>
-                                <Input
-                                    id="city"
-                                    value={addr.city}
-                                    onChange={(e) => setAddr((s) => ({ ...s, city: e.target.value }))}
-                                />
-                                </div>
-                                <div className="grid gap-2">
-                                <Label htmlFor="state">State/Province</Label>
-                                <Input
-                                    id="state"
-                                    value={addr.state}
-                                    onChange={(e) => setAddr((s) => ({ ...s, state: e.target.value }))}
-                                />
-                                </div>
-                                <div className="grid gap-2">
-                                <Label htmlFor="postal">Postal</Label>
-                                <Input
-                                    id="postal"
-                                    value={addr.postal}
-                                    onChange={(e) => setAddr((s) => ({ ...s, postal: e.target.value }))}
-                                />
-                                </div>
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="country">Country</Label>
-                                <Input
-                                id="country"
-                                value={addr.country}
-                                onChange={(e) => setAddr((s) => ({ ...s, country: e.target.value }))}
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setOpen(false)}>
-                        Cancel
-                        </Button>
-                        <Button onClick={handleSave}>Save changes</Button>
-                    </DialogFooter>
+                        <DialogFooter>
+                            <Button variant="outline" onClick={() => setOpen(false)}>
+                            Cancel
+                            </Button>
+                            <Button onClick={handleSave}>Save changes</Button>
+                        </DialogFooter>
                     </DialogContent>
                 </Dialog>
                 </div>
