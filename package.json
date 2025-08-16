@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:clean": "rimraf node_modules/.vite && vite --force",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -40,6 +41,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "rimraf": "^6.0.1",
     "tw-animate-css": "^1.3.6",
     "vite": "^7.0.4"
   }
