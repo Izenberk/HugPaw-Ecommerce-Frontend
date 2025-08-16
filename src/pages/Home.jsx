@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <main className="space-y-8 pb-12">
       <HeroSplit
-        title="More Than Pets — They’re Family"
+        title={["More Than Pets", "They’re Family"]}
         subtitle="Create unique items for your furry friends"
         cta={{ label: "Shop Now", href: "/catalog" }}
         imageSrc="/src/assets/images/home/pet-owner.png"
