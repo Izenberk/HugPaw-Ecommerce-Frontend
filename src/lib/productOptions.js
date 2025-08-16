@@ -217,9 +217,9 @@ export const SAMPLE_COLLAR = {
             ]
         }
     ],
-    variants: [
-        { sku: "COL-RED-XS", attrs: { color: "red", size: "XS" }, price: 530 },
-        { sku: "COL-BLUE-M", attrs: { color: "blue", size: "M" }, price: 600 },
-        { sku: "COL-BLACK-XL", attrs: { color: "black", size: "XL" }, price: 720 },
-    ]
+    // variants: [
+    //     { sku: "COL-RED-XS", attrs: { color: "red", size: "XS" }, price: 530 },
+    //     { sku: "COL-BLUE-M", attrs: { color: "blue", size: "M" }, price: 400 },
+    //     { sku: "COL-BLACK-XL", attrs: { color: "black", size: "XL" }, price: 720 },
+    // ]
 };
