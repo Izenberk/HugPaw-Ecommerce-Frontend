@@ -3,16 +3,16 @@ import BrandLogo from "../../assets/images/logo/brand-logo.png";
 
 const Logo = () => {
   return (
-    <div className="flex gap-2 m-4">
-      <Link to="/">
-        <img
-          src={BrandLogo}
-          alt="HugPaw Logo"
-          className="h-7 w-7 object-contain"
-        />
-        <div className="text-onPrimary font-bold text-xl">HugPaw</div>
-      </Link>
-    </div>
+    <Link to="/" className="flex items-center gap-2">
+      <img
+        src={BrandLogo}
+        alt="HugPaw Logo"
+        className="h-7 w-7 object-contain"
+      />
+      <span className="text-onPrimary font-bold text-xl hover:text-gray-500">
+        HugPaw
+      </span>
+    </Link>
   );
 };
 

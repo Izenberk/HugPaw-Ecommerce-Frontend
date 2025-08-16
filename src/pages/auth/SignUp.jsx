@@ -17,6 +17,7 @@ const Signup = () => {
       email: "",
       Date: "",
       phonenumber: "",
+      address: "",
       username: "",
       password: "",
       confirmPassword: "",
@@ -44,7 +45,7 @@ const Signup = () => {
           rules={{ required: "First name is required" }}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First name</FormLabel>
+              <FormLabel className="py-1">First name</FormLabel>
               <FormControl>
                 <input
                   type="firstname"
@@ -64,7 +65,7 @@ const Signup = () => {
           rules={{ required: "Last name is required" }}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Last name</FormLabel>
+              <FormLabel className="py-1">Last name</FormLabel>
               <FormControl>
                 <input
                   type="lastname"
@@ -87,7 +88,7 @@ const Signup = () => {
           }}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="py-1">Email</FormLabel>
               <FormControl>
                 <input
                   {...field}
@@ -106,7 +107,7 @@ const Signup = () => {
           rules={{ required: "Date is required" }}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Date</FormLabel>
+              <FormLabel className="py-1">Date</FormLabel>
               <FormControl>
                 <input
                   type="date"
@@ -132,13 +133,33 @@ const Signup = () => {
           }}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone number</FormLabel>
+              <FormLabel className="py-1">Phone number</FormLabel>
               <FormControl>
                 <input
                   type="tel"
                   {...field}
                   className="w-full border rounded-full p-2"
                   placeholder="1234567890"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="address"
+          control={methods.control}
+          rules={{ required: "Address is required" }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="py-1">Address</FormLabel>
+              <FormControl>
+                <input
+                  type="address"
+                  {...field}
+                  placeholder="Enter your Address"
+                  className="w-full border rounded-full p-2"
                 />
               </FormControl>
               <FormMessage />
@@ -153,7 +174,7 @@ const Signup = () => {
             rules={{ required: "Username is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel className="py-1">Username</FormLabel>
                 <FormControl>
                   <input
                     {...field}
@@ -173,7 +194,7 @@ const Signup = () => {
             rules={{ required: "Password is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="py-1">Password</FormLabel>
                 <FormControl>
                   <input
                     type="password"
@@ -194,7 +215,7 @@ const Signup = () => {
             rules={{ required: "Please confirm your password" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Confirm Password</FormLabel>
+                <FormLabel className="py-1">Confirm Password</FormLabel>
                 <FormControl>
                   <input
                     type="password"
@@ -210,7 +231,7 @@ const Signup = () => {
 
           <button
             type="submit"
-            className="w-full rounded-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded active:scale-95 active:bg-blue-600 transition transform"
+            className="w-full rounded-full bg-blue-500 hover:bg-blue-600 text-white py-2 active:scale-95 active:bg-blue-600 transition transform"
           >
             Sign Up
           </button>

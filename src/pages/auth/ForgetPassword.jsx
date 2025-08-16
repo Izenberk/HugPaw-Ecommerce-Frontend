@@ -8,6 +8,7 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { Link } from "react-router-dom";
 
 const ForgotPassword = () => {
   const methods = useForm({
@@ -62,11 +63,10 @@ const ForgotPassword = () => {
         </form>
       </Form>
 
-      {/* Back to Login */}
       <div className="text-sm text-center mt-4">
-        <a href="/login" className="text-blue-500 hover:underline">
+        <Link href="/login" className="text-blue-500 hover:underline">
           Back to Login
-        </a>
+        </Link>
       </div>
     </div>
   );

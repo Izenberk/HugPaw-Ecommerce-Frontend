@@ -8,21 +8,16 @@ const DesktopNav = () => {
     <div className="hidden md:flex items-center justify-between w-full gap-4">
       <nav>
         <ul className="hidden md:flex md:items-center-safe gap-4 ml-4">
-          <li className="hover:text-white">
-            <Link>
-              <Logo />
-            </Link>
+          <li className="hover:text-gray-500">
+            <Logo />
           </li>
 
-          <li className="hover:text-white">
-            <Link>Promotion</Link>
-          </li>
-          <li className="hover:text-white">
+          <li className="hover:text-gray-500">
             <Link to="catalog">Products</Link>
           </li>
-          <li className="hover:text-white">
-            <Link>Promotion</Link>
-          </li>
+          {/* <li className="hover:text-white">
+            <Link>Contact</Link>
+          </li> */}
         </ul>
       </nav>
       <SearchBox />
