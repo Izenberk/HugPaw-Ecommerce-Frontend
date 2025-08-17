@@ -11,9 +11,9 @@ export default function Home() {
   ];
 
   const reviews = [
-    { id: "r1", name: "Anna and bella", quote: "I loved how easy it was to design Bella’s collar. The engraving is perfect, and the color matches her personality so well!" },
-    { id: "r2", name: "Anna and bella", quote: "Great quality and fast shipping. We get compliments every week." },
-    { id: "r3", name: "Anna and bella", quote: "Customization was simple and the fit is perfect." },
+    { id: "r1", name: "Anna", quote: "I loved how easy it was to design Bella’s collar. The engraving is perfect, and the color matches her personality so well!" },
+    { id: "r2", name: "Mark", quote: "The automatic feeder has been a lifesaver. I customized the color to match my kitchen, and Milo loves the consistent meal times!" },
+    { id: "r3", name: "Sophie", quote: "Coco’s new water fountain is not only cute but super quiet. I added her name to the side, and now it feels like it’s truly hers. She drinks more water now too!" },
   ];
 
   return (
