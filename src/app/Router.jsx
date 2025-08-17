@@ -5,8 +5,8 @@ import UserPage from '@/pages/userPage/UserPage';
 import Login from '@/pages/auth/Login';
 import ProductCatalogPage from '@/pages/productCatalog/ProductRoute';
 import ProductDetailRoute from '@/pages/productDetail/ProductDetailRoute';
-import UserCart from '@/pages/userCart/userCart';
 import Checkout from '@/pages/Checkout/Checkout';
+import Cart from '@/pages/userCart/Cart';
 
 export const router = createBrowserRouter([
     {
@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
         },
          {
             path: "cart",
-            element: <UserCart/>
+            element: <Cart/>
         },
         {
             path: "cart/checkout",
