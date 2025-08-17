@@ -1,8 +1,12 @@
+// /src/pages/userCart/Cart.jsx
 import CartItem from "./CartItem";
 import OrderSummary from "./OrderSummary";
 import OrderSummaryBar from "./OrderSummaryBar";
+import { useCart } from "@/pages/userCart/CartContext.jsx";
 
 export default function Cart() {
+  const { items } = useCart();
+
   return (
     <section>
       <div className="text-center py-4">
@@ -12,21 +16,35 @@ export default function Cart() {
       </div>
 
       {/* Order Summary Bar */}
-      <OrderSummaryBar />;
+      <OrderSummaryBar />
 
-      {/* CartIem + Desktop Order Summary */}
-      <section className="mt-4 md:flex md:items-center md:flex-row">
-         <div className="md:w-[60%] mt-6">
-            <CartItem/>
-         </div>
+      {/* Cart Items + Desktop Order Summary */}
+      <section className="mt-4 md:flex md:items-start md:flex-row gap-6">
+        <div className="md:w-[60%] mt-6">
+          <div className=" overflow-y-scroll md:h-150  h-75 pt-4  bg-surface border rounded-lg shadow ">
+            {items.length === 0 ? (
+              <div className="w-[80%] max-w-4xl mx-auto p-4 text-center text-muted-foreground">
+                Your cart is empty
+              </div>
+            ) : (
+              items.map((it) => (
+                <CartItem
+                  key={it.productId + JSON.stringify(it.config || {})}
+                  item={it}
+                />
+              ))
+            )}
+          </div>
+        </div>
+
         <div className="md:w-[40%] mt-6 hidden md:block">
-            <OrderSummary/>
+          <OrderSummary />
         </div>
       </section>
 
-       {/* Mobile OrderSummary */}
+      {/* Mobile OrderSummary */}
       <section className="md:hidden mt-6">
-        <OrderSummary/>
+        <OrderSummary />
       </section>
     </section>
   );
