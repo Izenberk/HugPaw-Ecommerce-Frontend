@@ -1,17 +1,19 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-// ถ้าใช้ React Router ให้เปิดบรรทัดล่างนี้แล้วแทน <a> ด้วย <Link>
-// import { Link } from "react-router-dom";
+
 
 export default function CategoryRow({ title, subtitle, items }) {
   return (
     <section className="mx-auto max-w-6xl px-6 py-10">
-      {/* Heading */}
-      <div className="mb-6">
-        <h2 className="text-2xl font-semibold">{title}</h2>
-        <p className="text-sm text-muted-foreground">{subtitle}</p>
-      </div>
+     {/* Heading */}
+<div className="mb-6 flex flex-col md:flex-row md:items-baseline md:gap-3 items-center text-center md:text-left">
+  <h2 className="text-xl md:text-2xl font-semibold">{title}</h2>
+  {subtitle ? (
+    <p className="text-xs md:text-sm text-muted-foreground">{subtitle}</p>
+  ) : null}
+</div>
+
 
       {/* Desktop grid */}
       <div className="hidden sm:grid grid-cols-1 md:grid-cols-3 gap-4">
