@@ -114,7 +114,7 @@ export default function ProductDetail({ product, onAddToCart, onSavePreset }) {
                     onClick={handleSavePreset}
                     className="rounded-xl px-4 py-2 border hover:cursor-pointer hover:border-primary-foreground"
                     >
-                    Save Preset
+                    Add to Favorite
                     </button>
                 </footer>
                 </aside>

@@ -30,6 +30,10 @@ export const router = createBrowserRouter([
             element: <ProductCatalogPage />,
         },
         {
+            path: "products/:id",
+            element: <ProductDetailRoute />,
+        },
+        {
             path: "product-customize",
             element: <ProductDetailRoute />,
         },

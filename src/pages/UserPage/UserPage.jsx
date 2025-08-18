@@ -1,28 +1,49 @@
 import React, { useState } from 'react'
 import UserHeader from './UserHeader';
 import ActionTabs from './ActionTabs';
-import OrdersPanel from './OrdersPanel';
 import FavoritesPanel from './FavoritesPanel';
+import TrackingPanel from './TrackingPanel';
 import WarrantyPanel from './WarrantyPanel';
 import HistoryPanel from './HistoryPanel';
+import Blackcat from "@assets/images/blackcat.jpg"
 
 const UserPage = () => {
     const [active, setActive] = useState("favorites");
+    const [user, setUser] = useState({
+        avatarUrl: Blackcat,
+        username: "BlackCat Lover",
+        email: "blackcat@example.com",
+        role: "Customer",
+        address: {
+            line1: "99 Catnip Alley",
+            line2: "",
+            city: "Bangkok",
+            state: "Dindang",
+            postal: "10400",
+            country: "Thailand",
+        },
+    });
+
+    const handleSave = async (nextUser, { avatarFile }) => {
+        // optimistic avatar preview (show new image immediately)
+        let avatarUrl = user.avatarUrl;
+        if (avatarFile) {
+        avatarUrl = URL.createObjectURL(avatarFile); // replace with final URL after upload
+    }
+
+    setUser(prev => ({ ...prev, ...nextUser, avatarUrl }));
+
+        // TODO: upload avatarFile, get a permanent URL, then:
+        // setUser(prev => ({ ...prev, avatarUrl: finalUrl }));
+        // and optionally URL.revokeObjectURL(avatarUrl) to free memory
+    };
 
     return (
         <div className="px-4 py-6 lg:px-16">
-            {/* Make the whole page a grid; align header and panel to the same start at lg */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 lg:gap-6">
-
                 {/* Header — on lg, start at col 2 to align with the panel */}
                 <div className="order-1 lg:col-start-2 lg:col-span-3">
-                <UserHeader
-                    avatar={""}
-                    name="BlackCat Lover"
-                    role="Customer"
-                    bio="Loving cat mom & proud HugPaw member since 2024."
-                    onEditProfile={() => console.log("Edit profile clicked")}
-                />
+                <UserHeader user={user} onSave={handleSave} />
                 </div>
 
                 {/* Sidebar tabs */}
@@ -30,12 +51,13 @@ const UserPage = () => {
                 <ActionTabs value={active} onChange={setActive} />
                 </aside>
 
-                {/* Display panel — shares the same column start as the header at lg */}
+                {/* Display panel */}
                 <section className="order-3 lg:order-3 bg-card text-card-foreground rounded-xl border border-border p-4 lg:col-span-3">
-                {active === "favorites" && <FavoritesPanel />}
-                {active === "orders"    && <OrdersPanel />}
-                {active === "warranty"  && <WarrantyPanel />}
-                {active === "history"   && <HistoryPanel />}
+                    {/* {active === "favorites" && <FavoritesPanel />}
+                    {active === "orders" && <TrackingPanel />}
+                    {active === "warranty" && <WarrantyPanel />}
+                    {active === "history" && <HistoryPanel />} */}
+                    <FavoritesPanel />
                 </section>
             </div>
         </div>
