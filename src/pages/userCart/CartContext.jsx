@@ -1,9 +1,17 @@
 // /src/pages/userCart/CartContext.jsx
+import { useEffect } from "react";
 import { createContext, useContext, useMemo, useState } from "react";
 const CartCtx = createContext(null);
 
 export function CartProvider({ children }) {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(() => {
+    const saved = localStorage.getItem("cartItems");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(items));
+  }, [items]);
 
   const sameVariant = (a, b) =>
     a.productId === b.productId &&
@@ -14,7 +22,10 @@ export function CartProvider({ children }) {
       const idx = prev.findIndex((it) => sameVariant(it, incoming));
       if (idx === -1) return [...prev, { ...incoming }];
       const copy = [...prev];
-      copy[idx] = { ...copy[idx], quantity: copy[idx].quantity + (incoming.quantity || 1) };
+      copy[idx] = {
+        ...copy[idx],
+        quantity: copy[idx].quantity + (incoming.quantity || 1),
+      };
       return copy;
     });
   };
@@ -22,7 +33,11 @@ export function CartProvider({ children }) {
   const updateQty = (target, nextQty) => {
     setItems((prev) =>
       prev
-        .map((it) => (sameVariant(it, target) ? { ...it, quantity: Math.max(1, nextQty) } : it))
+        .map((it) =>
+          sameVariant(it, target)
+            ? { ...it, quantity: Math.max(1, nextQty) }
+            : it
+        )
         .filter((it) => it.quantity > 0)
     );
   };
@@ -39,10 +54,26 @@ export function CartProvider({ children }) {
 
   // 🟢 ฟังก์ชันกด + / –
   const increment = (target) => updateQty(target, target.quantity + 1);
-  const decrement = (target) => updateQty(target, Math.max(1, target.quantity - 1));
+  const decrement = (target) =>
+    updateQty(target, Math.max(1, target.quantity - 1));
+
+  // Clear all
+  const clearCart = () => {
+    localStorage.removeItem("cartItems");
+    setItems([]);
+  };
 
   const value = useMemo(
-    () => ({ items, addItem, updateQty, increment, decrement, removeItem, subtotal }),
+    () => ({
+      items,
+      addItem,
+      updateQty,
+      increment,
+      decrement,
+      removeItem,
+      clearCart,
+      subtotal,
+    }),
     [items, subtotal]
   );
 

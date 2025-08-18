@@ -31,5 +31,4 @@ const ProductDetailRoute = () => {
 // };
 
 export default ProductDetailRoute;
-{
-}
+
