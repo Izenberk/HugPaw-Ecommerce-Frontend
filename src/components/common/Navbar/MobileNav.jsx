@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
+  ChevronRight,
   Heart,
   LogOut,
   Menu,
@@ -51,7 +52,7 @@ const MobileNav = () => {
                       <p>Black Cat Lover</p>
                       <p>blackcat@gmail.com</p>
                     </div>
-                    <div className="text-gray-300">
+                    <div className="absolute right-1/20 -translate-x-1/2 text-gray-300">
                       <X />
                     </div>
                   </div>
@@ -62,6 +63,9 @@ const MobileNav = () => {
                     className="flex gap-3 items-center hover:text-gray-500"
                   >
                     <PawPrint /> Products
+                    <div className="absolute right-1/30 -translate-x-1/2">
+                      <ChevronRight />
+                    </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
@@ -70,6 +74,9 @@ const MobileNav = () => {
                     className="flex gap-3 items-center hover:text-gray-500"
                   >
                     <Heart /> Wishlist
+                    <div className="absolute right-1/30 -translate-x-1/2">
+                      <ChevronRight />
+                    </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
@@ -78,6 +85,9 @@ const MobileNav = () => {
                     className="flex gap-3 items-center hover:text-gray-500"
                   >
                     <ShoppingCart /> My Cart
+                    <div className="absolute right-1/30 -translate-x-1/2">
+                      <ChevronRight />
+                    </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -87,6 +97,9 @@ const MobileNav = () => {
                     className="flex gap-3 items-center hover:text-gray-500"
                   >
                     <MessageSquareText /> Contact
+                    <div className="absolute right-1/30 -translate-x-1/2">
+                      <ChevronRight />
+                    </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
@@ -95,6 +108,9 @@ const MobileNav = () => {
                     className="flex gap-3 items-center hover:text-gray-500"
                   >
                     <Settings /> Setting
+                    <div className="absolute right-1/30 -translate-x-1/2">
+                      <ChevronRight />
+                    </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -104,6 +120,9 @@ const MobileNav = () => {
                     className="flex gap-3 items-center hover:text-gray-500 w-full text-left"
                   >
                     <LogOut /> Sign Out
+                    <div className="absolute right-1/30 -translate-x-1/2">
+                      <ChevronRight />
+                    </div>
                   </button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -127,11 +146,11 @@ const MobileNav = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-screen p-5 mt-6.5">
                 <DropdownMenuLabel>
-                  <div className="flex flex-row w-full gap-3 p-3 border-[2px] rounded-md text-lg">
-                    <div className="flex justify-center items-center px-29.5">
+                  <div className="relative flex flex-row w-full gap-3 p-3 border-[2px] rounded-md text-lg">
+                    <div className="flex justify-center items-center">
                       <p>Account</p>
                     </div>
-                    <div className="text-gray-300">
+                    <div className="absolute right-3 text-gray-300">
                       <X />
                     </div>
                   </div>
@@ -143,6 +162,9 @@ const MobileNav = () => {
                     className="flex gap-3 items-center hover:text-gray-500"
                   >
                     <UserRound /> Login
+                    <div className="absolute right-1/30 -translate-x-1/2">
+                      <ChevronRight />
+                    </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
@@ -151,6 +173,9 @@ const MobileNav = () => {
                     className="flex gap-3 items-center hover:text-gray-500"
                   >
                     <UserRoundPen /> Sign up
+                    <div className="absolute right-1/30 -translate-x-1/2">
+                      <ChevronRight />
+                    </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -160,6 +185,9 @@ const MobileNav = () => {
                     className="flex gap-3 items-center hover:text-gray-500"
                   >
                     <PawPrint /> Products
+                    <div className="absolute right-1/30 -translate-x-1/2">
+                      <ChevronRight />
+                    </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
@@ -168,6 +196,9 @@ const MobileNav = () => {
                     className="flex gap-3 items-center hover:text-gray-500"
                   >
                     <ShoppingCart /> My Cart
+                    <div className="absolute right-1/30 -translate-x-1/2">
+                      <ChevronRight />
+                    </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -177,6 +208,9 @@ const MobileNav = () => {
                     className="flex gap-3 items-center hover:text-gray-500"
                   >
                     <MessageSquareText /> Contact
+                    <div className="absolute right-1/30 -translate-x-1/2">
+                      <ChevronRight />
+                    </div>
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
