@@ -1,4 +1,4 @@
-import { SAMPLE_COLLAR } from '@/lib/productOptions'
+import { SAMPLE_COLLAR } from '@/data/productCustomize';
 import ProductDetail from './productDetail'
 
 const ProductDetailRoute = () => {
