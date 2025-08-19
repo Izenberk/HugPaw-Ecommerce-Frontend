@@ -76,18 +76,36 @@ export default function ProductCatalog({
 
 /* ------------ helpers ------------- */
 
+// 1) Normalize products (incl. tags)
 function normalizeProducts(arr = []) {
-    return arr.map((p) => ({
+    return arr.map((p) => {
+        const imageUrl =
+        p.imageUrl ??
+        (Array.isArray(p.images) ? p.images[0] : undefined) ??
+        p.thumbnailUrl ??
+        "/images/placeholder-product.png";
+
+        return {
         id: p.id ?? p._id ?? p.sku,
         name: p.name ?? p.title ?? "Untitled",
         price: toNumber(p.price ?? p.basePrice ?? p.pricing?.price ?? 0),
-        imageUrl: p.imageUrl ?? (Array.isArray(p.images) ? p.images[0] : undefined) ?? p.thumbnailUrl ?? "/images/placeholder-product.png",
+        imageUrl,
         description: p.description ?? p.summary ?? "",
         category: p.category ?? null,
-        tags: p.tags ?? p.attributes?.tags ?? [],
+        // ✅ force tags into a flat array of trimmed strings
+        tags: normalizeTags(p.tags ?? p.attributes?.tags ?? []),
         customizeId: p.customizeId ?? null,
         customizable: Boolean(p.customizable),
-    }))
+        };
+    });
+}
+
+function normalizeTags(x) {
+    if (!Array.isArray(x)) return [];
+    return x
+        .map(String)
+        .map((s) => s.trim())
+        .filter(Boolean);
 }
 
 function toNumber(v) {
@@ -97,12 +115,12 @@ function toNumber(v) {
 
 function applyFilterSort(items, { search = "", category = null, sort = "relevance" } = {}) {
     const q = search.trim();
-
+    const tokens = parseQuery(q); // supports quoted phrases:  smart "bpa free"
     let out = items.filter((p) => {
         const okCategory = !category || category === "all" || norm(p.category) === norm(category);
         if (!okCategory) return false;
-        if (!q) return true;
-        return matchesSearch(p, q);
+        if (!tokens.length) return true;
+        return matchesSearch(p, tokens);
     });
 
     switch (sort) {
@@ -118,12 +136,26 @@ function applyFilterSort(items, { search = "", category = null, sort = "relevanc
         case "name_desc":
         out.sort((a, b) => b.name.localeCompare(a.name));
         break;
-        default:
-        break; // 'relevance' keeps current order
+        default: {
+        // Optional: relevance weighting (name > tags > description)
+        const score = (p) => {
+            let s = 0;
+            for (const t of tokens) {
+            if (norm(p.name).includes(t)) s += 4;
+            if ((p.tags ?? []).some((tag) => norm(tag).includes(t))) s += 3;
+            if (norm(p.category).includes(t)) s += 2;
+            if (norm(p.description).includes(t)) s += 1;
+            }
+            return s;
+        };
+        out.sort((a, b) => score(b) - score(a));
+        break;
+        }
     }
     return out;
 }
 
+// normalize strings: case/accents/hyphens/underscores → friendly matching
 function norm(s = "") {
     return String(s)
         .toLowerCase()
@@ -134,12 +166,28 @@ function norm(s = "") {
         .trim();
 }
 
-function matchesSearch(p, query) {
-    const haystack = norm(
-        [p.name, p.description, p.category, ...(Array.isArray(p.tags) ? p.tags : [])]
-        .filter(Boolean)
-        .join(" "),
-    );
-    const tokens = norm(query).split(" ");
-    return tokens.every((t) => haystack.includes(t));
+// parse query into tokens, supporting quoted phrases:  smart "bpa free"
+function parseQuery(query = "") {
+    const q = query.trim();
+    if (!q) return [];
+    const tokens = [];
+    const re = /"([^"]+)"|(\S+)/g;
+    let m;
+    while ((m = re.exec(q))) {
+        const token = m[1] || m[2];
+        const n = norm(token);
+        if (n) tokens.push(n);
+    }
+    return tokens;
 }
+
+// 2) Match tokens against haystack + individual tags
+function matchesSearch(p, tokens) {
+    const haystack = norm([p.name, p.description, p.category, ...(p.tags ?? [])].filter(Boolean).join(" "));
+    return tokens.every((t) => {
+        if (haystack.includes(t)) return true;
+        // direct tag pass avoids accidental token merging issues
+        return (p.tags ?? []).some((tag) => norm(tag).includes(t));
+    });
+}
+

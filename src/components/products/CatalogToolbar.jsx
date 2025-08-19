@@ -61,6 +61,14 @@ export default function CatalogToolbar({ params, onChange, categories = [] }) {
                             className="pl-8"
                             value={searchDraft}
                             onChange={(e) => setSearchDraft(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    // commit immediately (skip debounce)
+                                    if (searchDraft !== (params?.search ?? "")) {
+                                        onChange?.((prev) => ({ ...prev, search: searchDraft }));
+                                    }
+                                }
+                            }}
                         />
                         {searchDraft && (
                             <Button
