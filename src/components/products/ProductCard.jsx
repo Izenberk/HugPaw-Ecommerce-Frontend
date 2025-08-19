@@ -1,49 +1,60 @@
-import React from 'react'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card'
-import { Button } from '../ui/button'
-import { Link } from 'react-router-dom'
-import ProductTags from './ProductTags'
-import { formatTHB } from '@/lib/formatters'
+import React from "react";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
+import ProductTags from "./ProductTags";
+import { formatTHB } from "@/lib/formatters";
+import { paths } from "@/app/paths";
 
+const PLACEHOLDER_IMG = "/images/placeholder-product.png";
 
-const ProductCard = ({ id, name, price, imageUrl, description, to, tags=[] }) => {
+const ProductCard = ({ id, name, price, imageUrl, description, to, tags = [] }) => {
+  const href = to ?? paths.productDetail(id); // ✅ always customizable
+
     return (
-        <Card className="group h-full overflow-hidden transition-all hover:shadow-lg">
-            <CardHeader className="space-y-2">
-                <CardTitle className="flex justify-center text-xl font-semi text-foreground leading-tight">
-                    {name}
-                </CardTitle>
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-white">
-                    <img
-                        src={imageUrl}
-                        alt={name}
-                        loading="lazy"
-                        decoding="async"
-                        className="absolute inset-0 h-full w-full object-contain p-2"
-                    />
-                </div>
+        <Card className="group relative h-full overflow-hidden transition-all hover:shadow-lg">
+        <span className="absolute right-2 top-2 z-10 rounded-full bg-primary/10 px-2 py-1 text-xs text-primary">
+            Customizable
+        </span>
 
-                <ProductTags tags={tags} maxVisible={3} align="center" overflow="tooltip" />
+        <CardHeader className="space-y-2">
+            <CardTitle className="flex justify-center text-xl font-semibold leading-tight text-foreground">
+            {name}
+            </CardTitle>
 
-            </CardHeader>
-            <CardContent>
-                <div className="flex mx-4 gap-4">
-                    <span className="flex text-sm items-center">Starting price:</span><span className="text-lg font-semibold">{formatTHB(price)}</span>
-                </div>
-                <p
-                    className="text-sm text-muted-foreground line-clamp-2"
-                    title={description}
-                >
-                    {description}
-                </p>
-            </CardContent>
-            <CardFooter>
-                <Button className="w-full" asChild aria-label={`Customize ${name}`}>
-                    <Link to={to ?? `/product/${id}`}>Let's customize</Link>
-                </Button>
-            </CardFooter>
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-white">
+            <img
+                src={imageUrl || PLACEHOLDER_IMG}
+                alt={name}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-contain p-2"
+                onError={(e) => {
+                if (e.currentTarget.src !== PLACEHOLDER_IMG) e.currentTarget.src = PLACEHOLDER_IMG;
+                }}
+            />
+            </div>
+
+            <ProductTags tags={tags} maxVisible={3} align="center" overflow="tooltip" />
+        </CardHeader>
+
+        <CardContent>
+            <div className="mx-4 flex gap-4">
+            <span className="flex items-center text-sm">Starting price:</span>
+            <span className="text-lg font-semibold">{formatTHB(Number.isFinite(price) ? price : 0)}</span>
+            </div>
+            <p className="text-sm text-muted-foreground line-clamp-2" title={description}>
+            {description}
+            </p>
+        </CardContent>
+
+        <CardFooter>
+            <Button className="w-full" asChild aria-label={`Customize ${name}`}>
+            <Link to={href}>Let's customize</Link>
+            </Button>
+        </CardFooter>
         </Card>
-    )
-}
+    );
+};
 
-export default ProductCard
+export default ProductCard;

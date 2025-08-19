@@ -4,7 +4,7 @@ import Home from '@/pages/Home'
 import UserPage from '@/pages/userPage/UserPage';
 import Login from '@/pages/auth/Login';
 import ProductCatalogPage from '@/pages/productCatalog/ProductRoute';
-import ProductDetailRoute from '@/pages/productDetail/ProductDetailRoute';
+import ProductDetailRoute, { productLoader } from '@/pages/productDetail/ProductDetailRoute';
 
 
 export const router = createBrowserRouter([
@@ -31,12 +31,14 @@ export const router = createBrowserRouter([
         },
         {
             path: "products/:id",
+            loader: productLoader,
             element: <ProductDetailRoute />,
+            errorElement: <div className="p-6">Product not found 🐾</div>, // optional, nicer 404 for this page
         },
-        {
-            path: "product-customize",
-            element: <ProductDetailRoute />,
-        },
+        // {
+        //     path: "product-customize",
+        //     element: <ProductDetailRoute />,
+        // },
         {
             path: "login",
             element: <Login />,

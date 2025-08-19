@@ -1,55 +1,38 @@
-import collar from "@assets/images/products/collar.jpg"
-import dispenser from "@assets/images/products/water-dispenser.jpg"
-import feeder from "@assets/images/products/feeder.jpg"
+import collar from "@assets/images/products/collar.jpg";
+import dispenser from "@assets/images/products/water-dispenser.jpg";
+import feeder from "@assets/images/products/feeder.jpg";
 
-export const CATEGORIES = ["Accessories", "Hydration", "Feeding"]
+export const CATEGORIES = ["Accessories", "Hydration", "Feeding"];
 
 export const PRODUCTS_MOCK = [
     {
-        id: "p1",
-        name: "Collar",
+        id: "collar-001",                    // ✅ same ID used by productById()
+        name: "HugPaw Smart Collar",
         price: 400,
         imageUrl: collar,
         category: "Accessories",
-        tags:[
-            "customizable",
-            "GPS",
-            "engraving",
-            "waterproof",
-        ],
-        description: "More than just a collar It's their identity… Give your pet a collar that reflects who they are. Customize the color, size, and even engrave their name. Want extra peace of mind? Add GPS tracking and app connectivity to keep them safe, wherever they roam."
+        tags: ["customizable", "GPS", "engraving", "waterproof"],
+        description:
+        "More than just a collar—it's their identity. Customize color, size, and engrave their name. Add GPS and app connectivity for extra peace of mind.",
     },
     {
-        id: "p2",
-        name: "Water Dispenser",
+        id: "water-001",
+        name: "HugPaw Water Dispenser",
         price: 700,
         imageUrl: dispenser,
         category: "Hydration",
-        tags: [
-            "smart",
-            "auto-refill",
-            "filter-tracking",
-            "quiet-pump",
-            "bpa-free",
-            "dishwasher-safe"
-        ],
-        description: "Their wellness starts with water… Designed to keep water clean, fresh, and flowing just the way they like it. Customize the look to match your home, and add smart features like automatic refill alerts and filter tracking."
+        tags: ["smart", "auto-refill", "filter-tracking", "quiet-pump", "bpa-free", "dishwasher-safe"],
+        description:
+        "Fresh, filtered water with optional smart tracking and ultra-quiet pump. Custom looks to match your home.",
     },
     {
-        id: "p3",
-        name: "Feeder",
+        id: "feeder-001",
+        name: "HugPaw Smart Feeder",
         price: 750,
         imageUrl: feeder,
         category: "Feeding",
-        tags: [
-            "app-controlled",
-            "schedule",
-            "portion-control",
-            "voice-playback",
-            "dual-power",
-            "smart",
-            "stainless-bowl"
-        ],
-        description: "Mealtime made personal… Whether you're home or away, make sure your pet’s meals are always right in portion, timing, and style. Choose colors and finishes that suit your space, and add features like schedule control, app integration, and voice playback."
+        tags: ["app-controlled", "schedule", "portion-control", "voice-playback", "dual-power", "smart", "stainless-bowl"],
+        description:
+        "Automated meals with portion control, schedules, and optional voice playback—personalized mealtime, every time.",
     },
-]
+];
