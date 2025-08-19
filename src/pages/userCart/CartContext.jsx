@@ -9,9 +9,22 @@ export function CartProvider({ children }) {
     return saved ? JSON.parse(saved) : [];
   });
 
+  const [promoCode, setPromoCode] = useState(() => {
+    return localStorage.getItem("promoCode") || "";
+  });
+  const [appliedCode, setAppliedCode] = useState("");
+
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(items));
   }, [items]);
+
+  useEffect(() => {
+    if (promoCode) {
+      localStorage.setItem("promoCode", promoCode);
+    } else {
+      localStorage.removeItem("promoCode");
+    }
+  }, [promoCode]);
 
   const sameVariant = (a, b) =>
     a.productId === b.productId &&
@@ -72,9 +85,13 @@ export function CartProvider({ children }) {
       decrement,
       removeItem,
       clearCart,
+      promoCode,
+      setPromoCode,
+      appliedCode,
+      setAppliedCode,
       subtotal,
     }),
-    [items, subtotal]
+    [items, subtotal, promoCode,appliedCode]
   );
 
   return <CartCtx.Provider value={value}>{children}</CartCtx.Provider>;

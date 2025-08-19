@@ -5,8 +5,8 @@ import UserPage from '@/pages/userPage/UserPage';
 import Login from '@/pages/auth/Login';
 import ProductCatalogPage from '@/pages/productCatalog/ProductRoute';
 import ProductDetailRoute from '@/pages/productDetail/ProductDetailRoute';
-import Checkout from '@/pages/Checkout/Checkout';
 import Cart from '@/pages/userCart/Cart';
+import Checkout from '@/pages/checkout/Checkout';
 
 export const router = createBrowserRouter([
     {
