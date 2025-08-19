@@ -4,6 +4,8 @@ import Home from '@/pages/Home'
 import UserPage from '@/pages/userPage/UserPage';
 import Login from '@/pages/auth/Login';
 import ProductCatalogPage from '@/pages/productCatalog/ProductRoute';
+import Checkout from '@/pages/Checkout/Checkout';
+import Cart from '@/pages/userCart/Cart';
 import ProductDetailRoute, { productLoader } from '@/pages/productDetail/ProductDetailRoute';
 
 
@@ -42,6 +44,14 @@ export const router = createBrowserRouter([
         {
             path: "login",
             element: <Login />,
+        },
+         {
+            path: "cart",
+            element: <Cart/>
+        },
+        {
+            path: "cart/checkout",
+            element: <Checkout/>
         },
         ],
     },
