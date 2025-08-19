@@ -6,7 +6,6 @@ import { TooltipProvider } from "./components/ui/tooltip";
 import { AuthProvider } from "./pages/auth/AuthContext";
 
 createRoot(document.getElementById("root")).render(
-createRoot(document.getElementById("root")).render(
   <StrictMode>
     <TooltipProvider delayDuration={200}>
       <AuthProvider>
