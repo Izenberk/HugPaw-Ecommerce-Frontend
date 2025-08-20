@@ -5,9 +5,9 @@ import ReviewGrid from "@/components/home/ReviewGrid";
 
 export default function Home() {
   const categories = [
-    { id: "collar", title: "Collar", desc: "More than just a pet’s identity.", href: "/customize/collar", imageSrc:"/src/assets/images/products/collar.jpg", imageAlt:"Pet Collar" },
-    { id: "water", title: "Water Dispenser", desc: "Watering made powerful.", href: "/customize/water", imageSrc:"/src/assets/images/products/feeder.jpg", imageAlt:"Feeder"},
-    { id: "food", title: "Food Dispenser", desc: "Mealtime, now personal.", href: "/customize/food", imageSrc:"/src/assets/images/products/water-dispenser.jpg", imageAlt:"Water Dispenser" },
+    { id: "collar", title: "Collar", desc: "More than just a pet’s identity.", href: "/customize/collar", imageSrc:"/src/assets/images/products/Red-Collar.jpg", imageAlt:"Pet Collar" },
+    { id: "water", title: "Water Dispenser", desc: "Watering made powerful.", href: "/customize/water", imageSrc:"/src/assets/images/products/Automatic-Feeder.jpg", imageAlt:"Feeder"},
+    { id: "food", title: "Food Dispenser", desc: "Mealtime, now personal.", href: "/customize/food", imageSrc:"/src/assets/images/products/Automatic-Water-Dispenser.jpg", imageAlt:"Water Dispenser" },
   ];
 
   const reviews = [
