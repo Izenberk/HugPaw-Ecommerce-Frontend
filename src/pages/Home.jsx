@@ -5,15 +5,51 @@ import ReviewGrid from "@/components/home/ReviewGrid";
 
 export default function Home() {
   const categories = [
-    { id: "collar", title: "Collar", desc: "More than just a pet’s identity.", href: "/customize/collar", imageSrc:"/src/assets/images/products/Red-Collar.jpg", imageAlt:"Pet Collar" },
-    { id: "water", title: "Water Dispenser", desc: "Watering made powerful.", href: "/customize/water", imageSrc:"/src/assets/images/products/Automatic-Feeder.jpg", imageAlt:"Feeder"},
-    { id: "food", title: "Food Dispenser", desc: "Mealtime, now personal.", href: "/customize/food", imageSrc:"/src/assets/images/products/Automatic-Water-Dispenser.jpg", imageAlt:"Water Dispenser" },
+    {
+      id: "collar",
+      title: "Collar",
+      desc: "More than just a pet’s identity.",
+      href: "/products/collar-001",
+      imageSrc: "/src/assets/images/products/Red-Collar.jpg",
+      imageAlt: "Pet Collar",
+    },
+    {
+      id: "water",
+      title: "Water Dispenser",
+      desc: "Watering made powerful.",
+      href: "/products/water-001",
+      imageSrc: "/src/assets/images/products/Automatic-Water-Dispenser.jpg",
+      imageAlt: "Feeder",
+    },
+    {
+      id: "food",
+      title: "Food Dispenser",
+      desc: "Mealtime, now personal.",
+      href: "/products/feeder-001",
+      imageSrc: "/src/assets/images/products/Automatic-Feeder.jpg",
+      imageAlt: "Water Dispenser",
+    },
   ];
 
   const reviews = [
-    { id: "r1", name: "Anna", quote: "I loved how easy it was to design Bella’s collar. The engraving is perfect, and the color matches her personality so well!" },
-    { id: "r2", name: "Mark", quote: "The automatic feeder has been a lifesaver. I customized the color to match my kitchen, and Milo loves the consistent meal times!" },
-    { id: "r3", name: "Sophie", quote: "Coco’s new water fountain is not only cute but super quiet. I added her name to the side, and now it feels like it’s truly hers. She drinks more water now too!" },
+    {
+      id: "r1",
+      name: "Anna",
+      quote:
+        "I loved how easy it was to design Bella’s collar. The engraving is perfect, and the color matches her personality so well!",
+    },
+    {
+      id: "r2",
+      name: "Mark",
+      quote:
+        "The automatic feeder has been a lifesaver. I customized the color to match my kitchen, and Milo loves the consistent meal times!",
+    },
+    {
+      id: "r3",
+      name: "Sophie",
+      quote:
+        "Coco’s new water fountain is not only cute but super quiet. I added her name to the side, and now it feels like it’s truly hers. She drinks more water now too!",
+    },
   ];
 
   return (
