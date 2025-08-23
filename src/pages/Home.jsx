@@ -62,7 +62,7 @@ export default function Home() {
         title={["More Than Pets", "They’re Family"]}
         subtitle="Create unique items for your furry friends"
         cta={{ label: "Shop Now", href: "/catalog" }}
-        imageSrc="/src/assets/images/home/pet-owner1.png"
+        imageSrc="/src/assets/images/home/hero.jpg"
         imageAlt="Happy pet family"
       />
 
