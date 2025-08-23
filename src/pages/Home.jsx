@@ -11,7 +11,7 @@ export default function Home() {
       desc: "More than just a pet’s identity.",
       href: "/products/collar-001",
       imageSrc: "/src/assets/images/products/Red-Collar.jpg",
-      imageAlt: "Pet Collar",
+      imageAlt: "Red pet collar",
     },
     {
       id: "water",
@@ -19,7 +19,7 @@ export default function Home() {
       desc: "Watering made powerful.",
       href: "/products/water-001",
       imageSrc: "/src/assets/images/products/Automatic-Water-Dispenser.jpg",
-      imageAlt: "Feeder",
+      imageAlt: "Automatic water dispenser",
     },
     {
       id: "food",
@@ -27,7 +27,7 @@ export default function Home() {
       desc: "Mealtime, now personal.",
       href: "/products/feeder-001",
       imageSrc: "/src/assets/images/products/Automatic-Feeder.jpg",
-      imageAlt: "Water Dispenser",
+      imageAlt: "Automatic food dispenser",
     },
   ];
 
@@ -35,25 +35,29 @@ export default function Home() {
     {
       id: "r1",
       name: "Anna",
+      stars: 5,
       quote:
         "I loved how easy it was to design Bella’s collar. The engraving is perfect, and the color matches her personality so well!",
     },
     {
       id: "r2",
       name: "Mark",
+      stars: 4,
       quote:
         "The automatic feeder has been a lifesaver. I customized the color to match my kitchen, and Milo loves the consistent meal times!",
     },
     {
       id: "r3",
       name: "Sophie",
+      stars: 5,
       quote:
-        "Coco’s new water fountain is not only cute but super quiet. I added her name to the side, and now it feels like it’s truly hers. She drinks more water now too!",
+        "Coco’s new water fountain is not only cute but super quiet. I added her name to the side—she drinks more water now too!",
     },
   ];
 
   return (
-    <main className="space-y-8 pb-12">
+    // ให้แต่ละ section คุม padding ตัวเอง → main ไม่ต้อง space-y ใหญ่
+    <main>
       <HeroSplit
         title={["More Than Pets", "They’re Family"]}
         subtitle="Create unique items for your furry friends"
@@ -69,12 +73,17 @@ export default function Home() {
       />
 
       <PromoStrip
+        badge="Limited Offer"
         title="20% Off Your First Custom Pet Product"
         subtitle="Design the perfect item for your friend today and enjoy free shipping on your first order."
-        cta={{ label: "Claim Your Discount", href: "#" }}
+        cta={{ label: "Claim Your Discount", href: "#claim" }}
       />
 
-      <ReviewGrid title="Review" items={reviews} />
+      <ReviewGrid
+        title="Review"
+        subtitle="Check out what our HugPaw Community has to say"
+        items={reviews}
+      />
     </main>
   );
 }
