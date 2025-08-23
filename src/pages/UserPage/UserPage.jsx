@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import UserHeader from './UserHeader';
-import ActionTabs from './ActionTabs';
+import UserHeader from '@/pages/UserPage/UserHeader.jsx';
+import ActionTabs from '@/pages/UserPage/ActionTabs.jsx';
 import Blackcat from "@assets/images/blackcat.jpg"
 import FavoritePanel from '@/components/favorites/FavoritePanel';
 
