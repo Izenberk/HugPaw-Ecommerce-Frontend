@@ -31,7 +31,7 @@ export default function UserNav() {
               onClick={logout}
               className="flex items-center gap-2 hover:text-red-500"
             >
-              <LogOut size={20} />
+
               <span>Logout</span>
             </button>
           </li> */}
