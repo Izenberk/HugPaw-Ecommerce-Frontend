@@ -3,12 +3,12 @@ import Layout from '@/app/Layout'
 import Home from '@/pages/Home'
 import Login from '@/pages/auth/Login';
 import ProductCatalogPage from '@/pages/productCatalog/ProductRoute';
-import Checkout from '@/pages/Checkout/Checkout';
+import Checkout from '@/pages/checkout/Checkout';
 import Cart from '@/pages/userCart/Cart';
 import ProductDetailRoute, { productLoader } from '@/pages/productDetail/ProductDetailRoute';
 import Signup from '@/pages/auth/SignUp';
 import NotFound from '@/pages/404_page';
-import UserPage from '@/pages/UserPage/UserPage';
+import UserPage from '@/pages/userPage/UserPage';
 
 
 export const router = createBrowserRouter([
