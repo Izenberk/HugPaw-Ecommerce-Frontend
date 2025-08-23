@@ -41,7 +41,7 @@ export default function HeroSplit({
           ) : null}
           {cta?.href && cta?.label ? (
             <div className="mt-6">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="h-12 px-8 text-base rounded-lg focus-visible:ring-2 focus-visible:ring-primary/40">
                 <Link to={cta.href}>{cta.label}</Link>
               </Button>
             </div>

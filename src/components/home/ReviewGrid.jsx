@@ -8,54 +8,58 @@ export default function ReviewGrid({
   items = [],
 }) {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-10">
+    <section className="mx-auto max-w-[1200px] px-6 md:px-8 py-12 md:py-16">
       {/* Heading + subheading */}
-      <div className="mb-4 flex flex-col md:flex-row md:items-baseline md:gap-3 items-center text-center md:text-left">
-        <h3 className="text-xl md:text-2xl font-semibold">{title}</h3>
+      <div className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-baseline md:gap-3 items-center text-center md:text-left">
+        <h3 className="text-2xl md:text-3xl font-semibold">{title}</h3>
         {subtitle ? (
-          <p className="text-xs md:text-sm text-muted-foreground max-w-md mx-auto md:mx-0">
+          <p className="text-base text-muted-foreground">
             {subtitle}
           </p>
         ) : null}
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         {items.map((r) => {
           const rating = Math.max(0, Math.min(5, Number(r.stars) || 0));
+          const initials = (r.name || "U")
+            .split(" ")
+            .map((w) => w[0])
+            .join("")
+            .slice(0, 2)
+            .toUpperCase();
+
           return (
-            <Card key={r.id} className="h-full rounded-2xl">
-              <CardContent className="p-4 md:p-6 space-y-3">
-                {/* Author + Name */}
+            <Card key={r.id} className="rounded-2xl h-full">
+              <CardContent className="p-5 md:p-6 flex flex-col gap-3">
+                {/* Author + Name + Stars */}
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-8 w-8 md:h-9 md:w-9">
+                  <Avatar className="h-10 w-10">
                     <AvatarImage src={r.avatarUrl} alt={r.name} />
-                    <AvatarFallback>
-                      {(r.name || "U")
-                        .split(" ")
-                        .map((w) => w[0])
-                        .join("")
-                        .slice(0, 2)
-                        .toUpperCase()}
-                    </AvatarFallback>
+                    <AvatarFallback>{initials}</AvatarFallback>
                   </Avatar>
-                  <div>
-                    <div className="text-sm font-medium">{r.name}</div>
+                  <div className="min-w-0">
+                    <div className="text-sm font-medium truncate">{r.name}</div>
                     {r.role ? (
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-muted-foreground truncate">
                         {r.role}
                       </div>
                     ) : null}
-                    {/* Stars ใต้ชื่อ */}
-                    <div className="flex items-center gap-0.5 mt-0.5">
+                    {/* Stars: muted/placeholder style */}
+                    <div
+                      className="flex items-center gap-0.5 mt-1"
+                      aria-label={`Rating: ${rating} out of 5`}
+                    >
                       {Array.from({ length: 5 }).map((_, i) => (
                         <Star
                           key={i}
                           size={14}
+                          strokeWidth={2}
                           className={
                             i < rating
-                              ? "fill-yellow-400 text-yellow-400"
-                              : "text-muted-foreground"
+                              ? "text-muted-foreground/70 fill-current"
+                              : "text-muted-foreground/30"
                           }
                         />
                       ))}
@@ -64,7 +68,9 @@ export default function ReviewGrid({
                 </div>
 
                 {/* Quote */}
-                <p className="text-sm leading-relaxed">“{r.quote}”</p>
+                <p className="text-sm leading-relaxed text-foreground/90 line-clamp-6">
+                  “{r.quote}”
+                </p>
               </CardContent>
             </Card>
           );
