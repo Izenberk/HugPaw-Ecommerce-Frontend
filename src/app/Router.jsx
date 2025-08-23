@@ -7,7 +7,7 @@ import Cart from '@/pages/userCart/Cart.jsx';
 import ProductDetailRoute, { productLoader } from '@/pages/productDetail/ProductDetailRoute.jsx';
 import Signup from '@/pages/auth/SignUp.jsx';
 import NotFound from '@/pages/404_page.jsx';
-import UserPage from '@/pages/userPage/UserPage.jsx';
+// import UserPage from '@/pages/userPage/UserPage.jsx';
 import Checkout from '@/pages/checkout/Checkout.jsx';
 
 
@@ -23,10 +23,10 @@ export const router = createBrowserRouter([
             path: "/",
             element: <Home />
         },
-        {
-            path: "user",
-            element: <UserPage />,
-        },
+        // {
+        //     path: "user",
+        //     element: <UserPage />,
+        // },
         {
             path: "catalog",
             element: <ProductCatalogPage />,
