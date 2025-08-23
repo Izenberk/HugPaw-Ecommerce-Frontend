@@ -7,7 +7,9 @@ export default function CartItem({ item }) {
   const { increment, decrement, removeItem } = useCart();
   if (!item) return null;
 
-  const { image, name, unitPrice, quantity, config } = item;
+  const { imageUrl, image, name, unitPrice, quantity, config } = item;
+  const FALLBACK_IMG = "/images/placeholder-product.png";
+  const imgSrc = imageUrl || image || FALLBACK_IMG;
   const lineTotal = unitPrice * quantity;
   const attrs = Object.entries(config || {})
     .map(([k, v]) =>
@@ -16,12 +18,13 @@ export default function CartItem({ item }) {
     .join(" • ");
 
   return (
-    <div className="w-[80%] max-w-4xl flex gap-4 bg-accent p-4 rounded-lg shadow mx-auto bg-primary border-1 mb-4">
-      <div className="w-24 h-24 flex-shrink-0">
+    <div className="w-[80%] max-w-4xl flex gap-4 p-4 rounded-lg shadow mx-auto border mb-4 bg-card text-card-foreground">
+      <div className="w-24 h-24 flex-shrink-0 rounded-md border bg-white relative">
         <img
-          src={image}
+          src={imgSrc}
           alt={name}
-          className="w-full h-full object-cover rounded-md"
+          className="absolute inset-0 w-full h-full object-contain p-2 rounded-md"
+          onError={(e) => { e.currentTarget.src = FALLBACK_IMG; }}
         />
       </div>
 

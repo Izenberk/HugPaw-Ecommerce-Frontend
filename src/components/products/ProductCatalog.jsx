@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { CATEGORIES, PRODUCTS_MOCK } from "@/data/products.mock";
 import { getProducts } from "@/lib/api";
 
+
 export default function ProductCatalog({
     initialProducts = PRODUCTS_MOCK,
     fetcher = getProducts,

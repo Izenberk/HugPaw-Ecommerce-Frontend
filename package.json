@@ -32,7 +32,8 @@
     "react-router-dom": "^7.7.1",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.11",
-    "zod": "^4.1.0-canary.20250806T002637"
+    "zod": "^4.1.0-canary.20250806T002637",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

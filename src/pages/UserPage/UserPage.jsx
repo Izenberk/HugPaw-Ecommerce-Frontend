@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
 import UserHeader from './UserHeader';
 import ActionTabs from './ActionTabs';
-import FavoritesPanel from './FavoritesPanel';
-import TrackingPanel from './TrackingPanel';
-import WarrantyPanel from './WarrantyPanel';
-import HistoryPanel from './HistoryPanel';
 import Blackcat from "@assets/images/blackcat.jpg"
+import FavoritePanel from '@/components/favorites/FavoritePanel';
 
 const UserPage = () => {
     const [active, setActive] = useState("favorites");
@@ -57,7 +54,7 @@ const UserPage = () => {
                     {active === "orders" && <TrackingPanel />}
                     {active === "warranty" && <WarrantyPanel />}
                     {active === "history" && <HistoryPanel />} */}
-                    <FavoritesPanel />
+                    <FavoritePanel />
                 </section>
             </div>
         </div>
