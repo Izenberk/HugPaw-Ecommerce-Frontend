@@ -8,6 +8,7 @@ import Checkout from '@/pages/Checkout/Checkout';
 import Cart from '@/pages/userCart/Cart';
 import ProductDetailRoute, { productLoader } from '@/pages/productDetail/ProductDetailRoute';
 import Signup from '@/pages/auth/SignUp';
+import NotFound from '@/pages/404_page';
 
 
 export const router = createBrowserRouter([
@@ -15,9 +16,7 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Layout />,
         errorElement: (
-        <div>
-            <h1>404 - Page Not Found ⚠️</h1>
-        </div>
+        <NotFound />
         ),
         children: [
         {

@@ -55,7 +55,7 @@ export const SAMPLE_FEEDER = {
     id: "feeder-001",
     name: "HugPaw Smart Feeder",
     basePrice: 1890,
-    images: ["/images/Feeder2.png"],
+    images: ["/images/Collage-Feeder.jpg"],
     description:
         "Automated feeding with portion control, schedules, and optional camera. Keep meals timely and pets happy—even when you’re away.",
     optionGroups: [
@@ -131,7 +131,7 @@ export const SAMPLE_WATER_DISPENSER = {
     id: "water-001",
     name: "HugPaw Smart Water Dispenser",
     basePrice: 1290,
-    images: ["/images/water-dispenser.jpg"],
+    images: ["/images/Collage-Water-Dispenser.jpg"],
     description:
         "Fresh, filtered water on tap. Ultra-quiet pump, replaceable filters, and optional UV-C sterilization to keep every sip pristine.",
     optionGroups: [

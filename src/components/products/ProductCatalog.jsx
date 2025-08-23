@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import CatalogToolbar from "@/components/products/CatalogToolbar";
 import ProductList from "@/components/products/ProductList";
 import { Separator } from "@/components/ui/separator";
-import { CATEGORIES, PRODUCTS_MOCK } from "@/data/products.mock";
+import { CATEGORIES, PRODUCTS_MOCK } from "@/data/productsCatalog.mock";
 import { getProducts } from "@/lib/api";
 
 
