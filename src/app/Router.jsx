@@ -7,8 +7,8 @@ import Cart from '@/pages/userCart/Cart.jsx';
 import ProductDetailRoute, { productLoader } from '@/pages/productDetail/ProductDetailRoute.jsx';
 import Signup from '@/pages/auth/SignUp.jsx';
 import NotFound from '@/pages/404_page.jsx';
-// import UserPage from '@/pages/userPage/UserPage.jsx';
-import Checkout from '@/pages/checkout/Checkout.jsx';
+import UserPage from '@/pages/userPage/UserPage';
+import Checkout from '@/pages/checkout/Checkout';
 
 
 export const router = createBrowserRouter([
@@ -23,10 +23,10 @@ export const router = createBrowserRouter([
             path: "/",
             element: <Home />
         },
-        // {
-        //     path: "user",
-        //     element: <UserPage />,
-        // },
+        {
+            path: "user",
+            element: <UserPage />,
+        },
         {
             path: "catalog",
             element: <ProductCatalogPage />,
@@ -51,11 +51,11 @@ export const router = createBrowserRouter([
         },
         {
             path: "cart",
-            element: <Cart/>
+            element: <Cart />
         },
         {
             path: "cart/checkout",
-            element: <Checkout/>
+            element: <Checkout />
         },
         ],
     },
