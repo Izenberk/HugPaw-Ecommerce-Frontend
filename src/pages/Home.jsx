@@ -10,7 +10,7 @@ export default function Home() {
       title: "Collar",
       desc: "More than just a pet’s identity.",
       href: "/products/collar-001",
-      imageSrc: "/src/assets/images/products/Red-Collar.jpg",
+      imageSrc: "/images/products/Red-Collar.jpg",
       imageAlt: "Red pet collar",
     },
     {
@@ -18,7 +18,7 @@ export default function Home() {
       title: "Water Dispenser",
       desc: "Watering made powerful.",
       href: "/products/water-001",
-      imageSrc: "/src/assets/images/products/Automatic-Water-Dispenser.jpg",
+      imageSrc: "/images/products/Automatic-Water-Dispenser.jpg",
       imageAlt: "Automatic water dispenser",
     },
     {
@@ -26,7 +26,7 @@ export default function Home() {
       title: "Food Dispenser",
       desc: "Mealtime, now personal.",
       href: "/products/feeder-001",
-      imageSrc: "/src/assets/images/products/Automatic-Feeder.jpg",
+      imageSrc: "/images/products/Automatic-Feeder.jpg",
       imageAlt: "Automatic food dispenser",
     },
   ];
