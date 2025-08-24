@@ -1,4 +1,5 @@
 # Project GitHub Structure
+
 ## Branches
 
     main: deployment
@@ -6,6 +7,8 @@
     develop: features merging
 
     react-transform: convert jsDOM to react component
+
+    login-page: Add Verification Form and Reset Password
 
 # React + Vite
 
