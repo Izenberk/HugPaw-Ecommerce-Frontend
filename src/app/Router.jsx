@@ -7,7 +7,9 @@ import Login from "@/pages/auth/Login";
 import ProductCatalogPage from "@/pages/productCatalog/ProductRoute";
 import Signup from "@/pages/auth/SignUp";
 import ForgotPassword from "@/pages/auth/ForgetPassword";
-import ProductDetailRoute from '@/pages/productDetail/ProductDetailRoute';
+import ProductDetailRoute from "@/pages/productDetail/ProductDetailRoute";
+import ResetPassword from "@/pages/auth/resetPassword";
+import VerificationForm from "@/pages/auth/VerificationForm";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ export const router = createBrowserRouter([
       {
         path: "forgotpassword",
         element: <ForgotPassword />,
+      },
+      {
+        path: "resetpassword",
+        element: <ResetPassword />,
+      },
+      {
+        path: "verificationform",
+        element: <VerificationForm />,
       },
     ],
   },

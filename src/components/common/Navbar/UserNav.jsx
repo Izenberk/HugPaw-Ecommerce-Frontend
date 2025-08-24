@@ -11,18 +11,13 @@ export default function UserNav() {
       {isLoggedIn ? (
         <ul className="flex items-center gap-6">
           <li className="flex items-center hover:text-gray-500">
-            <Link to="/wishlist">
+            <Link to="/user">
               <Heart />
             </Link>
           </li>
           <li className="flex items-center hover:text-gray-500">
             <Link to="/cart">
               <ShoppingCart />
-            </Link>
-          </li>
-          <li className="flex items-center hover:text-gray-500">
-            <Link to="/user" className="flex items-center gap-2">
-              <span>Profile</span>
             </Link>
           </li>
 

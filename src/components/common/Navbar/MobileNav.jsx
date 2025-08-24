@@ -40,22 +40,24 @@ const MobileNav = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-screen p-5 mt-6.5">
                 <DropdownMenuLabel>
-                  <div className="flex gap-10 p-3 border-[2px] rounded-md">
-                    <div>
-                      <img
-                        src={Blackcat}
-                        alt="UserPic"
-                        className="w-[80px] h-[80px] shrink-0 rounded-full object-cover border-4 border-border shadow-md my-2"
-                      />
+                  <Link to="/user">
+                    <div className="flex gap-10 p-3 border-[2px] rounded-md">
+                      <div>
+                        <img
+                          src={Blackcat}
+                          alt="UserPic"
+                          className="w-[80px] h-[80px] shrink-0 rounded-full object-cover border-4 border-border shadow-md my-2"
+                        />
+                      </div>
+                      <div className="flex flex-col items-left py-5 gap-3 text-[16px]">
+                        <p>Black Cat Lover</p>
+                        <p>blackcat@gmail.com</p>
+                      </div>
+                      <div className="absolute right-1/20 -translate-x-1/2 py-9 text-gray-300">
+                        <ChevronRight />
+                      </div>
                     </div>
-                    <div className="flex flex-col items-left py-5 gap-3 text-[16px]">
-                      <p>Black Cat Lover</p>
-                      <p>blackcat@gmail.com</p>
-                    </div>
-                    <div className="absolute right-1/20 -translate-x-1/2 text-gray-300">
-                      <X />
-                    </div>
-                  </div>
+                  </Link>
                 </DropdownMenuLabel>
                 <DropdownMenuItem asChild>
                   <Link
@@ -70,7 +72,7 @@ const MobileNav = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link
-                    to="/wishlist"
+                    to="/user"
                     className="flex gap-3 items-center hover:text-gray-500"
                   >
                     <Heart /> Wishlist
@@ -145,17 +147,6 @@ const MobileNav = () => {
                 <Menu className="hover:text-gray-500" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-screen p-5 mt-6.5">
-                <DropdownMenuLabel>
-                  <div className="relative flex flex-row w-full gap-3 p-3 border-[2px] rounded-md text-lg">
-                    <div className="flex justify-center items-center">
-                      <p>Account</p>
-                    </div>
-                    <div className="absolute right-3 text-gray-300">
-                      <X />
-                    </div>
-                  </div>
-                </DropdownMenuLabel>
-
                 <DropdownMenuItem asChild>
                   <Link
                     to="/login"
