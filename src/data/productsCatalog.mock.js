@@ -1,6 +1,6 @@
-import collar from "@assets/images/products/collar.jpg";
-import dispenser from "@assets/images/products/water-dispenser.jpg";
-import feeder from "@assets/images/products/feeder.jpg";
+import collar from "/images/products/Collage-Collar.jpg"
+import dispenser from "/images/products/Automatic-Water-Dispenser.jpg";
+import feeder from "/images/products/Automatic-Feeder.jpg";
 
 export const CATEGORIES = ["Accessories", "Hydration", "Feeding"];
 

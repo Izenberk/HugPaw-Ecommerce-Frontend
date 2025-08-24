@@ -13,16 +13,14 @@ const ProductCard = ({ id, name, price, imageUrl, description, to, tags = [] }) 
 
     return (
         <Card className="group relative h-full overflow-hidden transition-all hover:shadow-lg">
-        <span className="absolute right-2 top-2 z-10 rounded-full bg-primary/10 px-2 py-1 text-xs text-primary">
-            Customizable
-        </span>
 
         <CardHeader className="space-y-2">
             <CardTitle className="flex justify-center text-xl font-semibold leading-tight text-foreground">
             {name}
             </CardTitle>
+            
 
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-white">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-card">
             <img
                 src={imageUrl || PLACEHOLDER_IMG}
                 alt={name}
@@ -33,7 +31,11 @@ const ProductCard = ({ id, name, price, imageUrl, description, to, tags = [] }) 
                 if (e.currentTarget.src !== PLACEHOLDER_IMG) e.currentTarget.src = PLACEHOLDER_IMG;
                 }}
             />
+            <span className="absolute right-2 top-2 z-10 rounded-xl bg-accent px-2 py-1 text-xs text-secondary-foreground">
+                Customizable
+            </span>
             </div>
+            
 
             <ProductTags tags={tags} maxVisible={3} align="center" overflow="tooltip" />
         </CardHeader>

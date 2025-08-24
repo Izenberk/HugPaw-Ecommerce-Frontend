@@ -5,7 +5,7 @@ export const SAMPLE_COLLAR = {
     id: "collar-001",
     name: "HugPaw Smart Collar",
     basePrice: 400,
-    images: ["/images/Collar1.jpg"],
+    images: ["/images/products/Collar1.jpg"],
     description:
         "More than just a collar—it's their identity. Customize color, size, and engrave their name. Add GPS and app connectivity for extra peace of mind.",
     optionGroups: [
@@ -55,7 +55,7 @@ export const SAMPLE_FEEDER = {
     id: "feeder-001",
     name: "HugPaw Smart Feeder",
     basePrice: 1890,
-    images: ["/images/Feeder2.png"],
+    images: ["/images/products/Collage-Feeder.jpg"],
     description:
         "Automated feeding with portion control, schedules, and optional camera. Keep meals timely and pets happy—even when you’re away.",
     optionGroups: [
@@ -131,7 +131,7 @@ export const SAMPLE_WATER_DISPENSER = {
     id: "water-001",
     name: "HugPaw Smart Water Dispenser",
     basePrice: 1290,
-    images: ["/images/water-dispenser.jpg"],
+    images: ["/images/products/Collage-Water-Dispenser.jpg"],
     description:
         "Fresh, filtered water on tap. Ultra-quiet pump, replaceable filters, and optional UV-C sterilization to keep every sip pristine.",
     optionGroups: [

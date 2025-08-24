@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:clean": "rimraf node_modules/.vite && vite --force",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -19,7 +18,7 @@
     "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
-    "@radix-ui/react-tooltip": "^1.2.7",
+    "@radix-ui/react-tooltip": "^1.2.8",
     "@react-oauth/google": "^0.12.2",
     "@tailwindcss/vite": "^4.1.11",
     "axios": "^1.11.0",
@@ -32,7 +31,8 @@
     "react-router-dom": "^7.7.1",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.11",
-    "zod": "^4.1.0-canary.20250806T002637"
+    "zod": "^4.1.0-canary.20250806T002637",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

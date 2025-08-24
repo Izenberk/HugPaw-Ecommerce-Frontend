@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+
 @custom-variant dark (&:is(.dark *));
 
 /* === HugPaw x shadcn theme === */
@@ -126,7 +127,6 @@
   --chart-3: #9b6bde;
   --chart-4: #4cb494;
   --chart-5: #e25555;
-
 
   /* Optional sidebar tokens */
   --sidebar: #e9ecf5;

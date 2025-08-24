@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import ProductDetail from './productDetail'
+import ProductDetail from './ProductDetail.jsx'
 import { productById } from '@/data/productById';
 import { redirect, useLoaderData } from 'react-router-dom';
 import { CartProvider, useCart } from "../userCart/CartContext";

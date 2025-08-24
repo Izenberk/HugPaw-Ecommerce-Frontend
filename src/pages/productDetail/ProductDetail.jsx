@@ -1,16 +1,29 @@
+import { useFavorites } from "@/lib/favorites";
 import { formatTHB } from "@/lib/formatters";
-import { calcPrice, getDefaultConfig, normalizeConfig, serializeConfig, toCartItem, validateConfig } from "@/lib/productOptions";
+import { calcPrice, getDefaultConfig, normalizeConfig, toCartItem, validateConfig } from "@/lib/productOptions";
 import { assertProductShape } from "@/lib/productSchemas";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 
-export default function ProductDetail({ product, onAddToCart, onSavePreset }) {
+export default function ProductDetail({ product, onAddToCart }) {
     // guard authoring issues in dev
     try { assertProductShape(product); } catch (e) { console.error(e); }
 
-    const [cfg, setCfg] = useState(() => normalizeConfig(product, getDefaultConfig(product)));
+    const [cfg, setCfg] = useState(() =>
+        normalizeConfig(product, getDefaultConfig(product))
+    );
     const price = useMemo(() => calcPrice(product, cfg), [product, cfg]);
     const { ok, errors } = useMemo(() => validateConfig(product, cfg), [product, cfg]);
+
+    // If we navigated here from Favorites -> "Vuew detail", prefill with preset
+    const location = useLocation();
+    useEffect(() => {
+        const preset = location.state?.preset;
+        if (preset && typeof preset === "object") {
+            setCfg((prev) => normalizeConfig(product, { ...prev, ...preset }));
+        }
+    }, [location.state?.preset, product]);
 
     const setSingle = (groupKey, value) => {
         const next = normalizeConfig(product, { ...cfg, [groupKey]: value });
@@ -26,17 +39,29 @@ export default function ProductDetail({ product, onAddToCart, onSavePreset }) {
 
     const handleAddToCart = () => {
         if (!ok) return;
-        const item = toCartItem(product, cfg, 1);
-        onAddToCart ? onAddToCart(item) : console.log("cartItem", item);
+        const item = toCartItem(product, cfg, 1) || {};
+        const adapted = {
+            ...item,
+            quantity: item.quantity ?? 1,
+            unitPrice: item.unitPrice ?? item.price ?? price,
+            name: product.name,
+            imageUrl: product.images?.[0],
+        };
+        onAddToCart ? onAddToCart(adapted) : console.log("cartItem", adapted);
     };
 
-    const handleSavePreset = async () => {
-        const qs = serializeConfig(cfg);
-        onSavePreset ? onSavePreset(qs) : console.log("preset", qs);
-        if (navigator?.clipboard.writeText) {
-            // eslint-disable-next-line no-empty
-            try { await navigator.clipboard.writeText(qs); } catch {}
-        }
+    const { addFavorite } = useFavorites();
+    const handleAddToFavorite = () => {
+        if (!ok) return;
+        addFavorite({
+            productId: product.id,
+            name: product.name,
+            imageUrl: product.images?.[0],
+            basePrice: product.basePrice ?? product.price ?? 0,
+            price,
+            config: cfg,
+            tags: product.tags ?? [],
+        });
     };
 
     return (
@@ -111,7 +136,7 @@ export default function ProductDetail({ product, onAddToCart, onSavePreset }) {
                     Add to Cart
                     </button>
                     <button
-                    onClick={handleSavePreset}
+                    onClick={handleAddToFavorite}
                     className="rounded-xl px-4 py-2 border hover:cursor-pointer hover:border-primary-foreground"
                     >
                     Add to Favorite
