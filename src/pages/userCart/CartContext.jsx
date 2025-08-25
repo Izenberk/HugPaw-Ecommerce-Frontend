@@ -30,18 +30,22 @@ export function CartProvider({ children }) {
     a.productId === b.productId &&
     JSON.stringify(a.config || {}) === JSON.stringify(b.config || {});
 
-  const addItem = (incoming) => {
-    setItems((prev) => {
-      const idx = prev.findIndex((it) => sameVariant(it, incoming));
-      if (idx === -1) return [...prev, { ...incoming }];
-      const copy = [...prev];
-      copy[idx] = {
-        ...copy[idx],
-        quantity: copy[idx].quantity + (incoming.quantity || 1),
-      };
-      return copy;
-    });
-  };
+  const addItem = (incoming) =>
+  setItems(prev => {
+    const item = {
+      ...incoming,
+      quantity: Math.max(1, +incoming.quantity || 1),
+      config: incoming.config ?? {},
+    };
+
+    const idx = prev.findIndex(it => sameVariant(it, item));
+    if (idx < 0) return [...prev, item];                      // ยังไม่เคยมี → เพิ่มแถวใหม่
+
+    // เคยมีแล้ว → บวกจำนวน (อัปเดตแบบ immutable ด้วย map)
+    return prev.map((it, i) =>
+      i === idx ? { ...it, quantity: it.quantity + item.quantity } : it
+    );
+  });
 
   const updateQty = (target, nextQty) => {
     setItems((prev) =>

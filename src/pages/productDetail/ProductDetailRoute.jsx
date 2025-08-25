@@ -16,6 +16,7 @@ function ProductDetailWithCart() {
   );
 }
 
+
 const ProductDetailRoute = () => {
   return <ProductDetailWithCart />;
 };

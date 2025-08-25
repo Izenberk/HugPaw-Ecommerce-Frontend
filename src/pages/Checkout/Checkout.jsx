@@ -1,8 +1,11 @@
+import CardPaymentMethod from "@/components/payment-method-01";
 import OrderSummary from "../userCart/OrderSummary";
-import PayMentMethod from "./PayMentMethod";
 import UserInfo from "./UserInfo";
+import PurchaseDetail from "./PurchaseDetail";
+import { useState } from "react";
 
 const Checkout = () => {
+   const [purchaseTime, setPurchaseTime] = useState(null);
   return (
     <section>
       <header>
@@ -14,19 +17,27 @@ const Checkout = () => {
       </header>
 
       <main>
-        <div className="flex ">
-          <section className="w-[70%] ml-4 flex flex-col items-center">
-            <PayMentMethod />
-            <UserInfo />
+        <div className="flex flex-col-reverse gap-4 md:flex-row ">
+          <section className="md:w-[60%] md:ml-4 ">
+            <div className="md:flex md:flex-col md:items-center">
+              <CardPaymentMethod setPurchaseTime={setPurchaseTime} />
+            </div>
+            <div className="md:flex md:flex-col md:items-center">
+              <div className="w-3/5 mx-auto pt-4">
+                <PurchaseDetail dateTime={purchaseTime}/>
+              </div>
+            </div>
+            <div>
+              <UserInfo />
+            </div>
           </section>
-          <section className="w-[30%] mr-4 ">
-            <OrderSummary showPromo={false} showCheckoutBtn={false} />
+          <section className="md:w-[40%] md:flex md:flex-col md:items-center">
+            <div className="md:w-[80%] ">
+              <OrderSummary showPromo={false} showCheckoutBtn={false} />
+            </div>
           </section>
         </div>
-        
-
       </main>
-
     </section>
   );
 };
