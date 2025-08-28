@@ -8,7 +8,9 @@
 
     react-transform: convert jsDOM to react component
 
-    login-page: Add Verification Form and Reset Password
+    login-page: - Add Verification Form and Reset Password
+                - Edit NavBar to sticky 
+                - Edit link of Verification Form and Reset Password into right path
 
 # React + Vite
 

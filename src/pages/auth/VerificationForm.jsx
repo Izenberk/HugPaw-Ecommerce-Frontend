@@ -9,6 +9,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export default function VerificationForm({
   length = 4,
@@ -16,7 +17,7 @@ export default function VerificationForm({
   onChange,
   onComplete,
 }) {
-  const [values, setvalues] = useState(Array(length).fill(""));
+  const [values, setValues] = useState(Array(length).fill(""));
   const inputRefs = useRef([]);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function VerificationForm({
     return s.slice(0, 1);
   };
   const emit = (next) => {
-    setvalues(next);
+    setValues(next);
     const code = next.join("");
     onChange && onChange(code);
     if (next.every((v) => v.length === 1)) onComplete && onComplete(code);
@@ -108,12 +109,10 @@ export default function VerificationForm({
         </CardContent>
 
         <CardFooter className="flex gap-2 justify-center">
-          <Button onClick={""} disabled={values.join("").length < length}>
-            Verify
+          <Button disabled={values.join("").length < length}>
+            <Link to="/login">Verify</Link>
           </Button>
-          <Button variant="outline" onClick={""}>
-            Resend
-          </Button>
+          <Button>Resend</Button>
         </CardFooter>
       </Card>
     </div>
