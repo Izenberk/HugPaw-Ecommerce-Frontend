@@ -1,4 +1,3 @@
-// src/components/common/Navbar/DropdownAccount.jsx
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,73 +14,56 @@ import { useState } from "react";
 import { useCloseOnRouteChange } from "@/hooks/useCloseOnRouteChange";
 
 const DropdownAccount = () => {
-  const { logout } = useAuth();
+  // eslint-disable-next-line no-unused-vars
+  const { isLoggedIn, logout } = useAuth();
   const [open, setOpen] = useState(false);
 
-  // Close when route changes
-  useCloseOnRouteChange(setOpen);
+  useCloseOnRouteChange(setOpen)
 
   return (
     <div className="z-[200]">
       <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
-        <DropdownMenuTrigger asChild>
-          <button
-            type="button"
-            className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-foreground/10"
-          >
+        <div className="flex items-center gap-2">
+          <DropdownMenuTrigger className="flex items-center gap-2 hover:text-gray-500">
             <CircleUserRound />
             <span>Account</span>
-          </button>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent
-          align="end"
-          sideOffset={8}
-          className="z-[10000] w-72 p-2"
-          // Close on outside click/tap and Esc
-          onPointerDownOutside={() => setOpen(false)}
-          onEscapeKeyDown={() => setOpen(false)}
-        >
-          <DropdownMenuLabel asChild>
-            <Link
-              to="/user"
-              onClick={() => setOpen(false)}
-              className="relative flex items-center gap-4 p-3 rounded-md hover:bg-muted"
-            >
-              <img
-                src={Blackcat}
-                alt="UserPic"
-                className="w-[90px] h-[90px] shrink-0 rounded-full object-cover border-4 border-border shadow-md"
-              />
-              <div className="flex flex-col justify-center gap-1 text-[16px]">
-                <p>Black Cat Lover</p>
-                <p className="text-muted-foreground">blackcat@gmail.com</p>
-              </div>
-              <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-            </Link>
+          </DropdownMenuTrigger>
+        </div>
+        <DropdownMenuContent className="z-[1000]">
+          <DropdownMenuLabel>
+            <div className="flex justify-between gap-6">
+              <Link to="/user" className="flex items-center gap-2">
+                <div>
+                  <img
+                    src={Blackcat}
+                    alt="UserPic"
+                    className="w-[90px] h-[90px] shrink-0 rounded-full object-cover border-4 border-border shadow-md"
+                  />
+                </div>
+                <div className="flex flex-col items-left py-4 gap-3 text-[16px]">
+                  <p>Black Cat Lover</p>
+                  <p>blackcat@gmail.com</p>
+                </div>
+                <div className="absolute right-1/50 -translate-x-1/2 text-gray-500">
+                  
+                </div>
+              </Link>
+            </div>
           </DropdownMenuLabel>
-
           <DropdownMenuSeparator />
-
-          <DropdownMenuItem asChild onSelect={() => setOpen(false)}>
-            <Link to="/setting" className="relative flex items-center gap-2 pr-8">
-              <Settings className="h-4 w-4" />
-              <span>Setting</span>
-              <ChevronRight className="absolute right-2 top-1/2 -translate-y-1/2 opacity-50" />
-            </Link>
+          <DropdownMenuItem>
+            <Settings />
+            Setting
+            <div className="absolute right-1/30 -translate-x-1/2">
+              <ChevronRight />
+            </div>
           </DropdownMenuItem>
-
-          <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault(); // run logout before menu unmount
-              setOpen(false);
-              logout();
-            }}
-            className="relative flex items-center gap-2 pr-8"
-          >
-            <LogOut className="h-4 w-4" />
-            <span>Sign out</span>
-            <ChevronRight className="absolute right-2 top-1/2 -translate-y-1/2 opacity-50" />
+          <DropdownMenuItem onClick={logout}>
+            <LogOut />
+            Sign out
+            <div className="absolute right-1/30 -translate-x-1/2">
+              <ChevronRight />
+            </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
