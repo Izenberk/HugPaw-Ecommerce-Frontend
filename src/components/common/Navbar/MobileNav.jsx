@@ -1,6 +1,6 @@
 // MobileNav.jsx
-import React, { useEffect, useState } from "react";
-import { Link, useLocation} from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,35 +9,51 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Menu, ChevronRight, PawPrint, Heart, ShoppingCart, MessageSquareText, Settings, LogOut, UserRound, UserRoundPen } from "lucide-react";
+import {
+  Menu, ChevronRight, PawPrint, Heart, ShoppingCart,
+  MessageSquareText, Settings, LogOut, UserRound, UserRoundPen
+} from "lucide-react";
 import { useAuth } from "@/pages/auth/AuthContext";
 import Logo from "../Logo";
 import Blackcat from "@/assets/images/blackcat.jpg";
+import { useCloseOnRouteChange } from "@/hooks/useCloseOnRouteChange";
 
 const MobileNav = () => {
   const { isLoggedIn, logout } = useAuth();
   const [open, setOpen] = useState(false);
-  const location = useLocation();
 
-  // 1) Close on route change
-  useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
-
+  // Close when the route changes
+  useCloseOnRouteChange(setOpen);
 
   return (
     <div className="h-14">
       <div className="grid grid-cols-3 items-center h-14">
-        {/* Menu (dropdown trigger) */}
+        {/* Left: Menu trigger */}
         <div className="pl-3">
           <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
-            <DropdownMenuTrigger aria-label="Menu">
-              <Menu className="hover:text-gray-500" />
+            <DropdownMenuTrigger asChild aria-label="Menu">
+              <button type="button" className="p-2 rounded-md hover:bg-foreground/10">
+                <Menu className="hover:text-gray-500" />
+              </button>
             </DropdownMenuTrigger>
 
-            {/* 2) Make sure it overlays everything */}
-            <DropdownMenuContent className="w-screen p-5 mt-2 z-[10000]">
+            {/* Lightweight overlay to close on any outside tap/click */}
+            {open && (
+              <div
+                className="fixed inset-0 z-[9995]"
+                onClick={() => setOpen(false)}
+                aria-hidden="true"
+              />
+            )}
 
+            {/* Menu content */}
+            <DropdownMenuContent
+              className="w-screen p-5 mt-2 z-[10000]"
+              align="start"
+              sideOffset={8}
+              onPointerDownOutside={() => setOpen(false)}  // close on outside tap/click
+              onEscapeKeyDown={() => setOpen(false)}       // close on Esc
+            >
               {isLoggedIn ? (
                 <>
                   <DropdownMenuLabel asChild>
@@ -50,7 +66,7 @@ const MobileNav = () => {
                         />
                         <div className="flex flex-col justify-center gap-1 text-[16px]">
                           <p>Black Cat Lover</p>
-                          <p>blackcat@gmail.com</p>
+                          <p className="text-muted-foreground">blackcat@gmail.com</p>
                         </div>
                         <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300">
                           <ChevronRight />
@@ -98,7 +114,6 @@ const MobileNav = () => {
 
                   <DropdownMenuSeparator />
 
-                  {/* Use button + navigate helper if not a <Link> */}
                   <DropdownMenuItem
                     onSelect={(e) => {
                       e.preventDefault();
@@ -157,12 +172,12 @@ const MobileNav = () => {
           </DropdownMenu>
         </div>
 
-        {/* Logo */}
+        {/* Center: Logo */}
         <div className="flex justify-center">
           <Logo />
         </div>
 
-        {/* Cart */}
+        {/* Right: Cart */}
         <div className="flex justify-end pr-3">
           <Link to="/cart" className="hover:text-gray-500">
             <ShoppingCart />
