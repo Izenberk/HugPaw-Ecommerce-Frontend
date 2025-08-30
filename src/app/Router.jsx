@@ -10,7 +10,8 @@ import NotFound from '@/pages/404_page.jsx';
 import UserPage from '@/pages/userPage/UserPage.jsx';
 import Checkout from '@/pages/checkout/Checkout.jsx';
 import ResetPassword from '@/pages/auth/ResetPassword.jsx';
-import VerificationForm from '@/pages/auth/VerificationForm.jsx';
+import VerificationForm from '@/pages/auth/VerificationForm';
+import ForgotPassword from '@/pages/auth/ForgetPassword';
 
 
 export const router = createBrowserRouter([
@@ -60,12 +61,16 @@ export const router = createBrowserRouter([
             element: <Checkout />
         },
         {
-          path: "resetpassword",
-          element: <ResetPassword />,
+            path: "forgotpassword",
+            element: <ForgotPassword />,
         },
         {
-          path: "verification",
-          element: <VerificationForm />,
+            path: "verification",
+            element: <VerificationForm />,
+        },
+        {
+            path: "resetpassword",
+            element: <ResetPassword />,
         },
         ],
     },

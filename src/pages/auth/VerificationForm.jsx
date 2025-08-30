@@ -110,7 +110,7 @@ export default function VerificationForm({
 
         <CardFooter className="flex gap-2 justify-center">
           <Button disabled={values.join("").length < length}>
-            <Link to="/login">Verify</Link>
+            <Link to="/resetpassword">Verify</Link>
           </Button>
           <Button>Resend</Button>
         </CardFooter>

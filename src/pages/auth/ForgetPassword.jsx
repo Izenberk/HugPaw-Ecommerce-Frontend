@@ -57,7 +57,7 @@ const ForgotPassword = () => {
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full"
           >
-            <Link to="/verificationform">Send Reset Link</Link>
+            <Link to="/verification">Send Reset Link</Link>
           </button>
         </form>
       </Form>
