@@ -25,27 +25,28 @@ export default function ProductList({
     if (!products.length) return <EmptyState />;
 
     return (
-        <div className="grid gap-6 justify-center grid-cols-[repeat(auto-fit,minmax(16rem,24rem))] lg:mx-16">
-        {products.map((raw) => {
-            const p = normalizeProduct(raw);
-            // Guard: skip invalid items
-            if (!p.id) return null;
+        <div className="mx-auto max-w-screen-xl px-4">
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {products.map((raw) => {
+                const p = normalizeProduct(raw);
+                if (!p.id) return null;
 
-            return (
-            <ProductCard
-                key={p.id ?? p.sku ?? p.name}
-                id={p.id}
-                name={p.name}
-                price={p.price}
-                imageUrl={p.imageUrl}
-                description={p.description}
-                to={paths.productDetail(p.id)}
-                customizable={p.customizable}
-                customizeId={p.customizeId}
-                tags={p.tags}
-            />
-            );
-        })}
+                return (
+                <ProductCard
+                    key={p.id ?? p.sku ?? p.name}
+                    id={p.id}
+                    name={p.name}
+                    price={p.price}
+                    imageUrl={p.imageUrl}
+                    description={p.description}
+                    to={paths.productDetail(p.id)}
+                    customizable={p.customizable}
+                    customizeId={p.customizeId}
+                    tags={p.tags}
+                />
+                );
+            })}
+            </div>
         </div>
     );
 }
@@ -94,17 +95,18 @@ function SkeletonCard() {
     );
     }
 
-    function SkeletonGrid({ count = 8 }) {
+function SkeletonGrid({ count = 8 }) {
     return (
-        <div className="grid gap-6 justify-center grid-cols-[repeat(auto-fit,minmax(16rem,24rem))]">
-        {Array.from({ length: count }, (_, i) => (
-            <SkeletonCard key={i} />
-        ))}
+        <div className="mx-auto max-w-screen-xl px-4">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: count }, (_, i) => <SkeletonCard key={i} />)}
+        </div>
         </div>
     );
-    }
+}
 
-    function EmptyState() {
+
+function EmptyState() {
     return (
         <div className="flex flex-col items-center justify-center rounded-xl border p-10 text-center">
         <Info className="mb-2 opacity-60" aria-hidden="true" />
