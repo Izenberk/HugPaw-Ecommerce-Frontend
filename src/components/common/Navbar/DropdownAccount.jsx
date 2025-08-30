@@ -11,10 +11,11 @@ import { ChevronRight, CircleUserRound, LogOut, Settings } from "lucide-react";
 import Blackcat from "@/assets/images/blackcat.jpg";
 import { Link } from "react-router-dom";
 
-const DropdownAccout = () => {
+const DropdownAccount = () => {
+  // eslint-disable-next-line no-unused-vars
   const { isLoggedIn, logout } = useAuth();
   return (
-    <div>
+    <div className="z-[200]">
       <DropdownMenu>
         <div className="flex items-center gap-2">
           <DropdownMenuTrigger className="flex items-center gap-2 hover:text-gray-500">
@@ -22,7 +23,7 @@ const DropdownAccout = () => {
             <span>Account</span>
           </DropdownMenuTrigger>
         </div>
-        <DropdownMenuContent>
+        <DropdownMenuContent className="z-[1000]">
           <DropdownMenuLabel>
             <div className="flex justify-between gap-6">
               <Link to="/user" className="flex items-center gap-2">
@@ -64,4 +65,4 @@ const DropdownAccout = () => {
   );
 };
 
-export default DropdownAccout;
+export default DropdownAccount;

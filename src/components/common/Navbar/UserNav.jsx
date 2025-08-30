@@ -1,9 +1,10 @@
 import { useAuth } from "@/pages/auth/AuthContext";
 import { Heart, ShoppingCart, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
-import DropdownAccout from "./DropdownAccout";
+import DropdownAccount from "./DropdownAccount";
 
 export default function UserNav() {
+  // eslint-disable-next-line no-unused-vars
   const { isLoggedIn, logout } = useAuth();
 
   return (
@@ -20,17 +21,7 @@ export default function UserNav() {
               <ShoppingCart />
             </Link>
           </li>
-
-          {/* <li className="flex items-center">
-            <button
-              onClick={logout}
-              className="flex items-center gap-2 hover:text-red-500"
-            >
-
-              <span>Logout</span>
-            </button>
-          </li> */}
-          <DropdownAccout />
+          <DropdownAccount />
         </ul>
       ) : (
         <ul className="flex items-center gap-4 text-primary-foreground">

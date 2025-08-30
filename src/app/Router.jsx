@@ -9,6 +9,8 @@ import Signup from '@/pages/auth/SignUp.jsx';
 import NotFound from '@/pages/404_page.jsx';
 import UserPage from '@/pages/userPage/UserPage.jsx';
 import Checkout from '@/pages/checkout/Checkout.jsx';
+import ResetPassword from '@/pages/auth/ResetPassword.jsx';
+import VerificationForm from '@/pages/auth/VerificationForm.jsx';
 
 
 export const router = createBrowserRouter([
@@ -62,7 +64,7 @@ export const router = createBrowserRouter([
           element: <ResetPassword />,
         },
         {
-          path: "verificationform",
+          path: "verification",
           element: <VerificationForm />,
         },
         ],
