@@ -190,7 +190,7 @@ export const SAMPLE_WATER_DISPENSER = {
         ui: "radio",
         values: [
             { value: "usb-c", label: "USB-C", default: true },
-            { value: "battery", label: "Rechargeable Battery Base", priceAdj: 350 },
+            { value: "battery", label: "Rechargeable Battery", priceAdj: 350 },
         ],
         },
     ],

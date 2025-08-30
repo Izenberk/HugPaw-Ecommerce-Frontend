@@ -77,7 +77,7 @@ export function FavoriteCard({ item, addToCart }) {
                     size="sm"
                     variant="secondary"
                     onClick={() =>
-                        navigate(`/products/${productId}/customize`, { state: { preset: config } })
+                        navigate(`/products/${productId}`, { state: { preset: config } })
                     }
                     className="sm:w-auto"
                 >
