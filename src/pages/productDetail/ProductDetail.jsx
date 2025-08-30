@@ -4,9 +4,12 @@ import { calcPrice, getDefaultConfig, normalizeConfig, toCartItem, validateConfi
 import { assertProductShape } from "@/lib/productSchemas";
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-
+import { toast } from "sonner";
+import { useAddToCartToast } from "@/hooks/useAddToCartToast";
 
 export default function ProductDetail({ product, onAddToCart }) {
+    const addToCartToast = useAddToCartToast({ onAdd: onAddToCart });
+
     // guard authoring issues in dev
     try { assertProductShape(product); } catch (e) { console.error(e); }
 
@@ -39,15 +42,20 @@ export default function ProductDetail({ product, onAddToCart }) {
 
     const handleAddToCart = () => {
         if (!ok) return;
+
         const item = toCartItem(product, cfg, 1) || {};
         const adapted = {
             ...item,
             quantity: item.quantity ?? 1,
             unitPrice: item.unitPrice ?? item.price ?? price,
-            name: product.name,
-            imageUrl: product.images?.[0],
+            name: product.name ?? item.name,
+            imageUrl: product.images?.[0] ?? item.imageUrl,
+            // include config/options if your cart uses them:
+            config: cfg,
         };
-        onAddToCart ? onAddToCart(adapted) : console.log("cartItem", adapted);
+
+        // one line does it all: add + sonner toast + "View cart" action
+        addToCartToast(adapted);
     };
 
     const { addFavorite } = useFavorites();
@@ -61,6 +69,15 @@ export default function ProductDetail({ product, onAddToCart }) {
             price,
             config: cfg,
             tags: product.tags ?? [],
+        });
+        toast.success("Added to wishlist", {
+            description: product.name,
+            duration: 2000,
+            style: {
+            background: "var(--success)",
+            color: "var(--popover-foreground)",
+            border: "var(--border)"
+            }
         });
     };
 

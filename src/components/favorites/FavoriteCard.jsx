@@ -5,21 +5,46 @@ import { Eye, ShoppingCart, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useFavorites } from "@/lib/favorites";      // or "@/stores/favorites"
 import { formatTHB } from "@/lib/formatters";
+import { useState } from "react";
+import { useAddToCartToast } from "@/hooks/useAddToCartToast"; // ⬅️ NEW
 
 const FALLBACK_IMG = "/images/placeholder-product.png";
 
 export function FavoriteCard({ item, addToCart }) {
     const navigate = useNavigate();
-    const { removeFavorite, moveToCart } = useFavorites();
+    const { removeFavorite } = useFavorites();
+    const [adding, setAdding] = useState(false);
 
-    const { id, productId, name, imageUrl, price, config = {}, tags = [] } = item;
+    // If parent passed addToCart, the hook will use it; otherwise it falls back to CartContext.addItem
+    const addToCartToast = useAddToCartToast({ onAdd: addToCart });
+
+    const { id: favoriteId, productId, name, imageUrl, price, config = {}, tags = [] } = item;
     const imgSrc = imageUrl || FALLBACK_IMG;
+
+    const handleAddFromFav = async () => {
+        try {
+        setAdding(true);
+        // Normalize to the cart item shape expected by your cart
+        addToCartToast({
+            id: productId ?? favoriteId, // prefer productId as the SKU/cart id
+            name,
+            imageUrl: imgSrc,
+            unitPrice: price,
+            quantity: 1,
+            config,
+        });
+        // Optional: remove from favorites after adding to cart (classic “move to cart” behavior)
+        // If you want to keep it in favorites, just delete this line.
+        removeFavorite(favoriteId);
+        } finally {
+        setAdding(false);
+        }
+    };
 
     return (
         <Card
         className="
             w-full h-full overflow-hidden rounded-2xl
-            /* Vertical on mobile, horizontal on md+ */
             flex flex-col md:flex-row
         "
         >
@@ -74,31 +99,33 @@ export function FavoriteCard({ item, addToCart }) {
             {/* ACTIONS — stack on mobile, inline on desktop */}
             <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
                 <Button
-                    size="sm"
-                    variant="secondary"
-                    onClick={() =>
-                        navigate(`/products/${productId}`, { state: { preset: config } })
-                    }
-                    className="sm:w-auto"
+                size="sm"
+                variant="secondary"
+                onClick={() =>
+                    navigate(`/products/${productId}`, { state: { preset: config } })
+                }
+                className="sm:w-auto"
                 >
-                    <Eye className="mr-2 h-4 w-4" /> View detail
+                <Eye className="mr-2 h-4 w-4" /> View detail
                 </Button>
 
                 <Button
-                    size="sm"
-                    onClick={() => moveToCart(id, addToCart)}
-                    className="sm:w-auto"
+                size="sm"
+                onClick={handleAddFromFav}
+                disabled={adding}
+                className="sm:w-auto"
                 >
-                <ShoppingCart className="mr-2 h-4 w-4" /> Add to cart
+                <ShoppingCart className="mr-2 h-4 w-4" />
+                {adding ? "Adding..." : "Add to cart"}
                 </Button>
 
                 <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => removeFavorite(id)}
-                    className="sm:ml-auto sm:w-auto"
+                size="sm"
+                variant="destructive"
+                onClick={() => removeFavorite(favoriteId)}
+                className="sm:ml-auto sm:w-auto"
                 >
-                    <Trash2 className="mr-2 h-4 w-4" /> Delete
+                <Trash2 className="mr-2 h-4 w-4" /> Delete
                 </Button>
             </div>
             </div>
