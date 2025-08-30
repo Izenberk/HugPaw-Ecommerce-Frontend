@@ -18,7 +18,6 @@ const ProductCard = ({ id, name, price, imageUrl, description, to, tags = [] }) 
             <CardTitle className="flex justify-center text-xl font-semibold leading-tight text-foreground">
             {name}
             </CardTitle>
-            
 
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-card">
             <img
@@ -35,7 +34,7 @@ const ProductCard = ({ id, name, price, imageUrl, description, to, tags = [] }) 
                 Customizable
             </span>
             </div>
-            
+
 
             <ProductTags tags={tags} maxVisible={3} align="center" overflow="tooltip" />
         </CardHeader>

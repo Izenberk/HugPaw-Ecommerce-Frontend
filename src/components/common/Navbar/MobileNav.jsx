@@ -18,12 +18,12 @@ import { useCloseOnRouteChange } from "@/hooks/useCloseOnRouteChange";
 const MobileNav = () => {
   const { isLoggedIn, logout } = useAuth();
   const [open, setOpen] = useState(false);
-  
+
   useCloseOnRouteChange(setOpen)
 
   return (
     <div className="h-14">
-      <div className="grid grid-cols-3 items-center h-14">
+      <div className="flex items-center justify-between min-w-max min-h-full">
         {/* Menu (dropdown trigger) */}
         <div className="pl-3">
           <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
@@ -154,12 +154,12 @@ const MobileNav = () => {
         </div>
 
         {/* Logo */}
-        <div className="flex justify-center">
+        <div className="absolute left-1/2 -translate-x-1/2">
           <Logo />
         </div>
 
         {/* Cart */}
-        <div className="flex justify-end pr-3">
+        <div className="absolute right-1/15 -translate-x-1/2">
           <Link to="/cart" className="hover:text-gray-500">
             <ShoppingCart />
           </Link>

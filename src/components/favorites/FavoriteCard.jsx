@@ -27,7 +27,6 @@ export function FavoriteCard({ item, addToCart }) {
         <div
             className="
             bg-white ring-1 ring-border
-            /* Mobile: aspect box; Desktop: fixed width/height thumb */
             relative aspect-[4/3] md:aspect-auto md:w-48 md:h-40
             shrink-0
             "

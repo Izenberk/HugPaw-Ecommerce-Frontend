@@ -26,11 +26,10 @@ export default function ProductList({
 
     return (
         <div className="mx-auto max-w-screen-xl px-4">
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]">
             {products.map((raw) => {
                 const p = normalizeProduct(raw);
                 if (!p.id) return null;
-
                 return (
                 <ProductCard
                     key={p.id ?? p.sku ?? p.name}
