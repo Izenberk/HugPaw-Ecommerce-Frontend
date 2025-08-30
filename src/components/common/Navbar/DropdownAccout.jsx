@@ -7,8 +7,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/pages/auth/AuthContext";
-import { CircleUserRound, LogOut, Settings } from "lucide-react";
+import { ChevronRight, CircleUserRound, LogOut, Settings } from "lucide-react";
 import Blackcat from "@/assets/images/blackcat.jpg";
+import { Link } from "react-router-dom";
 
 const DropdownAccout = () => {
   const { isLoggedIn, logout } = useAuth();
@@ -18,33 +19,44 @@ const DropdownAccout = () => {
         <div className="flex items-center gap-2">
           <DropdownMenuTrigger className="flex items-center gap-2 hover:text-gray-500">
             <CircleUserRound />
-            Account
+            <span>Account</span>
           </DropdownMenuTrigger>
         </div>
         <DropdownMenuContent>
           <DropdownMenuLabel>
-            <div className="flex justify-between gap-4">
-              <div>
-                <img
-                  src={Blackcat}
-                  alt="UserPic"
-                  className="w-[90px] h-[90px] shrink-0 rounded-full object-cover border-4 border-border shadow-md"
-                />
-              </div>
-              <div className="flex flex-col items-left py-5 gap-3 text-[16px]">
-                <p>Black Cat Lover</p>
-                <p>blackcat@gmail.com</p>
-              </div>
+            <div className="flex justify-between gap-6">
+              <Link to="/user" className="flex items-center gap-2">
+                <div>
+                  <img
+                    src={Blackcat}
+                    alt="UserPic"
+                    className="w-[90px] h-[90px] shrink-0 rounded-full object-cover border-4 border-border shadow-md"
+                  />
+                </div>
+                <div className="flex flex-col items-left py-4 gap-3 text-[16px]">
+                  <p>Black Cat Lover</p>
+                  <p>blackcat@gmail.com</p>
+                </div>
+                <div className="absolute right-1/50 -translate-x-1/2 text-gray-500">
+                  <ChevronRight />
+                </div>
+              </Link>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Settings />
             Setting
+            <div className="absolute right-1/30 -translate-x-1/2">
+              <ChevronRight />
+            </div>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={logout}>
             <LogOut />
             Sign out
+            <div className="absolute right-1/30 -translate-x-1/2">
+              <ChevronRight />
+            </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

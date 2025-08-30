@@ -1,4 +1,5 @@
 # Project GitHub Structure
+
 ## Branches
 
     main: deployment
@@ -7,7 +8,9 @@
 
     react-transform: convert jsDOM to react component
 
-Peet Test 2
+    login-page: - Add Verification Form and Reset Password
+                - Edit NavBar to sticky 
+                - Edit link of Verification Form and Reset Password into right path
 
 # React + Vite
 

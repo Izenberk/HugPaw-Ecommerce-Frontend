@@ -10,41 +10,54 @@ import {
 } from "@/components/ui/form";
 import { Link } from "react-router-dom";
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const methods = useForm({
     defaultValues: {
-      email: "",
+      password: "",
+      newpassword: "",
     },
   });
 
   const onSubmit = (data) => {
-    console.log("Forgot password email:", data);
+    console.log("Please fill your new password:", data);
   };
 
   return (
     <div className="max-w-sm mx-auto my-15 p-6 border rounded-lg shadow">
-      <h2 className="text-2xl font-bold m-2 text-center">Forgot Password</h2>
+      <h2 className="text-2xl font-bold m-2 text-center">Reset Password</h2>
       <p className="text-sm text-gray-600 text-center m-4">
-        Enter your email to receive password reset instructions.
+        Enter your new password.
       </p>
 
       <Form {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
-          {/* Email */}
+          {/* Old Password */}
           <FormField
-            name="email"
+            name="New Password"
             control={methods.control}
             rules={{
-              required: "Email is required",
-              pattern: { value: /^\S+@\S+$/i, message: "Invalid email format" },
+              required: "New Password is required",
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "Invalid password format",
+              },
             }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>New Password</FormLabel>
                 <FormControl>
                   <input
                     {...field}
-                    placeholder="Enter your email"
+                    placeholder="Enter your new password"
+                    className="w-full border rounded-full p-2"
+                  />
+                </FormControl>
+                <FormMessage />
+                <FormLabel>Password Confirmation</FormLabel>
+                <FormControl>
+                  <input
+                    {...field}
+                    placeholder="Enter your new password"
                     className="w-full border rounded-full p-2"
                   />
                 </FormControl>
@@ -63,7 +76,7 @@ const ForgotPassword = () => {
       </Form>
 
       <div className="text-sm text-center mt-4">
-        <Link href="/login" className="text-blue-500 hover:underline">
+        <Link to="/login" className="text-blue-500 hover:underline">
           Back to Login
         </Link>
       </div>
@@ -71,4 +84,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;

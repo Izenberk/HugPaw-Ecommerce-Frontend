@@ -57,6 +57,14 @@ export const router = createBrowserRouter([
             path: "cart/checkout",
             element: <Checkout />
         },
+        {
+          path: "resetpassword",
+          element: <ResetPassword />,
+        },
+        {
+          path: "verificationform",
+          element: <VerificationForm />,
+        },
         ],
     },
 ]);
