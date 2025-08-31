@@ -80,6 +80,11 @@ export function CartProvider({ children }) {
     setItems([]);
   };
 
+  const cartCount = useMemo(
+  () => items.reduce((sum, item) => sum + item.quantity, 0),
+  [items]
+);
+
   const value = useMemo(
     () => ({
       items,
@@ -94,14 +99,15 @@ export function CartProvider({ children }) {
       appliedCode,
       setAppliedCode,
       subtotal,
+      cartCount,
     }),
-    [items, subtotal, promoCode,appliedCode]
+    [items, subtotal, promoCode,appliedCode, cartCount]
   );
 
   return <CartCtx.Provider value={value}>{children}</CartCtx.Provider>;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
+
 export function useCart() {
   const ctx = useContext(CartCtx);
   if (!ctx) throw new Error("useCart must be used within CartProvider");

@@ -1,11 +1,23 @@
 // /src/pages/userCart/Cart.jsx
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 import CartItem from "./CartItem";
 import OrderSummary from "./OrderSummary";
 import OrderSummaryBar from "./OrderSummaryBar";
 import { useCart } from "@/pages/userCart/CartContext.jsx";
+import { useEffect } from "react";
+
 
 export default function Cart() {
   const { items } = useCart();
+   const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/", { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <section>
