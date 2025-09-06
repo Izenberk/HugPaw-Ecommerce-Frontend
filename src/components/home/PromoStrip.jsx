@@ -70,9 +70,8 @@ export default function PromoStrip({
               <div className="flex w-full md:w-auto justify-center items-center">
                 <Button
                   asChild
-                  className="h-11 px-6 text-sm rounded-lg w-full md:w-auto 
-                           bg-primary text-primary-foreground hover:bg-primary/90 
-                           focus-visible:ring-2 focus-visible:ring-primary/40"
+                  size={"lg"}
+                  variant={"mutedblue"}
                 >
                   <a href={cta.href} aria-label={cta.label}>
                     {cta.label}

@@ -23,9 +23,12 @@ const buttonVariants = cva(
         black: "bg-black text-white hover:bg-black/90",
         blueorange:
           "bg-primary text-black hover:bg-gradient-to-r hover:from-[#e6eefe] hover:to-[#ffedcb]",
-        purplegradient:"bg-gradient-to-r from-[#D8B4FE] to-[#818CF8] text-white hover:from-[#C084FC] hover:to-[#7C3AED]",
-        lavenderblue:"border text-white bg-[#818CF8] hover:bg-gradient-to-r hover:from-[#818CF8] hover:to-[#D8B4FE]",
-        mutedblue:"border text-white bg-[#7A91BF] hover:bg-gradient-to-r hover:from-[#7A91BF] hover:to-[#324C80]",
+        purplegradient:
+          "bg-gradient-to-r from-[#D8B4FE] to-[#818CF8] text-white hover:from-[#C084FC] hover:to-[#7C3AED]",
+        lavenderblue:
+          "border text-white bg-[#818CF8] hover:bg-gradient-to-r hover:from-[#818CF8] hover:to-[#D8B4FE]",
+        mutedblue:
+          "border text-white bg-[#7A91BF] hover:bg-gradient-to-r hover:from-[#7A91BF] hover:to-[#324C80]",
       },
 
       size: {

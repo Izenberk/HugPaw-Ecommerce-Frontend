@@ -43,7 +43,8 @@ export default function CategoryRow({ title, subtitle, items }) {
               <CardContent className="mt-auto pb-5">
                 <Button
                   asChild
-                  className="h-10 px-4 text-sm rounded-lg w-full md:w-auto focus-visible:ring-2 focus-visible:ring-primary/40"
+                  size={"lg"}
+                  variant={"mutedblue"}
                 >
                   <Link to={it.href} aria-label={`Customize ${it.title}`}>
                     Let’s Customize
@@ -77,7 +78,7 @@ export default function CategoryRow({ title, subtitle, items }) {
                 </CardHeader>
 
                 <CardContent className="mt-auto pb-4">
-                  <Button asChild className="h-10 w-full text-sm">
+                  <Button asChild variant={"mutedblue"} size={"default"}>
                     <Link to={it.href} aria-label={`Customize ${it.title}`}>
                       Let’s Customize
                     </Link>

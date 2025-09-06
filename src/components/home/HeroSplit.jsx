@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 export default function HeroSplit({
-  title, // string | string[]
+  title, 
   subtitle,
-  cta, // { href: string; label: string }
+  cta, 
   imageSrc,
   imageAlt,
 }) {
@@ -25,15 +25,15 @@ export default function HeroSplit({
 
   return (
     <section
-      className="bg-[#fbfbfb]                 /* mobile default */
-        lg:bg-gradient-to-r          /* desktop gradient */
+      className="bg-[#fbfbfb]                
+        lg:bg-gradient-to-r          
         lg:from-[#fbfbfb]
         lg:via-[#e6eefe]
         lg:to-[#ffedcb]"
     >
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* MOBILE image (คงเดิม) */}
+          {/* MOBILE image */}
           <div className="block lg:hidden w-full h-auto object-cover">
             <img
               src={imageSrc}
@@ -42,7 +42,7 @@ export default function HeroSplit({
             />
           </div>
 
-          {/* TEXT side */}
+          {/* TEXT */}
           <div className="flex flex-col items-center justify-center text-center">
             <h1 className="text-3xl md:text-5xl font-semibold leading-tight tracking-tight">
               {renderTitle()}
@@ -57,7 +57,7 @@ export default function HeroSplit({
                 <Button
                   asChild
                   size="lg"
-                  className="h-12 px-8 text-base rounded-lg focus-visible:ring-2 focus-visible:ring-primary/40"
+                  variant="mutedblue"
                 >
                   <Link to={cta.href}>{cta.label}</Link>
                 </Button>
@@ -66,7 +66,7 @@ export default function HeroSplit({
           </div>
           
 
-          {/* DESKTOP image (ตัด padding ที่ทำให้เกิด gutter ซ้อน) */}
+          {/* DESKTOP image  */}
           <div className="hidden lg:block px-6 py-10">
             <div className="h-[360px] md:h-[420px] rounded-xl overflow-hidden">
               <img
