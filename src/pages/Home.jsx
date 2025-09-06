@@ -72,10 +72,10 @@ export default function Home() {
       />
 
       <PromoStrip
-        badge="Limited Offer"
-        title="20% Off Your First Custom Pet Product"
-        subtitle="Design the perfect item for your friend today and enjoy free shipping on your first order."
-        cta={{ label: "Claim Your Discount", href: "#claim" }}
+        badge="Coming Soon"
+        title="Exciting deals are on the way!"
+        subtitle="We’re preparing something special for you. Stay tuned for the exclusive offers."
+        cta={{ label: "Explore Products", href: "/catalog" }}
       />
 
       <ReviewGrid

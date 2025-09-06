@@ -33,8 +33,7 @@ export default function PromoStrip({
                   ) : null}
 
                   <h3 className="text-lg font-semibold leading-snug">
-                    <span className="block">20% Off</span>
-                    <span className="block">Your First Custom Pet Product</span>
+                    <span className="block">{title}</span>
                   </h3>
 
                   {subtitle ? (
