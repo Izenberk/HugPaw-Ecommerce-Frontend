@@ -71,7 +71,7 @@ export default function PromoStrip({
                 <Button
                   asChild
                   size={"lg"}
-                  variant={"mutedblue"}
+                  variant={"lavenderblue"}
                 >
                   <a href={cta.href} aria-label={cta.label}>
                     {cta.label}

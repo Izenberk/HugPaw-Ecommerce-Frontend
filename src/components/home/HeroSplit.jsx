@@ -57,7 +57,7 @@ export default function HeroSplit({
                 <Button
                   asChild
                   size="lg"
-                  variant="mutedblue"
+                  variant="lavenderblue"
                 >
                   <Link to={cta.href}>{cta.label}</Link>
                 </Button>
