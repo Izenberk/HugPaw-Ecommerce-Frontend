@@ -41,16 +41,19 @@ export const SAMPLE_COLLAR = {
         ],
         },
         {
-        key: "features",
-        label: "Smart Features",
-        type: "multi",
-        required: false,
-        ui: "checkbox",
-        values: [
-            { value: "gps", label: "GPS Tracker", priceAdj: 350 },
-            { value: "led", label: "LED Light",   priceAdj: 180 },
-            { value: "nfc", label: "NFC Tag",     priceAdj: 100 }
-        ],
+            key: "features",
+            label: "Smart Features",
+            type: "multi",
+            required: false,
+            ui: "checkbox",
+            values: [
+            { value: "gps", label: "GPS Tracker", priceAdj: 350,
+                component: { sku: "ACC-GPS-STD", stock: 12 } },   // separate box
+            { value: "led", label: "LED Light",   priceAdj: 180,
+                component: { sku: "ACC-LED-CLIP", stock: 5 } },
+            { value: "nfc", label: "NFC Tag",     priceAdj: 100,
+                component: { sku: "ACC-NFC-DISC", stock: 1 } }    // out of stock
+            ],
         },
     ],
 

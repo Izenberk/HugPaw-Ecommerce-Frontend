@@ -2,13 +2,17 @@ import { useFavorites } from "@/lib/favorites";
 import { formatTHB } from "@/lib/formatters";
 import { calcPrice, getDefaultConfig, normalizeConfig, toCartItem, validateConfig } from "@/lib/productOptions";
 import { assertProductShape } from "@/lib/productSchemas";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { toast } from "sonner";
 import { useAddToCartToast } from "@/hooks/useAddToCartToast";
+import { toast } from "sonner";
+import { useCart } from "@/context/CartContext";
+import { getGroup } from "@/lib/productOptions";
 
 export default function ProductCustom({ product, onAddToCart }) {
     const addToCartToast = useAddToCartToast({ onAdd: onAddToCart });
+    const { items = [] } = useCart?.() ?? { items: [] };
+
 
     // guard authoring issues in dev
     try { assertProductShape(product); } catch (e) { console.error(e); }
@@ -40,22 +44,176 @@ export default function ProductCustom({ product, onAddToCart }) {
         setCfg(next);
     };
 
+    // Which required single groups uniquely identify a variant
+    const requiredSingles = useMemo(
+        () => (product.optionGroups || [])
+            .filter(g => g.required && g.type === "single")
+            .map(g => g.key),
+        [product.optionGroups]
+    );
+
+    // Find the exact SKU for a fully-specified selection
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const findVariant = (sel) => {
+    const vs = product.variants || [];
+    if (!vs.length) return null;
+    return vs.find(v =>
+        requiredSingles.every(k => v.attrs?.[k] === sel?.[k])
+    ) || null;
+    };
+
+    const sameVariant = (a, b) =>
+        a.productId === b.productId &&
+        JSON.stringify(a.config || {}) === JSON.stringify(b.config || {});
+
+    // Current stock (only when all required singles are chosen)
+    const currentVariant = useMemo(() => {
+    const allFilled = requiredSingles.every(k => cfg[k]);
+    if (!allFilled) return null;
+    return findVariant(cfg);
+    }, [cfg, requiredSingles, findVariant]);
+
+    const currentStock = useMemo(() => {
+    if (!currentVariant) return null; // not fully specified yet
+    const s = currentVariant.availableQty ?? currentVariant.stock;
+    return (typeof s === "number") ? s : null;
+    }, [currentVariant]);
+
+    const LOW_STOCK_THRESHOLD = 5;
+
+    // 1) read selected features and their component stocks
+    const featureGroup = useMemo(
+        () => (product.optionGroups || []).find(g => g.key === "features"),
+        [product.optionGroups]
+    );
+
+    const selectedFeatures = useMemo(
+    () => Array.isArray(cfg.features) ? cfg.features : [],
+    [cfg.features]
+    );
+
+    const getFeatureMeta = useCallback(
+        (val) => featureGroup?.values?.find(v => v.value === val) || null,
+        [featureGroup]
+    );
+
+    // 2) how many of a given feature are already in the cart (across all lines)
+    const inCartQtyForFeature = useCallback((value) => {
+        return items.reduce((sum, it) => {
+            const has = Array.isArray(it?.config?.features) && it.config.features.includes(value);
+            return sum + (has ? (it.quantity || 0) : 0);
+        }, 0);
+    }, [items]);
+
+    // Remaining stock for a feature's component SKU (treat missing/NaN as unlimited)
+    const featureRemaining = useCallback((val) => {
+        const meta = getFeatureMeta(val);
+        const raw = meta?.component?.stock;      // might be "5" (string)
+        const stock = Number(raw);
+        if (!Number.isFinite(stock)) return Infinity; // treat as unlimited if not a finite number
+        const used = inCartQtyForFeature(val);
+        return Math.max(0, stock - used);
+    }, [getFeatureMeta, inCartQtyForFeature]);
+
+        // Disable choices that can never form an in-stock, active SKU
+    const isSelectable = useCallback((groupKey, candidate) => {
+        if (groupKey === "features") {
+            return featureRemaining(candidate) > 0;
+        }
+
+        // existing combo-aware logic for required singles ↓
+        const vs = product.variants || [];
+        if (!vs.length) return true;
+        const trial = { ...cfg, [groupKey]: candidate };
+        return vs.some(v => {
+            if (v.active === false) return false;
+            const stock = v.availableQty ?? v.stock ?? Infinity;
+            if (typeof stock === "number" && stock <= 0) return false;
+
+            return requiredSingles.every(k => {
+            const pick = trial[k];
+            return !pick || v.attrs?.[k] === pick;
+            });
+        });
+    }, [product.variants, cfg, featureRemaining, requiredSingles]);
+
     const handleAddToCart = () => {
         if (!ok) return;
 
-        const item = toCartItem(product, cfg, 1) || {};
+        const incomingQty = 1; // or your qty picker value
+
+        // Parent (collar) availability
+        const variant = findVariant(cfg);
+        const parentStock = variant?.availableQty ?? variant?.stock ?? null;
+
+        // How many of this exact configuration already in cart
+        const inCartExact = Array.isArray(items)
+            ? (items.find(it =>
+                it.productId === product.id &&
+                JSON.stringify(it.config || {}) === JSON.stringify(cfg)
+            )?.quantity ?? 0)
+            : 0;
+
+        // Remaining for the parent line
+        const parentRemaining =
+            (parentStock == null) ? Infinity : Math.max(0, parentStock - inCartExact);
+
+        // Component constraints
+        let limitingReason = null;
+        let maxByComponents = Infinity;
+
+        for (const featVal of selectedFeatures) {
+            const meta = getFeatureMeta(featVal);
+            const compStock = meta?.component?.stock;
+            if (typeof compStock !== "number") continue; // treat as unlimited if unspecified
+
+            const alreadyUsing = inCartQtyForFeature(featVal);
+            const compRemaining = Math.max(0, compStock - alreadyUsing);
+
+            if (compRemaining < maxByComponents) {
+            maxByComponents = compRemaining;
+            limitingReason = compRemaining === 0 ? `${meta?.label || featVal}` : limitingReason;
+            }
+        }
+
+        const maxAddable = Math.min(parentRemaining, maxByComponents);
+
+        if (maxAddable <= 0) {
+            // Explain why
+            const reason = limitingReason
+            ? `${limitingReason} is out of stock`
+            : (parentStock === 0 || parentRemaining === 0)
+                ? "This variant is out of stock"
+                : "Out of stock";
+            toast.error("Cannot add to cart", { description: reason });
+            return;
+        }
+
+        const addQty = Math.min(incomingQty, maxAddable);
+
+        const item = toCartItem(product, cfg, addQty) || {};
         const adapted = {
             ...item,
-            quantity: item.quantity ?? 1,
+            quantity: addQty,
             unitPrice: item.unitPrice ?? item.price ?? price,
             name: product.name ?? item.name,
             imageUrl: product.images?.[0] ?? item.imageUrl,
-            // include config/options if your cart uses them:
             config: cfg,
+            sku: variant?.sku ?? item.sku ?? null,
         };
 
-        // one line does it all: add + sonner toast + "View cart" action
         addToCartToast(adapted);
+
+        if (addQty < incomingQty) {
+            // Tell user which limit hit first
+            const hit =
+            maxAddable === parentRemaining
+                ? "collar variant stock"
+                : "feature stock";
+            toast.warning("Stock limit applied", {
+            description: `Only ${maxAddable} available based on ${hit}.`,
+            });
+        }
     };
 
     const { addFavorite } = useFavorites();
@@ -80,56 +238,6 @@ export default function ProductCustom({ product, onAddToCart }) {
             }
         });
     };
-
-    // Which required single groups uniquely identify a variant
-    const requiredSingles = useMemo(
-    () => (product.optionGroups || [])
-        .filter(g => g.required && g.type === "single")
-        .map(g => g.key),
-    [product]
-    );
-
-    // Find the exact SKU for a fully-specified selection
-    const findVariant = (sel) => {
-    const vs = product.variants || [];
-    if (!vs.length) return null;
-    return vs.find(v =>
-        requiredSingles.every(k => v.attrs?.[k] === sel?.[k])
-    ) || null;
-    };
-
-    // Disable choices that can never form an in-stock, active SKU
-    const isSelectable = (groupKey, candidate) => {
-    const vs = product.variants || [];
-    if (!vs.length) return true; // backend not ready → don't block UX
-    const trial = { ...cfg, [groupKey]: candidate };
-    return vs.some(v => {
-        if (v.active === false) return false;
-        const stock = v.availableQty ?? v.stock ?? Infinity;
-        if (typeof stock === "number" && stock <= 0) return false;
-        return requiredSingles.every(k => {
-        const pick = trial[k];
-        return !pick || v.attrs?.[k] === pick;
-        });
-    });
-    };
-
-    // Current stock (only when all required singles are chosen)
-    const currentVariant = useMemo(() => {
-    const allFilled = requiredSingles.every(k => cfg[k]);
-    if (!allFilled) return null;
-    return findVariant(cfg);
-    }, [cfg, requiredSingles, product]);
-
-    const currentStock = useMemo(() => {
-    if (!currentVariant) return null; // not fully specified yet
-    const s = currentVariant.availableQty ?? currentVariant.stock;
-    return (typeof s === "number") ? s : null;
-    }, [currentVariant]);
-
-    const LOW_STOCK_THRESHOLD = 5;
-
-
 
 
     return (
@@ -243,14 +351,14 @@ function Group({ group, value, error, onPick, isSelectable }) {
                 : Array.isArray(value) && value.includes(v.value);
 
             const selectable = isSelectable ? isSelectable(group.key, v.value) : true;
-            const disabled = !selectable || v.disabled;
+
+            // Important: don't lock a selected feature; allow user to unselect it.
+            const disabled = (!selectable && !active) || v.disabled;
 
             const base = "px-3 py-1.5 rounded-lg border hover:cursor-pointer hover:border-primary-foreground";
             const cls = disabled
                 ? `${base} opacity-40 cursor-not-allowed`
-                : active
-                ? `${base} bg-black text-white`
-                : `${base} hover:bg-muted`;
+                : active ? `${base} bg-black text-white` : `${base} hover:bg-muted`;
 
             return (
                 <button
