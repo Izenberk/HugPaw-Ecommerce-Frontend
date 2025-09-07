@@ -34,6 +34,20 @@
   }
 }
 
+@layer components {
+  .topbar {
+    @apply fixed top-0 left-0 w-full z-50 bg-gray-800 text-white text-sm text-center py-2 px-4
+  }
+
+  .top-link {
+    @apply underline underline-offset-4 font-medium hover:text-primary transition
+  }
+
+  .nav-desktop {
+    @apply h-12 md:h-16 px-6 rounded-full bg-background/70 backdrop-blur-md flex items-center justify-between
+  }
+}
+
 
 
 @custom-variant dark (&:is(.dark *));
@@ -342,22 +356,4 @@
   --sidebar-accent-foreground: oklch(95.25% 0.003 264.43);
   --sidebar-border: oklch(34.91% 0.012 264.53);
   --sidebar-ring: oklch(82.54% 0.121 263.18);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-
-@layer components {
-  navbar {
-    .underline {
-            @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full;
-          }
-  }
-}
-
-  body {
-    @apply bg-background text-foreground;
-  }
 }
