@@ -8,6 +8,7 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const methods = useForm({
@@ -15,7 +16,7 @@ const Signup = () => {
       firstname: "",
       lastname: "",
       email: "",
-      Date: "",
+      birthdate: "",
       phonenumber: "",
       address: "",
       username: "",
@@ -102,12 +103,12 @@ const Signup = () => {
         />
 
         <FormField
-          name="date"
+          name="birthdate"
           control={methods.control}
           rules={{ required: "Date is required" }}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="py-1">Date</FormLabel>
+              <FormLabel className="py-1">Birthdate</FormLabel>
               <FormControl>
                 <input
                   type="date"
@@ -229,11 +230,8 @@ const Signup = () => {
             )}
           />
 
-          <button
-            type="submit"
-            className="w-full rounded-full bg-blue-500 hover:bg-blue-600 text-white py-2 active:scale-95 active:bg-blue-600 transition transform"
-          >
-            Sign Up
+          <button className="w-full rounded-full bg-blue-500 hover:bg-blue-600 text-white py-2 active:scale-95 active:bg-blue-600 transition transform">
+            <Link to="/login">Sign Up</Link>
           </button>
         </form>
       </Form>
