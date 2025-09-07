@@ -1,19 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "@/index.css";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { AuthProvider } from "@/context/AuthContext";
-import { CartProvider } from "@/context/CartContext";
 import App from "@/App";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <CartProvider>
-      <TooltipProvider delayDuration={200}>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </TooltipProvider>
-    </CartProvider>
+    <App />
   </StrictMode>
 );
