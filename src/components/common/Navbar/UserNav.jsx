@@ -1,4 +1,4 @@
-import { useAuth } from "@/pages/auth/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { Heart, ShoppingCart, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import DropdownAccount from "./DropdownAccount";

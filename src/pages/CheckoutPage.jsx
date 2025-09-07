@@ -1,4 +1,4 @@
-export default function Checkout() {
+export default function CheckoutPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Bar Section */}

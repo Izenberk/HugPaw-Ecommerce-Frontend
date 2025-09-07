@@ -6,7 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuth } from "@/pages/auth/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { ChevronRight, CircleUserRound, LogOut, Settings } from "lucide-react";
 import Blackcat from "@/assets/images/blackcat.jpg";
 import { Link } from "react-router-dom";

@@ -1,14 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/app/Layout.jsx'
-import Home from '@/pages/Home.jsx'
+import HomePage from '@/pages/HomePage.jsx'
 import Login from '@/pages/auth/Login.jsx';
-import ProductCatalogPage from '@/pages/productCatalog/ProductRoute.jsx';
-import Cart from '@/pages/userCart/Cart.jsx';
-import ProductDetailRoute, { productLoader } from '@/pages/productDetail/ProductDetailRoute.jsx';
+import ProductCatalogPage from '@/pages/ProductCatalogPage.jsx';
+import CartPage from '@/pages/CartPage.jsx';
+import ProductCustomPage, { productLoader } from '@/pages/ProductCustomPage.jsx';
 import Signup from '@/pages/auth/SignUp.jsx';
 import NotFound from '@/pages/404_page.jsx';
-import UserPage from '@/pages/userPage/UserPage.jsx';
-import Checkout from '@/pages/checkout/Checkout.jsx';
+import UserPage from '@/pages/UserPage.jsx';
+import CheckoutPage from '@/pages/CheckoutPage.jsx';
 import ResetPassword from '@/pages/auth/ResetPassword.jsx';
 import VerificationForm from '@/pages/auth/VerificationForm';
 import ForgotPassword from '@/pages/auth/ForgetPassword';
@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
         children: [
         {
             path: "/",
-            element: <Home />
+            element: <HomePage />
         },
         {
             path: "user",
@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
         {
             path: "products/:id",
             loader: productLoader,
-            element: <ProductDetailRoute />,
+            element: <ProductCustomPage />,
             errorElement: <div className="p-6">Product not found 🐾</div>, // optional, nicer 404 for this page
         },
         // {
@@ -54,11 +54,11 @@ export const router = createBrowserRouter([
         },
         {
             path: "cart",
-            element: <Cart />
+            element: <CartPage />
         },
         {
             path: "cart/checkout",
-            element: <Checkout />
+            element: <CheckoutPage />
         },
         {
             path: "forgotpassword",

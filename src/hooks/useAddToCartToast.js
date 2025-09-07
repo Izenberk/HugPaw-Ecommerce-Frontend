@@ -1,7 +1,7 @@
 // src/hooks/useAddToCartToast.js
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "@/pages/userCart/CartContext";
+import { useCart } from "@/context/CartContext";
 
 // Optional onAdd lets components inject their own add-to-cart behavior.
 export function useAddToCartToast({ onAdd } = {}) {

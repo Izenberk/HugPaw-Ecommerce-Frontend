@@ -1,4 +1,4 @@
-// /src/pages/userCart/CartContext.jsx
+// /src/context/CartContext.jsx
 import { useEffect } from "react";
 import { createContext, useContext, useMemo, useState } from "react";
 const CartCtx = createContext(null);

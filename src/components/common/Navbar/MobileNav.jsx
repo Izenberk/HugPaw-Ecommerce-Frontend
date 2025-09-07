@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Menu, ChevronRight, PawPrint, Heart, ShoppingCart, MessageSquareText, Settings, LogOut, UserRound, UserRoundPen } from "lucide-react";
-import { useAuth } from "@/pages/auth/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import Logo from "../Logo";
 import Blackcat from "@/assets/images/blackcat.jpg";
 import { useCloseOnRouteChange } from "@/hooks/useCloseOnRouteChange";

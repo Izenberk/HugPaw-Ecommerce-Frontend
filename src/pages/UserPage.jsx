@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import UserHeader from '@/pages/userPage/UserHeader';
-import ActionTabs from '@/pages/userPage/ActionTabs';
+import UserHeader from '@/components/userPage/UserHeader';
+import ActionTabs from '@/components/userPage/ActionTabs';
 import Blackcat from "@assets/images/blackcat.jpg"
 import FavoritePanel from '@/components/favorites/FavoritePanel';
 
+// Mock data of user page
 const UserPage = () => {
     const [active, setActive] = useState("favorites");
     const [user, setUser] = useState({
@@ -30,9 +31,6 @@ const UserPage = () => {
 
     setUser(prev => ({ ...prev, ...nextUser, avatarUrl }));
 
-        // TODO: upload avatarFile, get a permanent URL, then:
-        // setUser(prev => ({ ...prev, avatarUrl: finalUrl }));
-        // and optionally URL.revokeObjectURL(avatarUrl) to free memory
     };
 
     return (

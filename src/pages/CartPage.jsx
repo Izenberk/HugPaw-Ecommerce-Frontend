@@ -1,10 +1,10 @@
 // /src/pages/userCart/Cart.jsx
-import CartItem from "./CartItem";
-import OrderSummary from "./OrderSummary";
-import OrderSummaryBar from "./OrderSummaryBar";
-import { useCart } from "@/pages/userCart/CartContext.jsx";
+import CartItem from "../components/userCart/CartItem";
+import OrderSummary from "../components/userCart/OrderSummary";
+import OrderSummaryBar from "../components/userCart/OrderSummaryBar";
+import { useCart } from "@/context/CartContext.jsx";
 
-export default function Cart() {
+export default function CartPage() {
   const { items } = useCart();
 
   return (

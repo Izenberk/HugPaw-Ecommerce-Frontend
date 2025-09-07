@@ -11,7 +11,7 @@ import {
 import { Fingerprint } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
   const methods = useForm({

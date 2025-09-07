@@ -3,7 +3,7 @@ import HeroSplit from "@/components/home/HeroSplit";
 import PromoStrip from "@/components/home/PromoStrip";
 import ReviewGrid from "@/components/home/ReviewGrid";
 
-export default function Home() {
+export default function HomePage() {
   const categories = [
     {
       id: "collar",

@@ -11,7 +11,7 @@ export default function ProductCatalog({
     fetcher = getProducts,
     defaultParams = { search: "", category: null, sort: "relevance" },
     }) {
-    const [products, setProducts] = useState(initialProducts ?? []);
+    const [products, setProducts] = useState(initialProducts ?? []); // wait to replace with fetcher
     const [isLoading, setIsLoading] = useState(!initialProducts);
     const [error, setError] = useState(null);
     const [params, setParams] = useState(defaultParams); // for CatalogToolbar
@@ -46,8 +46,8 @@ export default function ProductCatalog({
     // If fetching from server -> results are already filtered by `params`
     const visibleProducts = useMemo(() => {
         const normalized = normalizeProducts(products);
-        if (!initialProducts) return normalized;
-        return applyFilterSort(normalized, params);
+        if (!initialProducts) return normalized;    // client-side filter
+        return applyFilterSort(normalized, params); // server-side filter
     }, [products, params, initialProducts]);
 
     return (

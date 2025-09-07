@@ -1,8 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
-import ProductDetail from './ProductDetail.jsx'
+import ProductCustom from '../components/productDetail/ProductCustom.jsx'
 import { productById } from '@/data/productById';
 import { redirect, useLoaderData } from 'react-router-dom';
-import { CartProvider, useCart } from "../userCart/CartContext";
+import { CartProvider, useCart } from "../context/CartContext.jsx";
 
 
 export async function productLoader({ params }) {
@@ -11,23 +11,22 @@ export async function productLoader({ params }) {
 
     return product;
 }
-function ProductDetailWithCart() {
+
+function ProductCustomWithCart() {
     const { addItem } = useCart();
     const product = useLoaderData();
 
     return (
-        <ProductDetail
+        <ProductCustom
         product={product}
         onAddToCart={(item) => {
-            console.log("[ProductDetailRoute] add:", item);
             addItem(item);
         }}
-        onSavePreset={(qs) => console.log("Preset", qs)}
         />
     );
 }
-const ProductDetailRoute = () => {
-    return <ProductDetailWithCart />
+const ProductCustomPage = () => {
+    return <ProductCustomWithCart />
 }
 
-export default ProductDetailRoute
+export default ProductCustomPage

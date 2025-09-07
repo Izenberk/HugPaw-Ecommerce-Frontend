@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useCart } from "./CartContext";
+import { useCart } from "../../context/CartContext";
 import { useState } from "react";
 
 export default function OrderSummary() {

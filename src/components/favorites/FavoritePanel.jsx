@@ -2,7 +2,7 @@ import { useFavorites } from "@/lib/favorites";
 import { Heart } from "lucide-react";
 import { FavoriteCard } from "./FavoriteCard";
 import { Button } from "../ui/button";
-import { useCart } from "@/pages/userCart/CartContext";
+import { useCart } from "@/context/CartContext";
 
 export default function FavoritePanel() {
     const { items, clearFavorites } = useFavorites();

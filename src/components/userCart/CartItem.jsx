@@ -1,6 +1,6 @@
 // /src/pages/userCart/CartItem.jsx
 import { Trash2 } from "lucide-react";
-import { useCart } from "./CartContext";
+import { useCart } from "../../context/CartContext";
 import { formatTHB } from "@/lib/formatters";
 
 export default function CartItem({ item }) {
