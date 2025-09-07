@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import CatalogToolbar from "@/components/products/CatalogToolbar";
-import ProductList from "@/components/products/ProductList";
+import CatalogToolbar from "@/components/productsCatalog/CatalogToolbar";
+import ProductList from "@/components/productsCatalog/ProductList";
 import { Separator } from "@/components/ui/separator";
 import { CATEGORIES, PRODUCTS_MOCK } from "@/data/productsCatalog.mock";
 import { getProducts } from "@/lib/api";

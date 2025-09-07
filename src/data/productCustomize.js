@@ -57,32 +57,32 @@ export const SAMPLE_COLLAR = {
     // Sellable combos with stock (what drives availability)
     variants: [
         // BLACK
-        { sku: "COL-BLK-XS", attrs: { color: "black", size: "XS" }, stock: 0,  image: "/images/products/collar-black.jpg" }, // out of stock
-        { sku: "COL-BLK-S",  attrs: { color: "black", size: "S"  }, stock: 8,  image: "/images/products/collar-black.jpg" },
-        { sku: "COL-BLK-M",  attrs: { color: "black", size: "M"  }, stock: 15, image: "/images/products/collar-black.jpg" },
-        { sku: "COL-BLK-L",  attrs: { color: "black", size: "L"  }, stock: 3,  image: "/images/products/collar-black.jpg" }, // low stock
-        { sku: "COL-BLK-XL", attrs: { color: "black", size: "XL" }, stock: 4,  image: "/images/products/collar-black.jpg", priceAdj: 0 },
+        { sku: "COL-BLK-XS", attrs: { color: "black", size: "XS" }, stock: 0 },
+        { sku: "COL-BLK-S",  attrs: { color: "black", size: "S"  }, stock: 8 },
+        { sku: "COL-BLK-M",  attrs: { color: "black", size: "M"  }, stock: 15 },
+        { sku: "COL-BLK-L",  attrs: { color: "black", size: "L"  }, stock: 3 },
+        { sku: "COL-BLK-XL", attrs: { color: "black", size: "XL" }, stock: 4 },
 
         // RED
-        { sku: "COL-RED-XS", attrs: { color: "red", size: "XS" }, stock: 3,  image: "/images/products/collar-red.jpg" },
-        { sku: "COL-RED-S",  attrs: { color: "red", size: "S"  }, stock: 0,  image: "/images/products/collar-red.jpg" }, // out of stock
-        { sku: "COL-RED-M",  attrs: { color: "red", size: "M"  }, stock: 10, image: "/images/products/collar-red.jpg" },
-        { sku: "COL-RED-L",  attrs: { color: "red", size: "L"  }, stock: 5,  image: "/images/products/collar-red.jpg" },
-        { sku: "COL-RED-XL", attrs: { color: "red", size: "XL" }, stock: 1,  image: "/images/products/collar-red.jpg" }, // very low
+        { sku: "COL-RED-XS", attrs: { color: "red", size: "XS" }, stock: 3 },
+        { sku: "COL-RED-S",  attrs: { color: "red", size: "S"  }, stock: 0 },
+        { sku: "COL-RED-M",  attrs: { color: "red", size: "M"  }, stock: 10 },
+        { sku: "COL-RED-L",  attrs: { color: "red", size: "L"  }, stock: 5 },
+        { sku: "COL-RED-XL", attrs: { color: "red", size: "XL" }, stock: 1 },
 
         // BLUE
-        { sku: "COL-BLU-XS", attrs: { color: "blue", size: "XS" }, stock: 2,  image: "/images/products/collar-blue.jpg" },
-        { sku: "COL-BLU-S",  attrs: { color: "blue", size: "S"  }, stock: 6,  image: "/images/products/collar-blue.jpg" },
-        { sku: "COL-BLU-M",  attrs: { color: "blue", size: "M"  }, stock: 0,  image: "/images/products/collar-blue.jpg" }, // out of stock
-        { sku: "COL-BLU-L",  attrs: { color: "blue", size: "L"  }, stock: 7,  image: "/images/products/collar-blue.jpg" },
-        { sku: "COL-BLU-XL", attrs: { color: "blue", size: "XL" }, stock: 3,  image: "/images/products/collar-blue.jpg" },
+        { sku: "COL-BLU-XS", attrs: { color: "blue", size: "XS" }, stock: 2 },
+        { sku: "COL-BLU-S",  attrs: { color: "blue", size: "S"  }, stock: 6 },
+        { sku: "COL-BLU-M",  attrs: { color: "blue", size: "M"  }, stock: 0 },
+        { sku: "COL-BLU-L",  attrs: { color: "blue", size: "L"  }, stock: 7 },
+        { sku: "COL-BLU-XL", attrs: { color: "blue", size: "XL" }, stock: 3 },
 
         // GREEN
-        { sku: "COL-GRN-XS", attrs: { color: "green", size: "XS" }, stock: 0,  image: "/images/products/collar-green.jpg" }, // out of stock
-        { sku: "COL-GRN-S",  attrs: { color: "green", size: "S"  }, stock: 5,  image: "/images/products/collar-green.jpg" },
-        { sku: "COL-GRN-M",  attrs: { color: "green", size: "M"  }, stock: 8,  image: "/images/products/collar-green.jpg" },
-        { sku: "COL-GRN-L",  attrs: { color: "green", size: "L"  }, stock: 0,  image: "/images/products/collar-green.jpg", active: true }, // out of stock
-        { sku: "COL-GRN-XL", attrs: { color: "green", size: "XL" }, stock: 2,  image: "/images/products/collar-green.jpg" }
+        { sku: "COL-GRN-XS", attrs: { color: "green", size: "XS" }, stock: 0 },
+        { sku: "COL-GRN-S",  attrs: { color: "green", size: "S"  }, stock: 5 },
+        { sku: "COL-GRN-M",  attrs: { color: "green", size: "M"  }, stock: 8 },
+        { sku: "COL-GRN-L",  attrs: { color: "green", size: "L"  }, stock: 0 },
+        { sku: "COL-GRN-XL", attrs: { color: "green", size: "XL" }, stock: 2 },
     ],
 
     // bump when options change to trigger FE re-normalization of saved presets (favorites/cart)

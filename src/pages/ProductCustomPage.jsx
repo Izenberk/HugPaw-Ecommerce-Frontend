@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import ProductCustom from '../components/productDetail/ProductCustom.jsx'
+import ProductCustom from '../components/productCustom/ProductCustom.jsx'
 import { productById } from '@/data/productById';
 import { redirect, useLoaderData } from 'react-router-dom';
 import { CartProvider, useCart } from "../context/CartContext.jsx";

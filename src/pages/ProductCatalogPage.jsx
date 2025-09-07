@@ -1,4 +1,4 @@
-import ProductCatalog from '@components/products/ProductCatalog'
+import ProductCatalog from '@/components/productsCatalog/ProductCatalog'
 import { PRODUCTS_MOCK } from '@/data/productsCatalog.mock'
 
 const ProductCatalogPage = () => {
