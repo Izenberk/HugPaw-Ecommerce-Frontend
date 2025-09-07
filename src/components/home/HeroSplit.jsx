@@ -25,7 +25,7 @@ export default function HeroSplit({
 
   return (
     <section
-      className="bg-gradient-to-r from-[#fbfbfb] via-[#e6eefe] to-[#ffedcb] animate-gradient-xy flex items-center"
+      className="bg-gradient-to-r from-[#fbfbfb] via-[#e6eefe] to-[#ffedcb] animate-gradient-xy flex items-center pt-20"
     >
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
