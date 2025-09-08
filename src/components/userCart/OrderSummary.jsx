@@ -2,13 +2,16 @@ import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useState } from "react";
 
-export default function OrderSummary() {
-  const { subtotal } = useCart();
-  const [promoCode, setPromoCode] = useState("");
-  const [appliedCode, setAppliedCode] = useState(null);
+export default function OrderSummary({
+  showCheckoutBtn = true,
+  showPromo = true,
+}) {
+  const { subtotal, promoCode, setPromoCode, appliedCode, setAppliedCode } = useCart();
+
+
   const [promoMsg, setPromoMsg] = useState("");
 
-  const promoDiscount = appliedCode === "HappyHugPaw" ? subtotal * 0.05 : 0;
+  const promoDiscount = appliedCode.trim().toLowerCase() === "happyhugpaw" ? subtotal * 0.05 : 0;
 
   const discount = subtotal > 3000 ? subtotal * 0.1 : 0;
   const shipping = subtotal > 0 ? 50 : 0;
@@ -16,60 +19,60 @@ export default function OrderSummary() {
 
   const handleApply = () => {
     const normalized = promoCode.trim().toLowerCase();
-    if (!normalized) {
-      setAppliedCode(null);
-      setPromoMsg("Please enter a promo code.");
-      return;
-    }
+
     if (normalized === "happyhugpaw".toLowerCase()) {
-      setAppliedCode("HappyHugPaw");
+      setAppliedCode("happyhugpaw");
+
       setPromoMsg("🎉 Promo applied: HappyHugPaw (5% off)");
     } else {
-      setAppliedCode(null);
+      
       setPromoMsg("❌ Invalid promo code");
     }
   };
 
-  const handleRemovePromo = () => {
-    setAppliedCode(null);
-    setPromoCode("");
-    setPromoMsg("");
-  };
+
 
   return (
     <div className="bg-surface border rounded-lg shadow space-y-4 p-4 max-w-xl mx-auto">
       {/* Promo code */}
-      <div className="flex justify-between gap-2">
-        <input
-          type="text"
-          placeholder="Enter promo code here"
-          className="flex-1 border px-3 py-2 rounded"
-          value={promoCode}
-          onChange={(e) => setPromoCode(e.target.value)}
-        />
-        <button
-          onClick={handleApply}
-          disabled={!promoCode.trim()}
-          className={`px-4 py-2 rounded hover:bg-primaryHover font-semibold
+      {showPromo && (
+        <div>
+          <div className="flex justify-between gap-2">
+            <input
+              type="text"
+              placeholder="Enter promo code here"
+              className="flex-1 border px-3 py-2 rounded"
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+            />
+            <button
+              onClick={handleApply}
+              disabled={!promoCode.trim()}
+              className={`px-4 py-2 rounded hover:bg-primaryHover font-semibold
           ${
             !promoCode.trim()
               ? "bg-gray-300 text-gray-600 cursor-not-allowed"
               : "bg-primary text-onPrimary hover:bg-primaryHover cursor-pointer"
           }`}
-        >
-          Apply
-        </button>
-      </div>
-
-      {promoMsg && (
-        <p
-          className={`text-sm mt-1 ${
-            promoMsg.startsWith("❌") ? "text-red-600 font-semibold" : "text-green-600 font-semibold "
-          }`}
-        >
-          {promoMsg}
-        </p>
+            >
+              Apply
+            </button>
+          </div>
+          {promoMsg && (
+            <p
+              className={`text-sm mt-1 ${
+                promoMsg.startsWith("❌")
+                  ? "text-red-600 font-semibold"
+                  : "text-green-600 font-semibold "
+              }`}
+            >
+              {promoMsg}
+            </p>
+          )}
+        </div>
       )}
+
+
 
       {/* Summary */}
       <div className="space-y-1 text-sm">
@@ -93,8 +96,8 @@ export default function OrderSummary() {
           </div>
         </div>
 
-        {/* Promo code discount */}
-        {appliedCode === "HappyHugPaw" && (
+         {/* Promo code discount */}
+        {appliedCode === "happyhugpaw" &&  (
           <div className="flex justify-between text-onPrimary font-semibold">
             <span>Promo (HappyHugPaw 5% off)</span>
             <span>
@@ -105,6 +108,7 @@ export default function OrderSummary() {
             </span>
           </div>
         )}
+
 
         <div className="flex justify-between text-onPrimary">
           <span>Shipping</span>
@@ -117,14 +121,15 @@ export default function OrderSummary() {
           </span>
         </div>
       </div>
-
       {/* Checkout */}
-      <Link
-        to="checkout"
-        className="block text-center w-full bg-primary text-onPrimary py-3 rounded-lg shadow hover:bg-primaryHover font-semibold"
-      >
-        Checkout
-      </Link>
+      {showCheckoutBtn && (
+        <Link
+          to="checkout"
+          className="block text-center w-full bg-primary text-onPrimary py-3 rounded-lg shadow hover:bg-primaryHover font-semibold"
+        >
+          Checkout
+        </Link>
+      )}
     </div>
   );
 }

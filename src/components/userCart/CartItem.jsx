@@ -31,7 +31,7 @@ export default function CartItem({ item }) {
       <div className="flex-1 flex flex-col justify-between">
         <div className="text-sm lg:text-base flex-col">
           <h3 className="font-semibold">{name}</h3>
-          {attrs && <p className="opacity-80 ">{attrs}</p>}
+           <p className="opacity-80 ">{attrs}</p>
 
           {/* ราคาเดี่ยว + ราคารวมตามจำนวน */}
           <div className="mt-1 flex items-center gap-3">
