@@ -1,4 +1,5 @@
 import CategoryRow from "@/components/home/CategoryRow";
+import Features from "@/components/home/Features";
 import HeroSplit from "@/components/home/HeroSplit";
 import PressMentions from "@/components/home/PressMentions";
 import PromoStrip from "@/components/home/PromoStrip";
@@ -70,6 +71,8 @@ export default function Home() {
 
       <PressMentions />
 
+      <Features />
+      
       <CategoryRow
         title="Our Products"
         subtitle="At HugPaw, you can craft comfort, style, and tech — just for your buddy"
