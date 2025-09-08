@@ -10,13 +10,13 @@ import { useAddToCartToast } from "@/hooks/useAddToCartToast"; // ⬅️ NEW
 
 const FALLBACK_IMG = "/images/placeholder-product.png";
 
-export function FavoriteCard({ item, addToCart }) {
+export function FavoriteCard({ item }) {
     const navigate = useNavigate();
     const { removeFavorite } = useFavorites();
     const [adding, setAdding] = useState(false);
 
     // If parent passed addToCart, the hook will use it; otherwise it falls back to CartContext.addItem
-    const addToCartToast = useAddToCartToast({ onAdd: addToCart });
+    const addToCartToast = useAddToCartToast();
 
     const { id: favoriteId, productId, name, imageUrl, price, config = {}, tags = [] } = item;
     const imgSrc = imageUrl || FALLBACK_IMG;

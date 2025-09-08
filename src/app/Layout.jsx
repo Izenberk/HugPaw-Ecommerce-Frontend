@@ -1,7 +1,7 @@
 import { Outlet, ScrollRestoration } from "react-router-dom";
 import Navbar from "../components/common/Navbar/Navbar";
 import Footer from "../components/common/Footer/Footer";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "react-hot-toast";
 
 const Layout = () => {
     return (
@@ -19,7 +19,23 @@ const Layout = () => {
             </main>
 
             <Footer />
-            <Toaster richColors theme="system" position="top-center" />
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+                toastOptions={{
+                className: "rounded-xl shadow-lg",
+                style: {
+                    background: "var(--primary)",   // HugPaw blue
+                    color: "var(--primary-foreground)",
+                },
+                success: {
+                    style: { background: "#16a34a" }, // green
+                },
+                error: {
+                    style: { background: "#dc2626" }, // red
+                },
+                }}
+            />
         </div>
     );
 };

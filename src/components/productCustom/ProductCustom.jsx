@@ -4,15 +4,20 @@ import { calcPrice, getDefaultConfig, normalizeConfig, toCartItem, validateConfi
 import { assertProductShape } from "@/lib/productSchemas";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useAddToCartToast } from "@/hooks/useAddToCartToast";
-import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";
+import useRequireLogin from "@/hooks/useRequireLogin";
+import { AlertTriangle, PawPrint, XCircle } from "lucide-react";
+import { useAddToCartToast } from "@/hooks/useAddToCartToast";
+import { useAddToFavoriteToast } from "@/hooks/useAddToFavoriteToast";
+import { showToast } from "@/lib/toast";
 
-
-export default function ProductCustom({ product, onAddToCart }) {
-    const addToCartToast = useAddToCartToast({ onAdd: onAddToCart });
+export default function ProductCustom({ product }) {
+    const addToCartToast = useAddToCartToast();
     const { items = [] } = useCart?.() ?? { items: [] };
 
+    const { requireLogin } = useRequireLogin({
+        icon: <PawPrint className="text-primary" />,  // 👈 pass JSX here
+    });
 
     // guard authoring issues in dev
     try { assertProductShape(product); } catch (e) { console.error(e); }
@@ -62,6 +67,7 @@ export default function ProductCustom({ product, onAddToCart }) {
     ) || null;
     };
 
+    // eslint-disable-next-line no-unused-vars
     const sameVariant = (a, b) =>
         a.productId === b.productId &&
         JSON.stringify(a.config || {}) === JSON.stringify(b.config || {});
@@ -179,13 +185,21 @@ export default function ProductCustom({ product, onAddToCart }) {
         const maxAddable = Math.min(parentRemaining, maxByComponents);
 
         if (maxAddable <= 0) {
-            // Explain why
             const reason = limitingReason
-            ? `${limitingReason} is out of stock`
-            : (parentStock === 0 || parentRemaining === 0)
+                ? `${limitingReason} is out of stock`
+                : (parentStock === 0 || parentRemaining === 0)
                 ? "This variant is out of stock"
                 : "Out of stock";
-            toast.error("Cannot add to cart", { description: reason });
+
+            showToast(
+                "error",
+                {
+                icon: <XCircle size={18} />,
+                title: "Cannot add to cart",
+                description: reason,
+                },
+                { duration: 3500 }
+            );
             return;
         }
 
@@ -205,40 +219,36 @@ export default function ProductCustom({ product, onAddToCart }) {
         addToCartToast(adapted);
 
         if (addQty < incomingQty) {
-            // Tell user which limit hit first
             const hit =
-            maxAddable === parentRemaining
-                ? "collar variant stock"
-                : "feature stock";
-            toast.warning("Stock limit applied", {
-            description: `Only ${maxAddable} available based on ${hit}.`,
-            });
+                maxAddable === parentRemaining ? "collar variant stock" : "feature stock";
+
+            showToast(
+                "warn",
+                {
+                icon: <AlertTriangle size={18} />,
+                title: "Stock limit applied",
+                description: `Only ${maxAddable} available based on ${hit}.`,
+                },
+                { duration: 3500 }
+            );
         }
     };
 
     const { addFavorite } = useFavorites();
+    const addFavWithToast = useAddToFavoriteToast({ onAdd: addFavorite });
+
     const handleAddToFavorite = () => {
         if (!ok) return;
-        addFavorite({
-            productId: product.id,
-            name: product.name,
-            imageUrl: product.images?.[0],
-            basePrice: product.basePrice ?? product.price ?? 0,
-            price,
-            config: cfg,
-            tags: product.tags ?? [],
-        });
-        toast.success("Added to wishlist", {
-            description: product.name,
-            duration: 2000,
-            style: {
-            background: "var(--success)",
-            color: "var(--popover-foreground)",
-            border: "var(--border)"
-            }
+        // Shape the item you want in favorites:
+        addFavWithToast({
+        productId: product.id,
+        name: product.name,
+        image: product.images?.[0],
+        price: price ?? product.basePrice ?? product.price ?? 0,
+        config: cfg,
+        tags: product.tags ?? [],
         });
     };
-
 
     return (
         <div className="mx-auto max-w-6xl p-4 lg:p-6">
@@ -313,14 +323,14 @@ export default function ProductCustom({ product, onAddToCart }) {
                 {/* Actions */}
                 <footer className="flex gap-3">
                     <button
-                        onClick={handleAddToCart}
+                        onClick={requireLogin(() => handleAddToCart())}
                         disabled={!ok || currentStock === 0}
                         className="rounded-xl px-4 py-2 border bg-primary text-primary-foreground hover:cursor-pointer hover:border-primary-foreground disabled:opacity-50"
                     >
                         Add to Cart
                     </button>
                     <button
-                        onClick={handleAddToFavorite}
+                        onClick={requireLogin(() => handleAddToFavorite())}
                         className="rounded-xl px-4 py-2 border hover:cursor-pointer hover:border-primary-foreground"
                     >
                         Add to Favorite
