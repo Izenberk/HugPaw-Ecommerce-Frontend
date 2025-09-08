@@ -20,6 +20,7 @@ export function useAddToCartToast({ onAdd } = {}) {
             image: item.image,
             actionLabel: "View cart",
             onAction: () => navigate("/cart"),
-        });
+        }, { duration: 3500 });
+
     };
 }

@@ -30,26 +30,36 @@ export const useFavorites = create((set, get) => ({
     items: load(),
 
     addFavorite: (payload) => {
-        const { productId, name, imageUrl, price, bastPrice, config, tags = [] } = payload;
+        const {
+            productId, name, imageUrl, price,
+            bastPrice, basePrice, // accept either
+            config, tags = []
+        } = payload;
+
+        const chosenPrice = Number(
+            price ?? basePrice ?? bastPrice ?? 0
+        );
+
         const id = `${productId}::${hashConfig(config)}`;
         const exists = get().items.some((it) => it.id === id);
         const withPersist = persist(set);
         if (exists) return id;
+
         withPersist((state) => ({
             ...state,
             items: [
-                {
-                    id,
-                    productId,
-                    name,
-                    imageUrl,
-                    price: Number(price ?? bastPrice ?? 0),
-                    bastPrice: Number(bastPrice ?? price ?? 0),
-                    config: config || {},
-                    tags,
-                    createdAt: Date.now(),
-                },
-                ...state.items,
+            {
+                id,
+                productId,
+                name,
+                imageUrl,
+                price: chosenPrice,      // cart-friendly
+                basePrice: chosenPrice,  // normalized
+                config: config || {},
+                tags,
+                createdAt: Date.now(),
+            },
+            ...state.items,
             ],
         }));
         return id;
