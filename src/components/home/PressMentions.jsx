@@ -3,15 +3,15 @@ import Marquee from "react-fast-marquee";
 export default function PressMentions() {
   const pressItems = [
     {
-      id: "uncrate",
-      logo: "uncrate",
-      quote: "Proven, high-impact formula.",
+      id: "Pet-Lover",
+      logo: "PET-LOVER",
+      quote: "A must-have brand for owners who truly care about their furry friends.",
     },
     {
-      id: "cosmopolitan",
-      logo: "COSMOPOLITAN",
+      id: "Modern Living",
+      logo: "MODERN LIVING",
       quote:
-        "Thanks to its smart packaging, the formula stays in tip-top shape for longer.",
+        "Their feeders and collars combine functionality with modern style.",
     },
     {
       id: "sundaytimes",
@@ -20,9 +20,9 @@ export default function PressMentions() {
         "I was less inclined to doomscroll and felt more productive.",
     },
     {
-      id: "standard",
-      logo: "THE STANDARD",
-      quote: "The best super supplements to take!",
+      id: "Tech4Pets",
+      logo: "TECH4PETS",
+      quote: "Innovative solutions for pet care, blending technology with everyday needs.",
     },
   ];
 
