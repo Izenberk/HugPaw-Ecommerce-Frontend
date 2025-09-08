@@ -4,6 +4,7 @@ const PurchaseDetail = ({dateTime}) => {
 const formatted = dateTime
     ? format(dateTime, "MMMM d, yyyy 'at' hh:mm a")
     : "—";
+
   return (
     <section>
       <div className="bg-white border rounded-lg shadow p-5">
@@ -13,4 +14,5 @@ const formatted = dateTime
     </section>
   );
 };
+
 export default PurchaseDetail;

@@ -25,7 +25,7 @@ export default function OrderSummary({
 
       setPromoMsg("🎉 Promo applied: HappyHugPaw (5% off)");
     } else {
-      
+
       setPromoMsg("❌ Invalid promo code");
     }
   };
