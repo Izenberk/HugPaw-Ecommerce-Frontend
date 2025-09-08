@@ -21,7 +21,7 @@ export function useAddToFavoriteToast({ onAdd } = {}) {
             description: item.name,
             image: item.image,
             actionLabel: "View wishlist",
-            onAction: () => navigate("/user/favorites"),
+            onAction: () => navigate("/user"),
         }, { duration: 2000 });
     };
 }

@@ -51,7 +51,7 @@ export function FavoriteCard({ item }) {
         {/* IMAGE */}
         <div
             className="
-            bg-white ring-1 ring-border
+            bg-white
             relative aspect-[4/3] md:aspect-auto md:w-48 md:h-40
             shrink-0
             "

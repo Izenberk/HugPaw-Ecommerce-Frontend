@@ -243,7 +243,7 @@ export default function ProductCustom({ product }) {
         addFavWithToast({
         productId: product.id,
         name: product.name,
-        image: product.images?.[0],
+        imageUrl: product.images?.[0],
         price: price ?? product.basePrice ?? product.price ?? 0,
         config: cfg,
         tags: product.tags ?? [],
