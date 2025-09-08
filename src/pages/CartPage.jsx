@@ -1,11 +1,11 @@
 // /src/pages/userCart/Cart.jsx
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/AuthContext";
-import CartItem from "./CartItem";
-import OrderSummary from "./OrderSummary";
-import OrderSummaryBar from "./OrderSummaryBar";
-import { useCart } from "@/pages/userCart/CartContext.jsx";
 import { useEffect } from "react";
+import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import CartItem from "@/components/userCart/CartItem";
+import OrderSummaryBar from "@/components/userCart/OrderSummaryBar";
+import OrderSummary from "@/components/userCart/OrderSummary";
 
 
 export default function CartPage() {

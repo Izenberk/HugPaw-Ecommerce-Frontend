@@ -1,12 +1,11 @@
-export default function CheckoutPage() {
 import CardPaymentMethod from "@/components/payment-method-01";
-import OrderSummary from "../userCart/OrderSummary";
-import UserInfo from "./UserInfo";
+import UserInfo from "../components/userCart/UserInfo";
 import PurchaseDetail from "./PurchaseDetail";
 import { useState } from "react";
+import OrderSummary from "@/components/userCart/OrderSummary";
 
-const Checkout = () => {
-   const [purchaseTime, setPurchaseTime] = useState(null);
+const CheckoutPage = () => {
+  const [purchaseTime, setPurchaseTime] = useState(null);
   return (
     <section>
       <header>
@@ -43,4 +42,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default CheckoutPage;

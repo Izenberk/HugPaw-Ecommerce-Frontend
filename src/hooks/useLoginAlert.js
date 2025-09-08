@@ -1,5 +1,5 @@
 
-import { useAuth } from "@/pages/auth/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { useCallback } from "react";
 
 export default function useLoginAlert(

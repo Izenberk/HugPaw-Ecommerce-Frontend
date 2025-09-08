@@ -2,9 +2,8 @@ import { useAuth } from "@/context/AuthContext";
 import { Heart, ShoppingCart, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import DropdownAccount from "./DropdownAccount";
-import DropdownAccout from "./DropdownAccout";
-import { useCart } from "@/pages/userCart/CartContext";
 import useLoginAlert from "@/hooks/useLoginAlert";
+import { useCart } from "@/context/CartContext";
 
 export default function UserNav() {
   // eslint-disable-next-line no-unused-vars
