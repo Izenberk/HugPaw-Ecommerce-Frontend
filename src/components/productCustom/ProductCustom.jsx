@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import { useAddToCartToast } from "@/hooks/useAddToCartToast";
 import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";
-import { getGroup } from "@/lib/productOptions";
+
 
 export default function ProductCustom({ product, onAddToCart }) {
     const addToCartToast = useAddToCartToast({ onAdd: onAddToCart });
