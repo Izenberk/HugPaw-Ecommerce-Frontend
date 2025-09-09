@@ -14,10 +14,12 @@ import { useAuth } from "@/context/AuthContext";
 import Logo from "../Logo";
 import Blackcat from "@/assets/images/blackcat.jpg";
 import { useCloseOnRouteChange } from "@/hooks/useCloseOnRouteChange";
+import { useCart } from "@/context/CartContext";
 
 const MobileNav = () => {
   const { isLoggedIn, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const { cartCount } = useCart();
 
   useCloseOnRouteChange(setOpen)
 
@@ -161,7 +163,14 @@ const MobileNav = () => {
         {/* Cart */}
         <div className="absolute right-1/15 -translate-x-1/2">
           <Link to="/cart" className="hover:text-gray-500">
-            <ShoppingCart />
+            <ul className="relative">
+              <li>
+                <ShoppingCart />
+              </li>
+              <span className="absolute -right-4 -top-2.5 bg-red-500 text-white text-xs font-bold rounded-full px-1.5">
+                {cartCount}
+              </span>
+            </ul>
           </Link>
         </div>
       </div>
