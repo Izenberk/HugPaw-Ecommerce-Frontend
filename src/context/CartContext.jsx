@@ -3,59 +3,97 @@ import { useEffect } from "react";
 import { createContext, useContext, useMemo, useState } from "react";
 const CartCtx = createContext(null);
 
+// helpers: numeric + stable stringify for config
+const num = (v, def = 0) => (Number.isFinite(+v) ? +v : def);
+const stableKey = (cfg = {}) =>
+  JSON.stringify(Object.entries(cfg).sort(([a], [b]) => a.localeCompare(b)));
+
+const resolveUnitPrice = (src) => {
+  if (Number.isFinite(+src?.unitPrice)) return +src.unitPrice;
+  if (Number.isFinite(+src?.price)) return +src.price;
+  if (Number.isFinite(+src?.basePrice)) return +src.basePrice;
+  return 0;
+};
+
 export function CartProvider({ children }) {
   const [items, setItems] = useState(() => {
-    const saved = localStorage.getItem("cartItems");
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem("cartItems");
+      const arr = saved ? JSON.parse(saved) : [];
+      // sanitize on load
+      return Array.isArray(arr)
+        ? arr.map((it) => ({
+            ...it,
+            quantity: Math.max(1, num(it.quantity, 1)),
+            unitPrice: resolveUnitPrice(it),
+            config: it.config ?? {},
+          }))
+        : [];
+    } catch {
+      return [];
+    }
   });
 
-  const [promoCode, setPromoCode] = useState(() => {
-    return localStorage.getItem("promoCode") || "";
+  const [promoCode, setPromoCode] = useState(
+    () => localStorage.getItem("promoCode") || ""
+  );
+  const [appliedCode, setAppliedCode] = useState(() => {
+    // OPTIONAL: persist appliedCode too
+    try {
+      return localStorage.getItem("appliedCode") || "";
+    } catch {
+      return "";
+    }
   });
-  const [appliedCode, setAppliedCode] = useState("");
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(items));
   }, [items]);
 
   useEffect(() => {
-    if (promoCode) {
-      localStorage.setItem("promoCode", promoCode);
-    } else {
-      localStorage.removeItem("promoCode");
-    }
+    if (promoCode) localStorage.setItem("promoCode", promoCode);
+    else localStorage.removeItem("promoCode");
   }, [promoCode]);
+
+  // OPTIONAL: keep appliedCode in sync
+  useEffect(() => {
+    if (appliedCode) localStorage.setItem("appliedCode", appliedCode);
+    else localStorage.removeItem("appliedCode");
+  }, [appliedCode]);
 
   const sameVariant = (a, b) =>
     a.productId === b.productId &&
-    JSON.stringify(a.config || {}) === JSON.stringify(b.config || {});
+    stableKey(a.config || {}) === stableKey(b.config || {});
 
   const addItem = (incoming) =>
-  setItems(prev => {
-    const item = {
-      ...incoming,
-      quantity: Math.max(1, +incoming.quantity || 1),
-      config: incoming.config ?? {},
-    };
+    setItems((prev) => {
+      // normalize the incoming payload
+      const item = {
+        ...incoming,
+        quantity: Math.max(1, num(incoming.quantity, 1)),
+        unitPrice: resolveUnitPrice(incoming),
+        config: incoming.config ?? {},
+      };
 
-    const idx = prev.findIndex(it => sameVariant(it, item));
-    if (idx < 0) return [...prev, item];                      // ยังไม่เคยมี → เพิ่มแถวใหม่
+      const idx = prev.findIndex((it) => sameVariant(it, item));
+      if (idx < 0) return [item, ...prev]; // prepend helps UX (new item on top)
 
-    // เคยมีแล้ว → บวกจำนวน (อัปเดตแบบ immutable ด้วย map)
-    return prev.map((it, i) =>
-      i === idx ? { ...it, quantity: it.quantity + item.quantity } : it
-    );
-  });
+      return prev.map((it, i) =>
+        i === idx
+          ? { ...it, quantity: num(it.quantity, 1) + item.quantity }
+          : it
+      );
+    });
 
   const updateQty = (target, nextQty) => {
     setItems((prev) =>
       prev
         .map((it) =>
           sameVariant(it, target)
-            ? { ...it, quantity: Math.max(1, nextQty) }
+            ? { ...it, quantity: Math.max(1, num(nextQty, 1)) }
             : it
         )
-        .filter((it) => it.quantity > 0)
+        .filter((it) => num(it.quantity, 1) > 0)
     );
   };
 
@@ -63,27 +101,30 @@ export function CartProvider({ children }) {
     setItems((prev) => prev.filter((it) => !sameVariant(it, target)));
   };
 
-  // 🟢 รวมยอดตามจำนวนชิ้น
   const subtotal = useMemo(
-    () => items.reduce((sum, it) => sum + it.unitPrice * it.quantity, 0),
+    () =>
+      items.reduce(
+        (sum, it) => sum + num(it.unitPrice, 0) * Math.max(1, num(it.quantity, 1)),
+        0
+      ),
     [items]
   );
 
-  // 🟢 ฟังก์ชันกด + / –
-  const increment = (target) => updateQty(target, target.quantity + 1);
+  const increment = (target) => updateQty(target, num(target.quantity, 1) + 1);
   const decrement = (target) =>
-    updateQty(target, Math.max(1, target.quantity - 1));
+    updateQty(target, Math.max(1, num(target.quantity, 1) - 1));
 
-  // Clear all
   const clearCart = () => {
     localStorage.removeItem("cartItems");
     setItems([]);
+    // (optional) also clear promo state
+    // setPromoCode(""); setAppliedCode("");
   };
 
   const cartCount = useMemo(
-  () => items.reduce((sum, item) => sum + item.quantity, 0),
-  [items]
-);
+    () => items.reduce((sum, it) => sum + Math.max(1, num(it.quantity, 1)), 0),
+    [items]
+  );
 
   const value = useMemo(
     () => ({
@@ -101,13 +142,13 @@ export function CartProvider({ children }) {
       subtotal,
       cartCount,
     }),
-    [items, subtotal, promoCode,appliedCode, cartCount]
+    [items, subtotal, promoCode, appliedCode, cartCount]
   );
 
   return <CartCtx.Provider value={value}>{children}</CartCtx.Provider>;
 }
 
-
+// eslint-disable-next-line react-refresh/only-export-components
 export function useCart() {
   const ctx = useContext(CartCtx);
   if (!ctx) throw new Error("useCart must be used within CartProvider");

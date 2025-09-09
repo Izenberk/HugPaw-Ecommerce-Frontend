@@ -45,12 +45,15 @@ export default function useRequireLogin({
 
     const requireLogin = useCallback(
         (handler) =>
-        (e) => {
-            if (ensureLoggedIn()) return handler?.(e);
-            e?.preventDefault?.();
+            (e) => {
+            // Always stop bubbling so parents don't also fire.
             e?.stopPropagation?.();
-            return false;
-        },
+            if (!ensureLoggedIn()) {
+                e?.preventDefault?.();
+                return false;
+            }
+            return handler?.(e);
+            },
         [ensureLoggedIn]
     );
 

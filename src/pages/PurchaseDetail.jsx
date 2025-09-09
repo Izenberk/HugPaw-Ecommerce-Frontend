@@ -2,7 +2,7 @@ import { format } from "date-fns";
 
 const PurchaseDetail = ({dateTime}) => {
 const formatted = dateTime
-    ? format(dateTime, "MMMM d, yyyy 'at' hh:mm a")
+    ? format(dateTime, "MMMM d, yyyy 'at' hh:mm:ss a")
     : "—";
 
   return (
