@@ -118,7 +118,8 @@ export function CartProvider({ children }) {
     localStorage.removeItem("cartItems");
     setItems([]);
     // (optional) also clear promo state
-    // setPromoCode(""); setAppliedCode("");
+    setPromoCode("");
+    setAppliedCode("");
   };
 
   const cartCount = useMemo(

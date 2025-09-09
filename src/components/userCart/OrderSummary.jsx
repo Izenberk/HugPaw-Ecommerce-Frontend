@@ -1,40 +1,41 @@
+// /src/components/userCart/OrderSummary.jsx
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useState } from "react";
+import { computeCartTotals } from "@/lib/cartTotals";
 
 export default function OrderSummary({
   showCheckoutBtn = true,
   showPromo = true,
 }) {
-  const { subtotal, promoCode, setPromoCode, appliedCode, setAppliedCode } = useCart();
-
-
+  const { items, promoCode, setPromoCode, appliedCode, setAppliedCode } = useCart();
   const [promoMsg, setPromoMsg] = useState("");
 
-  const promoDiscount = appliedCode.trim().toLowerCase() === "happyhugpaw" ? subtotal * 0.05 : 0;
-
-  const discount = subtotal > 3000 ? subtotal * 0.1 : 0;
-  const shipping = subtotal > 0 ? 50 : 0;
-  const total = subtotal - discount - promoDiscount + shipping;
+  const { subtotal, discount, promoDiscount, total } = computeCartTotals(items, {
+    appliedCode,          // <-- only this controls promo math
+    includeShipping: false,
+    taxRate: 0,
+  });
 
   const handleApply = () => {
     const normalized = promoCode.trim().toLowerCase();
-
-    if (normalized === "happyhugpaw".toLowerCase()) {
+    if (normalized === "happyhugpaw") {
       setAppliedCode("happyhugpaw");
-
       setPromoMsg("🎉 Promo applied: HappyHugPaw (5% off)");
     } else {
-
+      setAppliedCode(""); // ensure not applied
       setPromoMsg("❌ Invalid promo code");
     }
+    setPromoCode("");
   };
 
-
+  const handleRemovePromo = () => {
+    setAppliedCode("");
+    setPromoMsg("Promo removed");
+  };
 
   return (
     <div className="bg-surface border rounded-lg shadow space-y-4 p-4 max-w-xl mx-auto">
-      {/* Promo code */}
       {showPromo && (
         <div>
           <div className="flex justify-between gap-2">
@@ -48,12 +49,11 @@ export default function OrderSummary({
             <button
               onClick={handleApply}
               disabled={!promoCode.trim()}
-              className={`px-4 py-2 rounded hover:bg-primaryHover font-semibold
-          ${
-            !promoCode.trim()
-              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-              : "bg-primary text-onPrimary hover:bg-primaryHover cursor-pointer"
-          }`}
+              className={`px-4 py-2 rounded font-semibold ${
+                !promoCode.trim()
+                  ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                  : "bg-primary text-onPrimary hover:bg-primaryHover"
+              }`}
             >
               Apply
             </button>
@@ -63,7 +63,7 @@ export default function OrderSummary({
               className={`text-sm mt-1 ${
                 promoMsg.startsWith("❌")
                   ? "text-red-600 font-semibold"
-                  : "text-green-600 font-semibold "
+                  : "text-green-600 font-semibold"
               }`}
             >
               {promoMsg}
@@ -72,48 +72,36 @@ export default function OrderSummary({
         </div>
       )}
 
-
-
       {/* Summary */}
       <div className="space-y-1 text-sm">
-        <div className="flex justify-between text-onPrimary">
-          <span>Sub Total</span>
-          <span>฿{subtotal.toLocaleString()}</span>
-        </div>
-
-        <div className="flex justify-between text-onPrimary">
-          <div className="flex gap-2">
-            Discount
-            {subtotal > 3000 && (
-              <p className="text-onPrimary font-semibold">
-                🎉 You got 10% discount!
-              </p>
-            )}
-          </div>
-          <div>
-            -฿
-            {discount.toLocaleString(undefined, { maximumFractionDigits: 2 })}
-          </div>
-        </div>
-
-         {/* Promo code discount */}
-        {appliedCode === "happyhugpaw" &&  (
-          <div className="flex justify-between text-onPrimary font-semibold">
-            <span>Promo (HappyHugPaw 5% off)</span>
-            <span>
-              -฿
-              {promoDiscount.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              })}
+        <Row label="Subtotal" value={`฿${subtotal.toLocaleString()}`} />
+        <Row
+          label={
+            <span className="flex gap-2">
+              Discount
+              {discount > 0 && <span className="font-semibold">🎉 You got 10% discount!</span>}
             </span>
+          }
+          value={`-฿${discount.toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
+        />
+        {promoDiscount > 0 && (
+          <div className="flex justify-between text-onPrimary font-semibold">
+            <span className="flex items-center gap-2">
+              Promo (HappyHugPaw 5% off)
+              <button
+                type="button"
+                className="text-xs underline text-muted-foreground"
+                onClick={handleRemovePromo}
+              >
+                Remove
+              </button>
+            </span>
+            <span>-฿{promoDiscount.toLocaleString(undefined,{ maximumFractionDigits: 2 })}</span>
           </div>
         )}
 
+        <Row label="Shipping" value="Calculated at checkout" />
 
-        <div className="flex justify-between text-onPrimary">
-          <span>Shipping</span>
-          <span>฿{shipping.toLocaleString()}</span>
-        </div>
         <div className="flex justify-between font-semibold text-onPrimary">
           <span>Total</span>
           <span>
@@ -121,7 +109,7 @@ export default function OrderSummary({
           </span>
         </div>
       </div>
-      {/* Checkout */}
+
       {showCheckoutBtn && (
         <Link
           to="checkout"
@@ -130,6 +118,15 @@ export default function OrderSummary({
           Checkout
         </Link>
       )}
+    </div>
+  );
+}
+
+function Row({ label, value }) {
+  return (
+    <div className="flex justify-between text-onPrimary">
+      <span>{label}</span>
+      <span>{value}</span>
     </div>
   );
 }

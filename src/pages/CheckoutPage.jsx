@@ -10,10 +10,11 @@ import { formatTHB } from "@/lib/formatters";            // used inside children
 import { useUser } from "@/context/UserContext";
 import { appendOrder } from "@/lib/orderStorage";
 import ReceiptModal from "@/components/checkout/ReceiptModal";
+import { computeCartTotals } from "@/lib/cartTotals";
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
-  const { items, subtotal, clearCart } = useCart();
+  const { items, subtotal, clearCart, appliedCode } = useCart();
 
   const [receiptOpen, setReceiptOpen] = useState(false);
   const [recentOrder, setRecentOrder] = useState(null);
@@ -85,7 +86,7 @@ export default function CheckoutPage() {
       return;
     }
 
-    
+
     // 1) Payment validation
     if (paymentMethod === "card" && !paymentValid) {
       alert("Please complete valid card details.");
@@ -97,9 +98,21 @@ export default function CheckoutPage() {
     const ts = now.toISOString();
     setPurchaseTime(ts);
 
-    // 3) Compute amounts
-    const shippingFee = Number(shipping?.fee || 0);
-    const total = Math.max(0, (subtotal || 0) + shippingFee + (tax || 0) - (discount || 0));
+    // 3) Authoritative totals (same as CheckoutSummary)
+    const totals = computeCartTotals(items, {
+      appliedCode,              // promo: "happyhugpaw"
+      shippingMethod: shipping, // radio-selected method
+      includeShipping: true,
+      taxRate: 0,
+    });
+    const {
+      subtotal: subCalc,
+      discount: baseDiscount,
+      promoDiscount,
+      shippingFee,
+      tax: taxCalc,
+      total,
+    } = totals;
 
     // Helper: safely get unit price per line
     const unit = (it) =>
@@ -151,10 +164,12 @@ export default function CheckoutPage() {
         imageUrl: it.imageUrl || null,
       })),
       amounts: {
-        subtotal: subtotal || 0,
+        // snapshot the exact figures the UI showed
+        subtotal: subCalc,
+        discount: baseDiscount,
+        promoDiscount,        // keep promo separate for transparency
         shippingFee,
-        discount: discount || 0,
-        tax: tax || 0,
+        tax: taxCalc,
         total,
       },
     };
@@ -179,9 +194,7 @@ export default function CheckoutPage() {
     userInfo,
     shipping,
     items,
-    subtotal,
-    discount,
-    tax,
+    appliedCode,
     paymentMethod,
     paymentValid,
     paymentDetails,
@@ -218,10 +231,7 @@ export default function CheckoutPage() {
           {/* RIGHT: 5) summary */}
           <aside className="lg:col-span-5">
             <CheckoutSummary
-              subtotal={subtotal}
-              shippingFee={shipping?.fee || 0}
-              discount={discount}
-              tax={tax}
+              shippingMethod={shipping}              // ⟵ key change
               onConfirmPay={handleConfirmPay}
               disabled={!canConfirm}
               onBackToCart={() => navigate("/cart")}

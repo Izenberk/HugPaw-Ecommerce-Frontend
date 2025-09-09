@@ -9,15 +9,22 @@ import OrderSummary from "@/components/userCart/OrderSummary";
 
 
 export default function CartPage() {
-  const { items } = useCart();
-   const { isLoggedIn } = useAuth();
+  const { items, setPromoCode, setAppliedCode } = useCart();
+  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
 
+  // Protect cart route
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/", { replace: true });
     }
   }, [isLoggedIn, navigate]);
+
+  // Reset promos on mount
+  useEffect(() => {
+    setPromoCode("");
+    setAppliedCode("");
+  }, [setPromoCode, setAppliedCode]);
 
   return (
     <section>
