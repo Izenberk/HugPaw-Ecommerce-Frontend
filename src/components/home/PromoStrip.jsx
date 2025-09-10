@@ -33,8 +33,7 @@ export default function PromoStrip({
                   ) : null}
 
                   <h3 className="text-lg font-semibold leading-snug">
-                    <span className="block">20% Off</span>
-                    <span className="block">Your First Custom Pet Product</span>
+                    <span className="block">{title}</span>
                   </h3>
 
                   {subtitle ? (
@@ -70,9 +69,8 @@ export default function PromoStrip({
               <div className="flex w-full md:w-auto justify-center items-center">
                 <Button
                   asChild
-                  className="h-11 px-6 text-sm rounded-lg w-full md:w-auto 
-                           bg-primary text-primary-foreground hover:bg-primary/90 
-                           focus-visible:ring-2 focus-visible:ring-primary/40"
+                  size={"lg"}
+                  variant={"lavenderblue"}
                 >
                   <a href={cta.href} aria-label={cta.label}>
                     {cta.label}

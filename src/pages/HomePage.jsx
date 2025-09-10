@@ -1,5 +1,7 @@
 import CategoryRow from "@/components/home/CategoryRow";
+import Features from "@/components/home/Features";
 import HeroSplit from "@/components/home/HeroSplit";
+import PressMentions from "@/components/home/PressMentions";
 import PromoStrip from "@/components/home/PromoStrip";
 import ReviewGrid from "@/components/home/ReviewGrid";
 
@@ -55,17 +57,22 @@ export default function HomePage() {
     },
   ];
 
+
+
   return (
-    // ให้แต่ละ section คุม padding ตัวเอง → main ไม่ต้อง space-y ใหญ่
     <main>
       <HeroSplit
         title={["More Than Pets", "They’re Family"]}
         subtitle="Create unique items for your furry friends"
         cta={{ label: "Shop Now", href: "/catalog" }}
-        imageSrc="/src/assets/images/home/hero.jpg"
+       imageSrc="/src/assets/images/home/pet-owner1.png"
         imageAlt="Happy pet family"
       />
 
+      <PressMentions />
+
+      <Features />
+      
       <CategoryRow
         title="Our Products"
         subtitle="At HugPaw, you can craft comfort, style, and tech — just for your buddy"
@@ -73,10 +80,10 @@ export default function HomePage() {
       />
 
       <PromoStrip
-        badge="Limited Offer"
-        title="20% Off Your First Custom Pet Product"
-        subtitle="Design the perfect item for your friend today and enjoy free shipping on your first order."
-        cta={{ label: "Claim Your Discount", href: "#claim" }}
+        badge="Coming Soon"
+        title="Exciting deals are on the way!"
+        subtitle="We’re preparing something special for you. Stay tuned for the exclusive offers."
+        cta={{ label: "Explore Products", href: "/catalog" }}
       />
 
       <ReviewGrid

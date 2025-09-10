@@ -1,5 +1,53 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "animate.css";
+
+@layer utilities {
+  @keyframes gradient-x {
+    0%, 100% {
+      background-size: 200% 200%;
+      background-position: left center;
+    }
+    50% {
+      background-size: 200% 200%;
+      background-position: right center;
+    }
+  }
+
+  @keyframes gradient-xy {
+    0%, 100% {
+      background-size: 400% 400%;
+      background-position: left top;
+    }
+    50% {
+      background-size: 400% 400%;
+      background-position: right bottom;
+    }
+  }
+
+  .animate-gradient-x {
+    animation: gradient-x 10s ease infinite;
+  }
+
+  .animate-gradient-xy {
+    animation: gradient-xy 10s ease infinite;
+  }
+}
+
+@layer components {
+  .topbar {
+    @apply fixed top-0 left-0 w-full z-50 bg-gray-800 text-white text-sm text-center py-2 px-4
+  }
+
+  .top-link {
+    @apply underline underline-offset-4 font-medium hover:text-primary transition
+  }
+
+  .nav-desktop {
+    @apply h-12 md:h-16 px-6 rounded-full bg-background/70 backdrop-blur-md flex items-center justify-between
+  }
+}
+
 
 
 @custom-variant dark (&:is(.dark *));
