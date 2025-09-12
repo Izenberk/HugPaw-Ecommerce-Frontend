@@ -14,9 +14,7 @@ export default function ReviewGrid({
         <div className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-baseline md:gap-3 items-center text-center md:text-left">
           <h3 className="text-2xl md:text-3xl font-semibold">{title}</h3>
           {subtitle ? (
-            <p className="text-base text-muted-foreground">
-              {subtitle}
-            </p>
+            <p className="text-base text-muted-foreground">{subtitle}</p>
           ) : null}
         </div>
 
@@ -41,7 +39,9 @@ export default function ReviewGrid({
                       <AvatarFallback>{initials}</AvatarFallback>
                     </Avatar>
                     <div className="min-w-0">
-                      <div className="text-sm font-medium truncate">{r.name}</div>
+                      <div className="text-sm font-medium truncate">
+                        {r.name}
+                      </div>
                       {r.role ? (
                         <div className="text-xs text-muted-foreground truncate">
                           {r.role}
@@ -72,6 +72,15 @@ export default function ReviewGrid({
                   <p className="text-sm leading-relaxed text-foreground/90 line-clamp-6">
                     “{r.quote}”
                   </p>
+
+                  {/* Review image */}
+                  {r.imageSrc ? (
+                    <img
+                      src={r.imageSrc}
+                      alt={r.imageAlt || `Review from ${r.name}`}
+                      className="mt-3 w-full rounded-lg object-cover aspect-[4/3]"
+                    />
+                  ) : null}
                 </CardContent>
               </Card>
             );
@@ -81,4 +90,3 @@ export default function ReviewGrid({
     </section>
   );
 }
-

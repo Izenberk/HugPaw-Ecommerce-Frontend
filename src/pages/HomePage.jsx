@@ -1,5 +1,6 @@
 import CategoryRow from "@/components/home/CategoryRow";
 import Features from "@/components/home/Features";
+import Guarantees from "@/components/home/Guarantee";
 import HeroSplit from "@/components/home/HeroSplit";
 import PressMentions from "@/components/home/PressMentions";
 import PromoStrip from "@/components/home/PromoStrip";
@@ -40,6 +41,8 @@ export default function HomePage() {
       stars: 5,
       quote:
         "I loved how easy it was to design Bella’s collar. The engraving is perfect, and the color matches her personality so well!",
+      imageSrc: "/images/home/review-collar.png",
+      imageAlt: "Automatic food dispenser",
     },
     {
       id: "r2",
@@ -47,6 +50,8 @@ export default function HomePage() {
       stars: 4,
       quote:
         "The automatic feeder has been a lifesaver. I customized the color to match my kitchen, and Milo loves the consistent meal times!",
+      imageSrc: "/images/home/review-feeder.png",
+      imageAlt: "Automatic food dispenser",
     },
     {
       id: "r3",
@@ -54,10 +59,10 @@ export default function HomePage() {
       stars: 5,
       quote:
         "Coco’s new water fountain is not only cute but super quiet. I added her name to the side—she drinks more water now too!",
+      imageSrc: "/images/home/review-water-dispenser.png",
+      imageAlt: "Automatic water dispenser",
     },
   ];
-
-
 
   return (
     <main>
@@ -65,14 +70,14 @@ export default function HomePage() {
         title={["More Than Pets", "They’re Family"]}
         subtitle="Create unique items for your furry friends"
         cta={{ label: "Shop Now", href: "/catalog" }}
-       imageSrc="/src/assets/images/home/pet-owner1.png"
+        imageSrc="/src/assets/images/home/pet-owner1.png"
         imageAlt="Happy pet family"
       />
 
       <PressMentions />
 
       <Features />
-      
+
       <CategoryRow
         title="Our Products"
         subtitle="At HugPaw, you can craft comfort, style, and tech — just for your buddy"
@@ -91,6 +96,8 @@ export default function HomePage() {
         subtitle="Check out what our HugPaw Community has to say"
         items={reviews}
       />
+
+      <Guarantees />
     </main>
   );
 }
