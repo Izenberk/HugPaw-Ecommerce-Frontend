@@ -1,10 +1,13 @@
 import CategoryRow from "@/components/home/CategoryRow";
+import CollarSection from "@/components/home/CollarSection";
 import Features from "@/components/home/Features";
+import FeederSection from "@/components/home/FeederSection";
 import Guarantees from "@/components/home/Guarantee";
 import HeroSplit from "@/components/home/HeroSplit";
 import PressMentions from "@/components/home/PressMentions";
 import PromoStrip from "@/components/home/PromoStrip";
 import ReviewGrid from "@/components/home/ReviewGrid";
+import WaterDispenserSection from "@/components/home/WaterDispenserSection";
 
 export default function HomePage() {
   const categories = [
@@ -76,13 +79,18 @@ export default function HomePage() {
         imageSrc="/src/assets/images/home/pet-owner1.png"
         imageAlt="Happy pet family"
       />
+      <PressMentions />
       <CategoryRow
         title="Highest Functionality for Your Four-Legged Friend"
         items={categories}
       />
-      <PressMentions />
+      <CollarSection />
+      <WaterDispenserSection />
+      <FeederSection />
 
       <Features />
+
+      
 
       <PromoStrip
         badge="Coming Soon"
