@@ -1,5 +1,54 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "animate.css";
+
+@layer utilities {
+  @keyframes gradient-x {
+    0%, 100% {
+      background-size: 200% 200%;
+      background-position: left center;
+    }
+    50% {
+      background-size: 200% 200%;
+      background-position: right center;
+    }
+  }
+
+  @keyframes gradient-xy {
+    0%, 100% {
+      background-size: 400% 400%;
+      background-position: left top;
+    }
+    50% {
+      background-size: 400% 400%;
+      background-position: right bottom;
+    }
+  }
+
+  .animate-gradient-x {
+    animation: gradient-x 10s ease infinite;
+  }
+
+  .animate-gradient-xy {
+    animation: gradient-xy 10s ease infinite;
+  }
+}
+
+@layer components {
+  .topbar {
+    @apply fixed top-0 left-0 w-full z-50 bg-gray-800 text-white text-sm text-center py-2 px-4
+  }
+
+  .top-link {
+    @apply underline underline-offset-4 font-medium hover:text-primary transition
+  }
+
+  .nav-desktop {
+    @apply h-12 md:h-16 px-6 rounded-full bg-background/70 backdrop-blur-md flex items-center justify-between
+  }
+}
+
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -86,7 +135,7 @@
   --primary-hover: #cdd9fb;
   --secondary-hover: #f8ebce;
   --accent-hover: #cfc9f8;
-  --destructive-hover: #dc2626 
+  --destructive-hover: #dc2626;
   --success-hover: #1eaa52;
   --warning-hover: #e08d09;
   --info-hover: #0c96d2;
@@ -138,176 +187,43 @@
   --sidebar-ring: #7ea2ff;
 }
 
-/* 3) (Optional) Dark mode — tweak whenever we design it */
-:root.dark {
-  /* Layout & Core surfaces */
-  --background: #1a1c20;
-  --foreground: #f3f4f6;
-  --card: #1f2227;
-  --card-foreground: #f3f4f6;
-  --popover: #1f2227;
-  --popover-foreground: #f3f4f6;
+/* 3) Toast theme tokens (derived from your palette) */
+:root {
+  /* Brand/info (general notices) */
+  --toast-brand-bg: var(--chart-1);              /* #4f6cd8, richer than --primary */
+  --toast-brand-fg: #ffffff;
+  --toast-brand-border: var(--border);
+  --toast-brand-cta-bg: var(--popover);
+  --toast-brand-cta-fg: var(--chart-1);
 
-  /* Form & Structural elements */
-  --input: #374151;
-  --placeholder: #9aa4b2;
-  --border: #374151;
-  --overlay: rgba(0, 0, 0, 0.6);
-  --divider: #2e3441;
+  /* Success (added to cart) */
+  --toast-success-bg: var(--success);
+  --toast-success-fg: var(--success-foreground);
+  --toast-success-border: var(--border);
+  --toast-success-cta-bg: var(--popover);
+  --toast-success-cta-fg: var(--success);
 
-  /* Elevated surfaces */
-  --shadow: rgba(0, 0, 0, 0.35);
-  --surface-1: #1f2227;
-  --surface-2: #242830;
+  /* Warn (require login) */
+  --toast-warn-bg: var(--warning);
+  --toast-warn-fg: var(--warning-foreground);
+  --toast-warn-border: var(--border);
+  --toast-warn-cta-bg: var(--foreground);
+  --toast-warn-cta-fg: #ffffff;
 
-  /* brand color */
-  --primary: #a4b5ff;
-  --primary-foreground: #0f172a;
-  --secondary: #e7d8b8;
-  --secondary-foreground: #1a1208;
-  --accent: #bdb4ff;
-  --accent-foreground: #1e103f;
+  /* Favorite (wishlist) — purple vibe */
+  --toast-fav-bg: var(--chart-3);                /* #9b6bde */
+  --toast-fav-fg: #ffffff;
+  --toast-fav-border: var(--border);
+  --toast-fav-cta-bg: var(--popover);
+  --toast-fav-cta-fg: var(--chart-3);
 
-  /* Hover states */
-  --primary-hover: #bac8ff;
-  --secondary-hover: #f1e1c0;
-  --accent-hover: #d4cdff;
-  --destructive-hover: #ef4444;
-  --success-hover: #4dd58a;
-  --warning-hover: #fcc94f;
-  --info-hover: #5fcff9;
-
-  /* Subtle backgrounds / chips / skeletons */
-  --muted: #2f3440;
-  --muted-foreground: #cbd5e1;
-
-  /* Feedback */
-  --success: #34d399;
-  --success-foreground: #0b1210;
-  --warning: #fbbf24;
-  --warning-foreground: #1a1405;
-  --destructive: #dc2626;
-  --destructive-foreground: #ffffff;
-  --info: #38bdf8;
-  --info-foreground: #07131a;
-
-  /* Disabled states */
-  --disabled: #2a2f39;
-  --disabled-foreground: #9aa3af;
-  --disabled-border: #3a404c;
-
-  /* Link */
-  --link: #93b4ff;
-  --link-hover: #b7c8ff;
-  --link-visited: #c4a7ff;
-
-  /* Focus Helper */
-  --selection: #314272;
-  --ring: #b0c0ff;
-  --ring-offset: #1a1c20;
-
-  /* Optional chart colors */
-  --chart-1: #7d95ff;
-  --chart-2: #ffc470;
-  --chart-3: #c9a5ff;
-  --chart-4: #6fe2c0;
-  --chart-5: #ff8c8c;
-
-  /* Optional sidebar tokens */
-  --sidebar: #1f2937;
-  --sidebar-foreground: #f3f4f6;
-  --sidebar-primary: #7d95ff;
-  --sidebar-primary-foreground: #0f172a;
-  --sidebar-accent: #2f3440;
-  --sidebar-accent-foreground: #f3f4f6;
-  --sidebar-border: #374151;
-  --sidebar-ring: #b0c0ff;
+  --toast-error-bg: var(--destructive);
+  --toast-error-fg: var(--destructive-foreground);
+  --toast-error-border: var(--border);
+  --toast-error-cta-bg: var(--popover);
+  --toast-error-cta-fg: var(--destructive);
 }
 
-.dark {
-  /* Layout & Core surfaces */
-  --background: oklch(21.42% 0.006 264.53);
-  --foreground: oklch(95.25% 0.003 264.43);
-  --card: oklch(23.54% 0.006 264.53);
-  --card-foreground: oklch(95.25% 0.003 264.43);
-  --popover: oklch(23.54% 0.006 264.53);
-  --popover-foreground: oklch(95.25% 0.003 264.43);
-
-  /* Form & Structural elements */
-  --input: oklch(34.91% 0.012 264.53);
-  --placeholder: oklch(64.71% 0.022 263.92);
-  --border: oklch(34.91% 0.012 264.53);
-  --overlay: oklch(40% 0 0 / 0.6);
-  --divider: oklch(26.36% 0.012 264.53);
-
-  /* Elevated surfaces */
-  --shadow: oklch(0% 0 0 / 0.35);
-  --surface-1: oklch(23.54% 0.006 264.53);
-  --surface-2: oklch(27.41% 0.008 264.53);
-
-  /* Brand color */
-  --primary: oklch(75.52% 0.099 264.65);
-  --primary-foreground: oklch(20.24% 0.041 265.62);
-  --secondary: oklch(83.91% 0.061 84.62);
-  --secondary-foreground: oklch(21.02% 0.043 63.49);
-  --accent: oklch(78.33% 0.086 277.58);
-  --accent-foreground: oklch(21.44% 0.061 291.86);
-
-  /* Hover states */
-  --primary-hover: oklch(72.24% 0.096 264.65);
-  --secondary-hover: oklch(87.54% 0.058 84.62);
-  --accent-hover: oklch(82.94% 0.083 277.58);
-  --destructive-hover: oklch(61.78% 0.245 27.17);
-  --success-hover: oklch(76.14% 0.152 157.69);
-  --warning-hover: oklch(89.28% 0.134 82.52);
-  --info-hover: oklch(82.53% 0.142 213.11);
-
-  /* Subtle backgrounds / chips / skeletons */
-  --muted: oklch(29.15% 0.012 264.53);
-  --muted-foreground: oklch(82.71% 0.021 261.97);
-
-  /* Feedback */
-  --success: oklch(70.43% 0.151 157.69);
-  --success-foreground: oklch(17.2% 0.019 162.23);
-  --warning: oklch(78.94% 0.141 82.52);
-  --warning-foreground: oklch(16.88% 0.039 72.25);
-  --destructive: oklch(54.41% 0.224 27.17);
-  --destructive-foreground: oklch(100% 0 0);
-  --info: oklch(74.85% 0.154 213.11);
-  --info-foreground: oklch(17.44% 0.021 240.26);
-
-  /* Disabled states */
-  --disabled: oklch(29.07% 0.008 264.53);
-  --disabled-foreground: oklch(64.31% 0.022 261.9);
-  --disabled-border: oklch(35.6% 0.013 264.53);
-
-  /* Link */
-  --link: oklch(75.85% 0.144 262.91);
-  --link-hover: oklch(82.06% 0.11 264.5);
-  --link-visited: oklch(78.3% 0.116 296.36);
-
-  /* Focus Helper */
-  --selection: oklch(33.05% 0.048 267.57);
-  --ring: oklch(82.54% 0.121 263.18);
-  --ring-offset: oklch(21.42% 0.006 264.53);
-
-  /* Chart colors */
-  --chart-1: oklch(66.24% 0.142 264.4);
-  --chart-2: oklch(84.63% 0.143 84.17);
-  --chart-3: oklch(78.62% 0.135 292.74);
-  --chart-4: oklch(82.51% 0.121 165.86);
-  --chart-5: oklch(71.19% 0.173 28.12);
-
-  /* Sidebar */
-  --sidebar: oklch(29.24% 0.013 261.96);
-  --sidebar-foreground: oklch(95.25% 0.003 264.43);
-  --sidebar-primary: oklch(66.24% 0.142 264.4);
-  --sidebar-primary-foreground: oklch(20.24% 0.041 265.62);
-  --sidebar-accent: oklch(29.15% 0.012 264.53);
-  --sidebar-accent-foreground: oklch(95.25% 0.003 264.43);
-  --sidebar-border: oklch(34.91% 0.012 264.53);
-  --sidebar-ring: oklch(82.54% 0.121 263.18);
-}
 
 @layer base {
   * {

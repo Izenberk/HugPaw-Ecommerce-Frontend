@@ -1,0 +1,70 @@
+// /src/pages/userCart/Cart.jsx
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import CartItem from "@/components/userCart/CartItem";
+import OrderSummaryBar from "@/components/userCart/OrderSummaryBar";
+import OrderSummary from "@/components/userCart/OrderSummary";
+
+
+export default function CartPage() {
+  const { items, setPromoCode, setAppliedCode } = useCart();
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+
+  // Protect cart route
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/", { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
+
+  // Reset promos on mount
+  useEffect(() => {
+    setPromoCode("");
+    setAppliedCode("");
+  }, [setPromoCode, setAppliedCode]);
+
+  return (
+    <section>
+      <div className="text-center py-4">
+        <h1 className="text-3xl font-semibold text-onSecondary">
+          Cart and Order Confirmation
+        </h1>
+      </div>
+
+      {/* Order Summary Bar */}
+      <OrderSummaryBar />
+
+      {/* Cart Items + Desktop Order Summary */}
+      <section className="mt-4 md:flex md:items-start md:flex-row gap-6">
+        <div className="md:w-[60%] ">
+          <div className="overflow-y-scroll md:h-120 h-75 pt-4 bg-surface border rounded-lg shadow">
+            {items.length === 0 ? (
+              <div className="w-[80%] max-w-4xl mx-auto p-4 text-center text-muted-foreground">
+                Your cart is empty
+              </div>
+            ) : (
+              items.map((it) => (
+                <CartItem
+                  key={it.productId + JSON.stringify(it.config || {})}
+                  item={it}
+                />
+              ))
+            )}
+          </div>
+        </div>
+
+        <div className="md:w-[40%] mt-6 hidden md:block">
+          <OrderSummary />
+        </div>
+      </section>
+
+      {/* Mobile OrderSummary */}
+      <section className="md:hidden mt-6">
+        <OrderSummary />
+      </section>
+    </section>
+  );
+}
