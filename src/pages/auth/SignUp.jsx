@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormField,
@@ -8,16 +10,40 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+
+const signupSchema = z
+  .object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    email: z.string().email("Invalid email format"),
+    birthDate: z.string().min(1, "Birthdate is required"),
+    phoneNumber: z
+      .string()
+      .regex(/^[0-9]{10}$/, "Phone number must be 10 digits"),
+    address: z.string().min(1, "Address is required"),
+    username: z
+      .string()
+      .min(4, "Username must be at least 4 characters")
+      .max(20, "Username must be at most 20 characters"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string().min(6, "Please confirm your password"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords do not match",
+  });
 
 const Signup = () => {
   const methods = useForm({
+    resolver: zodResolver(signupSchema), 
     defaultValues: {
-      firstname: "",
-      lastname: "",
+      firstName: "",
+      lastName: "",
       email: "",
-      birthdate: "",
-      phonenumber: "",
+      birthDate: "",
+      phoneNumber: "",
       address: "",
       username: "",
       password: "",
@@ -25,12 +51,26 @@ const Signup = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    if (data.password !== data.confirmPassword) {
-      alert("Passwords do not match");
-      return;
+  const { signup } = useAuth();
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    const payload = {
+      email: data.email,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      username: data.username,
+      birthDate: data.birthDate,
+      avatarUrl: "",
+    };
+
+    const result = await signup(payload);
+    if (result.success) {
+      navigate("/login");
+    } else {
+      methods.setError("root", { message: result.message });
     }
-    console.log("Signup data:", data);
   };
 
   return (
@@ -40,146 +80,122 @@ const Signup = () => {
       </h2>
 
       <Form {...methods}>
-        <FormField
-          name="firstname"
-          control={methods.control}
-          rules={{ required: "First name is required" }}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="py-1">First name</FormLabel>
-              <FormControl>
-                <input
-                  type="firstname"
-                  {...field}
-                  placeholder="Enter your First name"
-                  className="w-full border rounded-full p-2"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          name="lastname"
-          control={methods.control}
-          rules={{ required: "Last name is required" }}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="py-1">Last name</FormLabel>
-              <FormControl>
-                <input
-                  type="lastname"
-                  {...field}
-                  placeholder="Enter your Last name"
-                  className="w-full border rounded-full p-2"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          name="email"
-          control={methods.control}
-          rules={{
-            required: "Email is required",
-            pattern: { value: /^\S+@\S+$/i, message: "Invalid email format" },
-          }}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="py-1">Email</FormLabel>
-              <FormControl>
-                <input
-                  {...field}
-                  placeholder="Enter your email"
-                  className="w-full border rounded-full p-2"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          name="birthdate"
-          control={methods.control}
-          rules={{ required: "Date is required" }}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="py-1">Birthdate</FormLabel>
-              <FormControl>
-                <input
-                  type="date"
-                  {...field}
-                  className="w-full border rounded-full p-2"
-                  placeholder="mm/dd/yyyy"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          name="phonenumber"
-          control={methods.control}
-          rules={{
-            required: "Phone number is required",
-            pattern: {
-              value: /^[0-9]{10}$/,
-              message: "Invalid phone number format",
-            },
-          }}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="py-1">Phone number</FormLabel>
-              <FormControl>
-                <input
-                  type="tel"
-                  {...field}
-                  className="w-full border rounded-full p-2"
-                  placeholder="1234567890"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          name="address"
-          control={methods.control}
-          rules={{ required: "Address is required" }}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="py-1">Address</FormLabel>
-              <FormControl>
-                <input
-                  type="address"
-                  {...field}
-                  placeholder="Enter your Address"
-                  className="w-full border rounded-full p-2"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            name="firstName"
+            control={methods.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>First name</FormLabel>
+                <FormControl>
+                  <input
+                    {...field}
+                    className="w-full border rounded-full p-2"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            name="lastName"
+            control={methods.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Last name</FormLabel>
+                <FormControl>
+                  <input
+                    {...field}
+                    className="w-full border rounded-full p-2"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            name="email"
+            control={methods.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <input
+                    {...field}
+                    type="email"
+                    className="w-full border rounded-full p-2"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            name="birthDate"
+            control={methods.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Birthdate</FormLabel>
+                <FormControl>
+                  <input
+                    {...field}
+                    type="date"
+                    className="w-full border rounded-full p-2"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            name="phoneNumber"
+            control={methods.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone number</FormLabel>
+                <FormControl>
+                  <input
+                    {...field}
+                    type="tel"
+                    placeholder="1234567890"
+                    className="w-full border rounded-full p-2"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            name="address"
+            control={methods.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Address</FormLabel>
+                <FormControl>
+                  <input
+                    {...field}
+                    className="w-full border rounded-full p-2"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             name="username"
             control={methods.control}
-            rules={{ required: "Username is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="py-1">Username</FormLabel>
+                <FormLabel>Username</FormLabel>
                 <FormControl>
                   <input
                     {...field}
-                    placeholder="Enter your username"
                     className="w-full border rounded-full p-2"
                   />
                 </FormControl>
@@ -188,19 +204,16 @@ const Signup = () => {
             )}
           />
 
-          {/* Password */}
           <FormField
             name="password"
             control={methods.control}
-            rules={{ required: "Password is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="py-1">Password</FormLabel>
+                <FormLabel>Password</FormLabel>
                 <FormControl>
                   <input
-                    type="password"
                     {...field}
-                    placeholder="Enter your password"
+                    type="password"
                     className="w-full border rounded-full p-2"
                   />
                 </FormControl>
@@ -209,19 +222,16 @@ const Signup = () => {
             )}
           />
 
-          {/* Confirm Password */}
           <FormField
             name="confirmPassword"
             control={methods.control}
-            rules={{ required: "Please confirm your password" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="py-1">Confirm Password</FormLabel>
+                <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
                   <input
-                    type="password"
                     {...field}
-                    placeholder="Confirm your password"
+                    type="password"
                     className="w-full border rounded-full p-2"
                   />
                 </FormControl>
@@ -230,8 +240,18 @@ const Signup = () => {
             )}
           />
 
-          <button className="w-full rounded-full bg-blue-500 hover:bg-blue-600 text-white py-2 active:scale-95 active:bg-blue-600 transition transform">
-            <Link to="/login">Sign Up</Link>
+          {methods.formState.errors.root && (
+            <p className="text-red-600 text-sm">
+              {methods.formState.errors.root.message}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={methods.formState.isSubmitting}
+            className="w-full rounded-full bg-blue-500 hover:bg-blue-600 text-white py-2 transition"
+          >
+            {methods.formState.isSubmitting ? "Signing up..." : "Sign Up"}
           </button>
         </form>
       </Form>

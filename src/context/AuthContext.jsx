@@ -1,27 +1,27 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
-
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const api = axios.create({
+    baseURL: "http://localhost:3030/api/v1",
+    withCredentials: true,
+    headers: { "Content-Type": "application/json" },
+  });
+
+  // checkAuth
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("http://localhost:3030/api/v1/auth/me", {
-          credentials: "include",
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data.user);
-        } else {
-          setUser(null);
-        }
+        const res = await api.get("/auth/me");
+        setUser(res.data.user);
       } catch (err) {
-        console.error("Auth check failed:", err);
+        console.error("Auth check failed:", err.response?.data || err.message);
         setUser(null);
       } finally {
         setLoading(false);
@@ -30,39 +30,48 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
+  // login
   const login = async (email, password) => {
     try {
-      const res = await fetch("http://localhost:3030/api/v1/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // ให้ cookie accessToken กลับมา
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Login failed");
-
-      setUser(data.user);
+      const res = await api.post("/auth/login", { email, password });
+      setUser(res.data.user);
       return { success: true };
     } catch (err) {
-      return { success: false, message: err.massage };
+      return {
+        success: false,
+        message: err.response?.data?.message || "Login failed",
+      };
     }
   };
 
+  // signup
+  const signup = async (payload) => {
+    try {
+      const res = await api.post("/auth/signup", payload);
+      setUser(res.data.user);
+      return { success: true };
+    } catch (err) {
+      return {
+        success: false,
+        message: err.response?.data?.message || "Signup failed",
+      };
+    }
+  };
+
+  // logout
   const logout = async () => {
     try {
-      await fetch("http://localhost:3030/api/v1/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
+      await api.post("/auth/logout");
     } catch (err) {
-      console.error("Logout failed", err);
+      console.error("Logout failed:", err.response?.data || err.message);
     } finally {
       setUser(null);
     }
   };
+
   return (
     <AuthContext.Provider
-      value={{ user, isLoggedIn: !!user, login, logout, loading }}
+      value={{ user, isLoggedIn: !!user, login, logout, loading, signup }}
     >
       {children}
     </AuthContext.Provider>
