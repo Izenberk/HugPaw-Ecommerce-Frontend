@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function CategoryRow({ title, subtitle, items }) {
   return (
-    <section className="">
+    <section>
       <div className="mx-auto max-w-[1200px] px-6 md:px-8 py-12 md:py-16">
         {/* Heading */}
         <div className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-3 text-center md:text-left">
@@ -20,16 +20,26 @@ export default function CategoryRow({ title, subtitle, items }) {
           {items.map((it) => (
             <Card
               key={it.id}
-              className="rounded-2xl text-center h-full flex flex-col transition-shadow hover:shadow-md"
+              className="group rounded-2xl text-center h-full flex flex-col transition-shadow hover:shadow-md"
             >
-              {/* lock aspect + contain image */}
-              <div className="w-full aspect-[4/3] grid place-items-center p-4">
+              <div className="w-full aspect-[4/3] relative p-4">
+                {/* default image */}
                 <img
                   src={it.imageSrc}
                   alt={it.imageAlt ?? it.title}
-                  className="max-h-full object-contain"
+                  className="max-h-full object-contain transition-opacity duration-300 group-hover:opacity-0"
                   loading="lazy"
                 />
+
+                {/* hover image */}
+                {it.imageHoverSrc && (
+                  <img
+                    src={it.imageHoverSrc}
+                    alt={it.imageAlt ?? it.title}
+                    className="absolute inset-0 m-auto max-h-full object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    loading="lazy"
+                  />
+                )}
               </div>
 
               <CardHeader className="pt-0">
@@ -41,13 +51,9 @@ export default function CategoryRow({ title, subtitle, items }) {
 
               {/* push CTA to bottom so all cards equal height */}
               <CardContent className="mt-auto pb-5">
-                <Button
-                  asChild
-                  size={"lg"}
-                  variant={"lavenderblue"}
-                >
+                <Button asChild size={"lg"} variant={"lavenderblue"}>
                   <Link to={it.href} aria-label={`Customize ${it.title}`}>
-                    Let’s Customize
+                    Discover More
                   </Link>
                 </Button>
               </CardContent>

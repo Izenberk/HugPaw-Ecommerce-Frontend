@@ -26,11 +26,12 @@ const buttonVariants = cva(
         purplegradient:
           "bg-gradient-to-r from-[#D8B4FE] to-[#818CF8] text-white hover:from-[#C084FC] hover:to-[#7C3AED]",
         lavenderblue:
-          "border text-white bg-[#818CF8] hover:bg-gradient-to-r hover:from-[#818CF8] hover:to-[#D8B4FE]",
+          "text-white bg-[#818CF8] hover:bg-gradient-to-r hover:from-[#818CF8] hover:to-[#D8B4FE]",
         mutedblue:
           "border text-white bg-[#7A91BF] hover:bg-gradient-to-r hover:from-[#7A91BF] hover:to-[#324C80]",
+        gradientblue:"inline-flex items-center rounded-full px-5 py-2 bg-[#818CF8] text-white font-medium leading-none transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
       },
-
+      
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
