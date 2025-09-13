@@ -92,14 +92,6 @@ export default function Navbar() {
           <div className="flex items-center gap-6">
             {/* <SearchBox className="hidden xl:block w-64" /> */}
             <UserNav />
-            <Link
-              to="/catalog"
-              className="inline-flex items-center rounded-full px-5 py-2
-                         bg-blue-600 text-white font-medium transition-all duration-300
-                         hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
-            >
-              Shop Now
-            </Link>
           </div>
         </div>
       </div>
