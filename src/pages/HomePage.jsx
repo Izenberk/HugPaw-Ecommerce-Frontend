@@ -1,11 +1,9 @@
 import CategoryRow from "@/components/home/CategoryRow";
 import CollarSection from "@/components/home/CollarSection";
-import Features from "@/components/home/Features";
 import FeederSection from "@/components/home/FeederSection";
 import Guarantees from "@/components/home/Guarantee";
 import HeroSplit from "@/components/home/HeroSplit";
 import PressMentions from "@/components/home/PressMentions";
-import PromoStrip from "@/components/home/PromoStrip";
 import ReviewGrid from "@/components/home/ReviewGrid";
 import WaterDispenserSection from "@/components/home/WaterDispenserSection";
 
@@ -87,25 +85,19 @@ export default function HomePage() {
       <CollarSection />
       <WaterDispenserSection />
       <FeederSection />
-
-      <Features />
-
       
-
-      <PromoStrip
-        badge="Coming Soon"
-        title="Exciting deals are on the way!"
-        subtitle="We’re preparing something special for you. Stay tuned for the exclusive offers."
-        cta={{ label: "Explore Products", href: "/catalog" }}
-      />
-
       <ReviewGrid
         title="Review"
         subtitle="Check out what our HugPaw Community has to say"
         items={reviews}
       />
-
       <Guarantees />
+      {/* <PromoStrip
+        badge="Coming Soon"
+        title="Exciting deals are on the way!"
+        subtitle="We’re preparing something special for you. Stay tuned for the exclusive offers."
+        cta={{ label: "Explore Products", href: "/catalog" }}
+      /> */}
     </main>
   );
 }
