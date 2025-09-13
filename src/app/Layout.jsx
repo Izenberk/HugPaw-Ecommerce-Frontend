@@ -2,6 +2,7 @@ import { Outlet, ScrollRestoration } from "react-router-dom";
 import Topbar from "../components/common/Topbar/Topbar";
 import Navbar from "../components/common/Navbar/Navbar";
 import Footer from "../components/common/Footer/Footer";
+import BackToTop from "@/components/common/BackToTop";
 import { ToastViewport } from "@/lib/toast";
 
 const Layout = () => {
@@ -20,6 +21,7 @@ const Layout = () => {
 
       <Footer />
       <ToastViewport />
+      <BackToTop />
     </div>
   );
 };

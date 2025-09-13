@@ -65,9 +65,6 @@ export default function ProductCatalog({
             At HugPaw, you can craft comfort, style, and tech just for your
             buddy
           </h1>
-          <p className="text-sm text-muted-foreground">
-            Take a look at our products
-          </p>
         </div>
         <div className="flex max-w-2xl">
           <CatalogToolbar
@@ -76,6 +73,9 @@ export default function ProductCatalog({
             categories={categories}
           />
         </div>
+        <p className="text-sm text-muted-foreground">
+            Take a look at our products
+          </p>
       </header>
       <Separator />
       <ProductList
