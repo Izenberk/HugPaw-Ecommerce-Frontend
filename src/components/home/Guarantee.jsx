@@ -1,40 +1,48 @@
-const Guarantees = () => {
-  const items = [
+import { BadgeCheck, CalendarCheck, PackageOpen, Info, TrainTrackIcon, TruckElectricIcon, TruckIcon } from "lucide-react";
+
+export default function Guarantee() {
+  const Guarantees = [
     {
-      id: "materials",
-      icon: "✅", // จะใช้ react-icons ก็ได้
+      icon: <BadgeCheck className="h-8 w-8" />,
       title: "Premium Materials",
-      desc: "Crafted for safety, built to last",
+      text: "Crafted for safety, built to last",
     },
     {
-      id: "moneyback",
-      icon: "📅",
+      icon: <CalendarCheck className="h-8 w-8" />,
       title: "Money-Back Guarantee",
-      desc: "30 day return policy*",
+      text: "30 day return policy*",
     },
     {
-      id: "support",
-      icon: "📞",
+      icon: <TruckIcon className="h-8 w-8" />,
+      title: "Fast & caring delivery",
+      text: "Quick shipping with secure packaging",
+
+    },
+    {
+      icon: <PackageOpen className="h-8 w-8" />,
       title: "Dedicated Customer Support",
-      desc: "Product experts on call*",
+      text: "Product experts on call*",
     },
   ];
 
   return (
-    <section className="w-full bg-[#818cf8] rounded-2xl ring-1 ring-black/10 p-6 sm:p-8">
-      <div className="grid gap-6 sm:grid-cols-3 text-black">
-        {items.map((item) => (
-          <div key={item.id} className="flex items-start gap-3">
-            <div className="text-2xl">{item.icon}</div>
+    <section className="bg-green-200 p-6 md:p-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        {Guarantees.map((g) => (
+          <div key={g.title} className="flex items-start gap-4">
+            {g.icon}
             <div>
-              <h3 className="font-semibold">{item.title}</h3>
-              <p className="text-sm text-black/70">{item.desc}</p>
+              <h3 className="font-semibold">{g.title}</h3>
+              <p className="text-sm text-gray-700">{g.text}</p>
             </div>
           </div>
         ))}
       </div>
+
+      {/* มุมขวา Info icon */}
+      <div className="absolute top-4 right-4">
+        <Info className="h-5 w-5" />
+      </div>
     </section>
   );
-};
-
-export default Guarantees;
+}
