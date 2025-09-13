@@ -74,15 +74,6 @@ export default function Navbar() {
           {/* RIGHT: secondary links + CTA / User */}
           <div className="flex items-center gap-6">
             <UserNav />
-            <Link
-              to="/get-started"
-              className="inline-flex items-center rounded-full px-5 py-2
-                 bg-blue-500 text-white font-medium leading-none
-                 transition-all duration-300
-                 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
-            >
-              Shop Now
-            </Link>
           </div>
         </div>
       </div>
