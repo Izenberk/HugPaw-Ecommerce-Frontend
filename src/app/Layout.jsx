@@ -13,7 +13,7 @@ const Layout = () => {
       </header>
 
       {/* Push content below (Topbar + Navbar height) */}
-      <main className="flex-1 pt-[120px] md:px-[100px]">
+      <main>
         <ScrollRestoration />
         <Outlet />
       </main>

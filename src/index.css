@@ -4,7 +4,8 @@
 
 @layer utilities {
   @keyframes gradient-x {
-    0%, 100% {
+    0%,
+    100% {
       background-size: 200% 200%;
       background-position: left center;
     }
@@ -15,7 +16,8 @@
   }
 
   @keyframes gradient-xy {
-    0%, 100% {
+    0%,
+    100% {
       background-size: 400% 400%;
       background-position: left top;
     }
@@ -34,6 +36,26 @@
   }
 }
 
+@layer components {
+  .nav-underline {
+    position: relative;
+  }
+  
+  .nav-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 0;
+    background: currentColor;
+    transition: width 0.25s ease;
+  }
+  
+  .nav-underline:hover::after {
+    width: 100%;
+  }
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -113,7 +135,7 @@
   --primary-foreground: #1e293b;
   --secondary: #fdf5e6;
   --secondary-foreground: #3b2a18;
-  --accent: #EAE6FE;
+  --accent: #eae6fe;
   --accent-foreground: #2d1b69;
 
   /* Hover states */
@@ -175,7 +197,7 @@
 /* 3) Toast theme tokens (derived from your palette) */
 :root {
   /* Brand/info (general notices) */
-  --toast-brand-bg: var(--chart-1);              /* #4f6cd8, richer than --primary */
+  --toast-brand-bg: var(--chart-1); /* #4f6cd8, richer than --primary */
   --toast-brand-fg: #ffffff;
   --toast-brand-border: var(--border);
   --toast-brand-cta-bg: var(--popover);
@@ -196,7 +218,7 @@
   --toast-warn-cta-fg: #ffffff;
 
   /* Favorite (wishlist) — purple vibe */
-  --toast-fav-bg: var(--chart-3);                /* #9b6bde */
+  --toast-fav-bg: var(--chart-3); /* #9b6bde */
   --toast-fav-fg: #ffffff;
   --toast-fav-border: var(--border);
   --toast-fav-cta-bg: var(--popover);
@@ -209,12 +231,7 @@
   --toast-error-cta-fg: var(--destructive);
 }
 
-
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-
   body {
     @apply bg-background text-foreground;
   }
