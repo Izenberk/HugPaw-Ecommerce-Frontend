@@ -22,12 +22,17 @@ export default function CategoryRow({ title, subtitle, items }) {
               key={it.id}
               className="group rounded-2xl text-center h-full flex flex-col transition-shadow hover:shadow-md"
             >
-              <div className="w-full aspect-[4/3] relative p-4">
+              {/* คลิกที่รูปได้ */}
+              <Link
+                to={it.href}
+                aria-label={`Open ${it.title}`}
+                className="block w-full aspect-[4/3] relative p-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
                 {/* default image */}
                 <img
                   src={it.imageSrc}
                   alt={it.imageAlt ?? it.title}
-                  className="max-h-full object-contain transition-opacity duration-300 group-hover:opacity-0"
+                  className="max-h-full object-contain transition-opacity duration-300 group-hover:opacity-0 group-focus-within:opacity-0"
                   loading="lazy"
                 />
 
@@ -36,22 +41,28 @@ export default function CategoryRow({ title, subtitle, items }) {
                   <img
                     src={it.imageHoverSrc}
                     alt={it.imageAlt ?? it.title}
-                    className="absolute inset-0 m-auto max-h-full object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    className="absolute inset-0 m-auto max-h-full object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
                     loading="lazy"
                   />
                 )}
-              </div>
+              </Link>
 
               <CardHeader className="pt-0">
+                {/* จะให้คลิกที่ชื่อก็ได้เช่นกัน */}
                 <CardTitle className="text-lg font-semibold">
-                  {it.title}
+                  <Link
+                    to={it.href}
+                    className="hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md"
+                  >
+                    {it.title}
+                  </Link>
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">{it.desc}</p>
               </CardHeader>
 
               {/* push CTA to bottom so all cards equal height */}
               <CardContent className="mt-auto pb-5">
-                <Button asChild size={"lg"} variant={"lavenderblue"}>
+                <Button asChild size="lg" variant="lavenderblue">
                   <Link to={it.href} aria-label={`Customize ${it.title}`}>
                     Discover More
                   </Link>
@@ -69,22 +80,34 @@ export default function CategoryRow({ title, subtitle, items }) {
                 key={it.id}
                 className="min-w-[260px] snap-start rounded-2xl text-center flex flex-col transition-shadow hover:shadow-md"
               >
-                <div className="w-full aspect-[4/3] grid place-items-center p-4">
+                {/* คลิกที่รูปได้ */}
+                <Link
+                  to={it.href}
+                  aria-label={`Open ${it.title}`}
+                  className="block w-full aspect-[4/3] grid place-items-center p-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                >
                   <img
                     src={it.imageSrc}
                     alt={it.imageAlt ?? it.title}
                     className="max-h-full object-contain"
                     loading="lazy"
                   />
-                </div>
+                </Link>
 
                 <CardHeader className="pt-0">
-                  <CardTitle className="text-base">{it.title}</CardTitle>
+                  <CardTitle className="text-base">
+                    <Link
+                      to={it.href}
+                      className="hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md"
+                    >
+                      {it.title}
+                    </Link>
+                  </CardTitle>
                   <p className="text-xs text-muted-foreground">{it.desc}</p>
                 </CardHeader>
 
                 <CardContent className="mt-auto pb-4">
-                  <Button asChild variant={"lavenderblue"} size={"default"}>
+                  <Button asChild variant="lavenderblue" size="default">
                     <Link to={it.href} aria-label={`Customize ${it.title}`}>
                       Let’s Customize
                     </Link>
