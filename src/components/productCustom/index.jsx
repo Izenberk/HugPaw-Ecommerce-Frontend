@@ -293,8 +293,8 @@ export default function ProductCustom({ product }) {
     };
 
     return (
-        <div className="mx-auto max-w-6xl p-4 lg:p-6">
-            <div className="grid gap-6 lg:gap-10 lg:grid-cols-12">
+<div className="mx-auto max-w-6xl p-6 lg:p-12 mt-10 lg:mt-14">
+  <div className="grid gap-6 lg:gap-10 lg:grid-cols-12">
 
                 {/* LEFT: Gallery (desktop only) */}
                 <section className="hidden lg:block lg:col-span-7">

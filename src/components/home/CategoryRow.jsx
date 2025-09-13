@@ -3,7 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
-export default function CategoryRow({ title, subtitle, items }) {
+export default function CategoryRow({
+  title,
+  subtitle,
+  items,
+  ctaHref = "/catalog",
+  ctaLabel = "Discover All Products",
+}) {
   return (
     <section>
       <div className="mx-auto max-w-[1200px] px-6 md:px-8 py-12 md:py-16">
@@ -26,29 +32,35 @@ export default function CategoryRow({ title, subtitle, items }) {
               <Link
                 to={it.href}
                 aria-label={`Open ${it.title}`}
-                className="block w-full aspect-[4/3] relative p-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="block w-full aspect-[4/3] relative rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                {/* default image */}
-                <img
-                  src={it.imageSrc}
-                  alt={it.imageAlt ?? it.title}
-                  className="max-h-full object-contain transition-opacity duration-300 group-hover:opacity-0 group-focus-within:opacity-0"
-                  loading="lazy"
-                />
-
-                {/* hover image */}
-                {it.imageHoverSrc && (
+                {/* กรอบคงที่ + padding */}
+                <div className="absolute inset-0 p-4">
+                  {/* base + hover วางซ้อนกันเต็มกรอบ */}
                   <img
-                    src={it.imageHoverSrc}
+                    src={it.imageSrc}
                     alt={it.imageAlt ?? it.title}
-                    className="absolute inset-0 m-auto max-h-full object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
+                    width={800}
+                    height={600} // กัน CLS ตาม aspect 4:3
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300 opacity-100 group-hover:opacity-0 group-focus-within:opacity-0 pointer-events-none"
                     loading="lazy"
                   />
-                )}
+                  {it.imageHoverSrc && (
+                    <img
+                      src={it.imageHoverSrc}
+                      alt={it.imageAlt ?? it.title}
+                      width={800}
+                      height={600}
+                      decoding="async"
+                      className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 pointer-events-none"
+                      loading="lazy"
+                    />
+                  )}
+                </div>
               </Link>
 
               <CardHeader className="pt-0">
-                {/* จะให้คลิกที่ชื่อก็ได้เช่นกัน */}
                 <CardTitle className="text-lg font-semibold">
                   <Link
                     to={it.href}
@@ -59,15 +71,6 @@ export default function CategoryRow({ title, subtitle, items }) {
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">{it.desc}</p>
               </CardHeader>
-
-              {/* push CTA to bottom so all cards equal height */}
-              <CardContent className="mt-auto pb-5">
-                <Button asChild size="lg" variant="lavenderblue">
-                  <Link to={it.href} aria-label={`Customize ${it.title}`}>
-                    Discover More
-                  </Link>
-                </Button>
-              </CardContent>
             </Card>
           ))}
         </div>
@@ -106,6 +109,7 @@ export default function CategoryRow({ title, subtitle, items }) {
                   <p className="text-xs text-muted-foreground">{it.desc}</p>
                 </CardHeader>
 
+                {/* ยังคงปุ่มในแต่ละการ์ดฝั่งโมบายไว้ตามเดิม */}
                 <CardContent className="mt-auto pb-4">
                   <Button asChild variant="lavenderblue" size="default">
                     <Link to={it.href} aria-label={`Customize ${it.title}`}>
@@ -116,6 +120,17 @@ export default function CategoryRow({ title, subtitle, items }) {
               </Card>
             ))}
           </div>
+        </div>
+
+        <div className="mt-10 md:mt-12 flex justify-center">
+                          <Link
+              to="/catalog"
+              className="inline-flex items-center rounded-full px-5 py-2
+                         bg-blue-600 text-white font-medium transition-all duration-300
+                         hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
+            >
+              Discover All Products
+            </Link>
         </div>
       </div>
     </section>

@@ -14,6 +14,7 @@ export default function HomePage() {
       desc: "More than just a pet’s identity.",
       href: "/products/collar-001",
       imageSrc: "/images/products/Red-Collar.jpg",
+      imageHoverSrc: "/images/products/Collage-Collar.jpg",
       imageAlt: "Red pet collar",
     },
     {
@@ -22,6 +23,7 @@ export default function HomePage() {
       desc: "Watering made powerful.",
       href: "/products/water-001",
       imageSrc: "/images/products/Automatic-Water-Dispenser.jpg",
+      imageHoverSrc: "/images/products/Collage-Water-Dispenser.jpg",
       imageAlt: "Automatic water dispenser",
     },
     {
@@ -30,6 +32,7 @@ export default function HomePage() {
       desc: "Mealtime, now personal.",
       href: "/products/feeder-001",
       imageSrc: "/images/products/Automatic-Feeder.jpg",
+      imageHoverSrc: "/images/products/Collage-Feeder.jpg",
       imageAlt: "Automatic food dispenser",
     },
   ];
@@ -73,16 +76,13 @@ export default function HomePage() {
         imageSrc="/src/assets/images/home/pet-owner1.png"
         imageAlt="Happy pet family"
       />
-
+      <CategoryRow
+        title="Highest Functionality for Your Four-Legged Friend"
+        items={categories}
+      />
       <PressMentions />
 
       <Features />
-
-      <CategoryRow
-        title="Our Products"
-        subtitle="At HugPaw, you can craft comfort, style, and tech — just for your buddy"
-        items={categories}
-      />
 
       <PromoStrip
         badge="Coming Soon"

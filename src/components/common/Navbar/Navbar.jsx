@@ -3,11 +3,11 @@ import MobileNav from "@components/common/Navbar/MobileNav";
 
 const Navbar = () => {
   return (
-    <div className="sticky top-0 z-[100] bg-white text-black h-[80px] px-4 flex">
+    <div className="sticky top-0 z-[100]h-[80px] px-4 flex">
       <div className="hidden md:flex items-center justify-between w-full">
         <DesktopNav />
       </div>
-      <div className="sticky top-0 flex items-center justify-between w-full md:hidden">
+      <div className="sticky top-0 flex items-center justify-between w-full md:hidden bg-white text-black">
         <MobileNav />
       </div>
     </div>
