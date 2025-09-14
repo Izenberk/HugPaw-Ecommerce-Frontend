@@ -123,14 +123,18 @@ export default function CategoryRow({
         </div>
 
         <div className="mt-10 md:mt-12 flex justify-center">
-                          <Link
-              to="/catalog"
-              className="inline-flex items-center rounded-full px-5 py-2
-                         bg-blue-600 text-white font-medium transition-all duration-300
-                         hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
-            >
-              Discover All Products
-            </Link>
+          <Link
+            to="/catalog"
+            className="inline-flex items-center rounded-full px-6 py-4
+                         bg-[#d1d74e] text-black text-[16px] font-bold"
+            bg-blue-600
+            text-white
+            font-medium
+            transition-all
+            duration-300
+          >
+            Discover All Products
+          </Link>
         </div>
       </div>
     </section>

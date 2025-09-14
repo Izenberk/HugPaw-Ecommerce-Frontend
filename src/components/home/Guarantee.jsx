@@ -26,7 +26,7 @@ export default function Guarantee() {
   ];
 
   return (
-    <section className="bg-green-200 p-6 md:p-8">
+    <section className="bg-[#d1d74e] p-6 md:p-8">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {Guarantees.map((g) => (
           <div key={g.title} className="flex items-start gap-4">

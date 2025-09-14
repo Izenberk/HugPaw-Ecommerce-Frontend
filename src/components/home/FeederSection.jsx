@@ -1,8 +1,7 @@
 export default function FeederSection() {
   return (
-    <section>
+    <section className="bg-[#e5eaff]">
       <div className="mx-auto max-w-6xl px-6 md:px-12 py-16 md:py-24 grid md:grid-cols-2 items-center gap-10">
-        
         {/* LEFT : IMAGE */}
         <div className="flex justify-center order-1 md:order-1">
           <img
