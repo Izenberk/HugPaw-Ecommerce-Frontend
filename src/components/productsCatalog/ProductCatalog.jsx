@@ -4,6 +4,7 @@ import ProductList from "@/components/productsCatalog/ProductList";
 import { Separator } from "@/components/ui/separator";
 import { CATEGORIES, PRODUCTS_MOCK } from "@/data/productsCatalog.mock";
 import { getProducts } from "@/lib/api";
+import { ChevronDown } from "lucide-react";
 
 export default function ProductCatalog({
   initialProducts = PRODUCTS_MOCK,
@@ -51,14 +52,16 @@ export default function ProductCatalog({
 
   return (
     <div className="space-y-6">
-      <div className="w-full">
+      {/* Header image + arrow */}
+      <div className="w-full max-w-6xl mx-auto px-6 relative">
         <img
-          src="/images/header/product-catalog-header.jpg"
+          src="/images/header/catalog-header.jpg"
           alt="Pet owner with dog and cat"
-          className="w-full h-96 object-cover object-[center_35%] rounded-none"
+          className="w-full h-96 object-cover object-[center_35%] rounded-[32px]"
         />
       </div>
 
+      {/* Header text */}
       <header className="flex flex-col gap-2 items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">
@@ -73,21 +76,44 @@ export default function ProductCatalog({
             categories={categories}
           />
         </div>
-        <p className="text-sm text-muted-foreground">
-            Take a look at our products
-          </p>
-      </header>
-      <Separator />
-      <ProductList
-        products={visibleProducts}
-        isLoading={isLoading}
-        error={error}
-      />
-      {!isLoading && !error && (
-        <p className="text-xs text-muted-foreground">
-          {visibleProducts.length} item(s)
+        <p
+          onClick={() =>
+            document.getElementById("product-section")?.scrollIntoView({
+              behavior: "smooth",
+            })
+          }
+          className="text-sm text-muted-foreground cursor-pointer hover:underline hover:text-gray-900 transition"
+        >
+          Take a look at our products
         </p>
-      )}
+        <ChevronDown
+          onClick={() =>
+            document.getElementById("product-section")?.scrollIntoView({
+              behavior: "smooth",
+            })
+          }
+          className="w-6 h-6 text-gray-800"
+        />
+      </header>
+
+      <Separator />
+
+      {/* Product list with anchor id */}
+      <div id="product-section" className="pb-16">
+        <ProductList
+          products={visibleProducts}
+          isLoading={isLoading}
+          error={error}
+        />
+
+        {!isLoading && !error && (
+          <div className="flex justify-center mt-4">
+            <p className="text-xs text-muted-foreground">
+              {visibleProducts.length} item(s)
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
