@@ -3,17 +3,8 @@ export default function WaterDispenserSection() {
     <section>
       <div className="mx-auto max-w-6xl px-6 md:px-12 py-16 md:py-24 grid md:grid-cols-2 items-center gap-10">
         
-        {/* LEFT : IMAGE */}
-        <div className="flex justify-center border-rounded-lg">
-          <img
-            src="/images/home/review-water-dispenser.png"
-            alt="Automatic Pet Water Dispenser"
-            className="object-contain h-[360px] md:h-[420px] rounded-xl overflow-hidden"
-          />
-        </div>
-
-        {/* RIGHT : CONTENT */}
-        <div className="text-gray-800">
+        {/* LEFT : CONTENT */}
+        <div className="text-gray-800 order-2 md:order-1">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Fresh Water Anytime
           </h2>
@@ -23,10 +14,21 @@ export default function WaterDispenserSection() {
             Designed with smart filtration and continuous circulation, it ensures 
             fresh and clean water all day long. Perfect for busy pet owners.
           </p>
-          <button onClick={() => window.location.href="/products/water-001"} 
-          className="px-6 py-3 rounded-full bg-gray-900 text-white font-medium shadow hover:bg-gray-800 transition">
+          <button
+            onClick={() => (window.location.href = "/products/water-001")}
+            className="px-6 py-3 rounded-full bg-gray-900 text-white font-medium shadow hover:bg-gray-800 transition"
+          >
             View Product
           </button>
+        </div>
+
+        {/* RIGHT : IMAGE */}
+        <div className="flex justify-center order-1 md:order-2">
+          <img
+            src="/images/home/review-water-dispenser.png"
+            alt="Automatic Pet Water Dispenser"
+            className="object-contain h-[360px] md:h-[420px] rounded-xl overflow-hidden"
+          />
         </div>
       </div>
     </section>
