@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 
 export default function Hero() {
   return (
@@ -27,16 +26,11 @@ export default function Hero() {
               for your four-legged family.
             </p>
 
-            {/* ใช้ shadcn Button */}
-               <div className="mt-6">
-                <Link
-              to="/catalog"
-              className="inline-flex items-center rounded-full px-6 py-4
-                         bg-[#d1d74e] text-black text-[16px] font-bold"
-            >
-              Discover All
-            </Link>
-              </div>
+            <div className="mt-6">
+              <Link to="/catalog" className="hero-button">
+                Discover All
+              </Link>
+            </div>
           </div>
         </div>
 
