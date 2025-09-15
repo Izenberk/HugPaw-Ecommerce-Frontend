@@ -176,7 +176,7 @@ function Choice({ id, value, icon, label }) {
       <RadioGroupItem value={value} id={id} className="peer sr-only" aria-label={label} />
       <Label
         htmlFor={id}
-        className="border-muted hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary flex flex-col items-center justify-between rounded-md border-2 bg-transparent p-4"
+        className="border-muted hover:bg-primary hover:text-primary-foreground peer-data-[state=checked]:border-primary flex flex-col items-center justify-between rounded-md border-2 bg-transparent p-4"
       >
         {icon}
         {label}

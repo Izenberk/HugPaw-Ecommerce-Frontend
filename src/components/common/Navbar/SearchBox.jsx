@@ -11,7 +11,7 @@ const SearchBox = () => {
           type="text"
           id="search-input"
           placeholder="Search..."
-          className="w-full px-4 py-2 pl-10 rounded-md border border-border focus:outline-none focus:ring-2 focus:ring-accent text-primary-foreground bg-card"
+          className="w-full px-4 py-2 pl-10 rounded-md border border-border focus:outline-none focus:ring-2 focus:ring-primary text-primary-foreground bg-card"
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
