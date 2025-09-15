@@ -74,7 +74,6 @@ export default function HomePage() {
       <HeroSection />
       <PressMentions />
       <CategoryRow
-        title="Highest Functionality for Your Four-Legged Friend"
         items={categories}
       />
       <CollarSection />

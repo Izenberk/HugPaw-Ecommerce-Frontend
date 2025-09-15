@@ -4,8 +4,6 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 export default function CategoryRow({
-  title,
-  subtitle,
   items,
   ctaHref = "/catalog",
   ctaLabel = "Discover All Products",
@@ -14,11 +12,11 @@ export default function CategoryRow({
     <section>
       <div className="mx-auto max-w-[1200px] px-6 md:px-8 py-12 md:py-16">
         {/* Heading */}
-        <div className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-3 text-center md:text-left">
-          <h2 className="text-2xl md:text-3xl font-semibold">{title}</h2>
-          {subtitle ? (
-            <p className="text-base text-muted-foreground">{subtitle}</p>
-          ) : null}
+        <div className="flex flex-col items-center text-center gap-2 mb-6 md:mb-8">
+          <h2 className="text-2xl md:text-3xl font-semibold">Why HugPaw?</h2>
+          <p className="text-base text-muted-foreground">
+            Highest Functionality for Your Four-Legged Friend
+          </p>
         </div>
 
         {/* ≥ sm : grid */}

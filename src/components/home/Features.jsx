@@ -1,4 +1,3 @@
-// src/components/HugPawFeatures.jsx
 import React from "react";
 
 const mockFeatures = [
@@ -44,14 +43,13 @@ const mockFeatures = [
   },
 ];
 
-function HugPawFeatures({ heading, subheading, items = mockFeatures }) {
+function HugPawFeatures({ items = mockFeatures }) {
   return (
     <section
       id="why-us"
       className="relative isolate py-14 sm:py-16 lg:py-20"
       aria-labelledby="hugpaw-features-heading"
     >
-      {/* soft bg tint that fits HugPaw palette */}
       <div className="absolute inset-0 -z-10" />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-10 sm:mb-12">
@@ -69,7 +67,7 @@ function HugPawFeatures({ heading, subheading, items = mockFeatures }) {
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {items.map((f) => (
             <li key={f.id} className="group rounded-2xl bg-white/70 backdrop-blur ring-1 ring-black/5 p-6 hover:shadow-md transition">
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-indigo-50 text-indigo-800 mb-4">
+              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-indigo-50 text-black mb-4">
                 {f.icon}
               </div>
               <h3 className="text-lg font-medium text-slate-900">{f.title}</h3>

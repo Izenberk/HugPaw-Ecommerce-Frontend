@@ -2,8 +2,7 @@ export default function WaterDispenserSection() {
   return (
     <section>
       <div className="mx-auto max-w-6xl px-6 md:px-12 py-16 md:py-24 grid md:grid-cols-2 items-center gap-10">
-        
-        {/* LEFT : CONTENT */}
+      
         <div className="text-gray-800 order-2 md:order-1">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Fresh Water Anytime
@@ -22,7 +21,6 @@ export default function WaterDispenserSection() {
           </button>
         </div>
 
-        {/* RIGHT : IMAGE */}
         <div className="flex justify-center order-1 md:order-2">
           <img
             src="/images/home/review-water-dispenser.png"

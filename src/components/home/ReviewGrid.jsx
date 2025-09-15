@@ -8,11 +8,11 @@ export default function ReviewGrid({
   items = [],
 }) {
   return (
-    <section className="">
+    <section>
       <div className="mx-auto max-w-[1200px] px-6 md:px-8 py-12 md:py-16">
         {/* Heading + subheading */}
-        <div className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-baseline md:gap-3 items-center text-center md:text-left">
-          <h3 className="text-2xl md:text-3xl font-semibold">{title}</h3>
+        <div className="mb-6 md:mb-8 flex flex-col items-center text-center gap-2">
+          <h1 className="text-2xl md:text-3xl font-semibold">{title}</h1>
           {subtitle ? (
             <p className="text-base text-muted-foreground">{subtitle}</p>
           ) : null}

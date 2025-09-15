@@ -1,8 +1,8 @@
 export default function CollarSection() {
   return (
-    <section className="bg-[#e5eaff]">
+    <section>
       <div className="mx-auto max-w-6xl px-6 md:px-12 py-16 md:py-24 grid md:grid-cols-2 items-center gap-10">
-        {/* LEFT : IMAGE */}
+  
         <div className="flex justify-center">
           <img
             src="/images/home/review-collar.png"
@@ -11,7 +11,6 @@ export default function CollarSection() {
           />
         </div>
 
-        {/* RIGHT : CONTENT */}
         <div className="text-gray-800">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Style Meets Comfort
