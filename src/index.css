@@ -157,5 +157,11 @@
            hover:scale-105 hover:-translate-y-1
            hover:shadow-lg hover:shadow-white/20;
   }
+   .title-text {
+    @apply text-4xl font-bold text-gray-900;
+  }
+  .subtitle-text {
+    @apply text-xl text-gray-700;
+  }
 }
 

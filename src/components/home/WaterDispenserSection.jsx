@@ -3,12 +3,12 @@ export default function WaterDispenserSection() {
   return (
     <section>
       <div className="mx-auto max-w-6xl px-6 md:px-12 py-16 md:py-24 grid md:grid-cols-2 items-center gap-10">
-        <div className="text-gray-800 order-2 md:order-1">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <div>
+          <h1 className="title-text mb-4">
             Fresh Water Anytime
-          </h2>
-          <h3 className="text-xl font-semibold mb-3">AquaFlow</h3>
-          <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+          </h1>
+          <h2 className="subtitle-text font-bold mb-2">AquaFlow</h2>
+          <p className="subtitle-text mb-6">
             Keep your pet hydrated with the AquaFlow automatic water dispenser.
             Designed with smart filtration and continuous circulation, it
             ensures fresh and clean water all day long. Perfect for busy pet

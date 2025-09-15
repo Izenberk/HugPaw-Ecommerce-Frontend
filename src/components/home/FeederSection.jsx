@@ -13,12 +13,12 @@ export default function FeederSection() {
           />
         </div>
 
-        <div className="text-gray-800 order-2 md:order-2">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <div className="order-2 md:order-2">
+          <h1 className="title-text mb-4">
             Smart Feeding Made Easy
-          </h2>
-          <h3 className="text-xl font-semibold mb-3">MealMate</h3>
-          <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+          </h1>
+          <h2 className="subtitle-text font-bold mb-2">MealMate</h2>
+          <p className="subtitle-text mb-6">
             The MealMate automatic feeder ensures your pet never misses a meal.
             With programmable portions and a sleek design, it’s perfect for
             maintaining healthy eating habits — even when you're away.

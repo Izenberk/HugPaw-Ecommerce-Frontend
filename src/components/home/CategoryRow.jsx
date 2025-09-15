@@ -13,8 +13,8 @@ export default function CategoryRow({
       <div className="mx-auto max-w-[1200px] px-6 md:px-8 py-12 md:py-16">
         {/* Heading */}
         <div className="flex flex-col items-center text-center gap-2 mb-6 md:mb-8">
-          <h2 className="text-2xl md:text-3xl font-semibold">Why HugPaw?</h2>
-          <p className="text-base text-muted-foreground">
+          <h2 className="title-text mb-2">Why HugPaw?</h2>
+          <p className="subtitle-text max-w-2xl">
             Highest Functionality for Your Four-Legged Friend
           </p>
         </div>
