@@ -16,9 +16,8 @@ import ForgotPassword from "@/pages/auth/ForgetPassword";
 
 // --- NEW: lazy admin imports (JS components you just built) ---
 import React, { Suspense } from "react";
-const AdminLayout = React.lazy(() => import("@/admin/AdminLayout.jsx"));     // simple shell (header/sidebar) or reuse Layout
-const ItemsPage   = React.lazy(() => import("@/admin/pages/ItemsPage.jsx")); // list + modal form
-
+const AdminLayout  = React.lazy(() => import("@/admin/AdminLayout.jsx"));
+const ProductsPage = React.lazy(() => import("@/admin/pages/ProductsPage.jsx"));
 
 export const router = createBrowserRouter([
   {
@@ -46,29 +45,23 @@ export const router = createBrowserRouter([
   },
 
   // --- NEW: admin area root (separate tree) ---
-  {
+    {
     path: "/admin",
     element: (
-      <Suspense fallback={<div className="p-6">Loading admin…</div>}>
-
-          <AdminLayout />
-
-      </Suspense>
+        <Suspense fallback={<div className="p-6">Loading admin…</div>}>
+        <AdminLayout />
+        </Suspense>
     ),
-    errorElement: <NotFound />,
     children: [
-      {
-        index: true,
-        element: <div className="p-6">Admin dashboard (coming soon)</div>,
-      },
-      {
-        path: "items",
+        { index: true, element: <div className="p-6">Admin dashboard</div> },
+        {
+        path: "products",
         element: (
-          <Suspense fallback={<div className="p-6">Loading items…</div>}>
-            <ItemsPage />
-          </Suspense>
+            <Suspense fallback={<div className="p-6">Loading products…</div>}>
+            <ProductsPage />
+            </Suspense>
         ),
-      },
+        },
     ],
-  },
+    },
 ]);
