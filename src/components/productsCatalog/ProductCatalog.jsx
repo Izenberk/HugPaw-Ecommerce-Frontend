@@ -53,7 +53,8 @@ export default function ProductCatalog({
   return (
     <div className="space-y-6">
       {/* Header image */}
-      <div className="w-full max-w-6xl mx-auto px-6 relative">
+      
+      <div className="w-full max-w-6xl mx-auto px-6">
         <img
           src="/images/header/catalog-header.jpg"
           alt="Pet owner with dog and cat"

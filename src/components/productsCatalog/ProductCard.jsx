@@ -30,7 +30,7 @@ const ProductCard = ({ id, name, price, imageUrl, description, to, tags = [] }) 
                 if (e.currentTarget.src !== PLACEHOLDER_IMG) e.currentTarget.src = PLACEHOLDER_IMG;
                 }}
             />
-            <span className="absolute right-2 top-2 z-10 rounded-xl bg-accent px-2 py-1 text-xs text-secondary-foreground">
+            <span className="absolute right-2 top-2 z-10 rounded-xl bg-primary px-2 py-1 text-xs text-secondary-foreground">
                 Customizable
             </span>
             </div>
@@ -49,8 +49,8 @@ const ProductCard = ({ id, name, price, imageUrl, description, to, tags = [] }) 
             </p>
         </CardContent>
 
-        <CardFooter>
-            <Button className="w-full" asChild aria-label={`Customize ${name}`}>
+        <CardFooter className="flex items-center justify-center">
+            <Button className="w-min" variant="black" asChild aria-label={`Customize ${name}`}>
             <Link to={href}>Let's customize</Link>
             </Button>
         </CardFooter>

@@ -30,7 +30,7 @@ const buttonVariants = cva(
         mutedblue:
           "border text-white bg-[#7A91BF] hover:bg-gradient-to-r hover:from-[#7A91BF] hover:to-[#324C80]",
         gradientblue:"inline-flex items-center rounded-full px-5 py-2 bg-[#818CF8] text-white font-medium leading-none transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
-      },
+    },
       
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
