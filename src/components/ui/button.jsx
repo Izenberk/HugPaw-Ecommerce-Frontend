@@ -18,9 +18,9 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+          "hover:bg-muted-primary hover:text-muted-primary-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
-        black: "bg-black text-white hover:bg-black/90",
+        black: "bg-gray-800 text-white hover:bg-gray-600 hover:text-white hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-white/20",
         blueorange:
           "bg-primary text-black hover:bg-gradient-to-r hover:from-[#e6eefe] hover:to-[#ffedcb]",
         purplegradient:

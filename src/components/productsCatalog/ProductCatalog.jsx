@@ -65,7 +65,7 @@ export default function ProductCatalog({
       {/* Header text */}
       <header className="flex flex-col gap-2 items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">
+          <h1 className="title-text m-6">
             At HugPaw, you can craft comfort, style, and tech just for your
             buddy
           </h1>

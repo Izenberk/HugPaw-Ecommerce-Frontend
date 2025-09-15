@@ -30,7 +30,7 @@ const ProductCard = ({ id, name, price, imageUrl, description, to, tags = [] }) 
                 if (e.currentTarget.src !== PLACEHOLDER_IMG) e.currentTarget.src = PLACEHOLDER_IMG;
                 }}
             />
-            <span className="absolute right-2 top-2 z-10 rounded-xl bg-primary px-2 py-1 text-xs text-secondary-foreground">
+            <span className="absolute right-2 top-2 z-10 rounded-xl bg-primary px-2 py-1 text-xs text-">
                 Customizable
             </span>
             </div>
