@@ -1,74 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "animate.css";
+@tailwind utilities;
 
-@layer utilities {
-  @keyframes gradient-x {
-    0%,
-    100% {
-      background-size: 200% 200%;
-      background-position: left center;
-    }
-    50% {
-      background-size: 200% 200%;
-      background-position: right center;
-    }
-  }
-
-  @keyframes gradient-xy {
-    0%,
-    100% {
-      background-size: 400% 400%;
-      background-position: left top;
-    }
-    50% {
-      background-size: 400% 400%;
-      background-position: right bottom;
-    }
-  }
-
-  .animate-gradient-x {
-    animation: gradient-x 10s ease infinite;
-  }
-
-  .animate-gradient-xy {
-    animation: gradient-xy 10s ease infinite;
-  }
+@theme {
+  --font-poppins: "Poppins", "sans-serif";
+  --font-worksans: "Work Sans", "sans-serif";
+  --font-montserrat: "Montserrat", "sans-serif";
+  --font-cabin: "Cabin", "sans-serif";
 }
 
-@layer components {
-  .nav-underline {
-    position: relative;
-  }
-  
-  .nav-underline::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    height: 2px;
-    width: 0;
-    background: currentColor;
-    transition: width 0.25s ease;
-  }
-  
-  .nav-underline:hover::after {
-    width: 100%;
-  }
-}
-
-@custom-variant dark (&:is(.dark *));
-
-/* === HugPaw x shadcn theme === */
-
-/* 1) Map shadcn tokens (Tailwind v4 @theme) to our base CSS vars */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-
-  /* shadcn semantic tokens — read from our base vars below */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -84,12 +33,9 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-
-  /* Optional extras used by some shadcn components */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -103,136 +49,104 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+  --animate-grid: grid 15s linear infinite;
+  @keyframes grid {
+    0% {
+      transform: translateY(-50%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite
+    alternate;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+  @keyframes shimmer-slide {
+    to {
+      transform: translate(calc(100cqw - 100%), 0);
+    }
+  }
+  @keyframes spin-around {
+    0% {
+      transform: translateZ(0) rotate(0);
+    }
+    15%,
+    35% {
+      transform: translateZ(0) rotate(90deg);
+    }
+    65%,
+    85% {
+      transform: translateZ(0) rotate(270deg);
+    }
+    100% {
+      transform: translateZ(0) rotate(360deg);
+    }
+  }
 }
 
-/* 2) Our base variables (HugPaw palette) */
 :root {
-  --radius: 10px;
-  /* 0.625rem ~ 10px */
-
-  /* Layout & Core surfaces */
-  --background: #FAF7F2;
-  --foreground: #000000;
-  --card: #ffffff;
-  --card-foreground: #000000;
-  --popover: #ffffff;
-  --popover-foreground: #000000;
-
-  /* Form & Structural elements */
-  --input: #e7ebf2;
-  --placeholder: #94a3b8;
-  --border: #e7ebf2;
-  --overlay: rgba(0, 0, 0, 0.45);
-  --divider: #eef1f6;
-
-  /* Elevated surfaces */
-  --shadow: rgba(0, 0, 0, 0.08);
-  --surface-1: #ffffff;
-  --surface-2: #f7f9fd;
-
-  /* brand color*/
-  --primary: #e6eefe;
-  --primary-foreground: #1e293b;
-  --secondary: #fdf5e6;
-  --secondary-foreground: #3b2a18;
-  --accent: #eae6fe;
-  --accent-foreground: #2d1b69;
-
-  /* Hover states */
-  --primary-hover: #cdd9fb;
-  --secondary-hover: #f8ebce;
-  --accent-hover: #cfc9f8;
-  --destructive-hover: #dc2626;
-  --success-hover: #1eaa52;
-  --warning-hover: #e08d09;
-  --info-hover: #0c96d2;
-
-  /* Subtle backgrounds / chips / skeletons */
-  --muted: #f4f7ff;
-  --muted-foreground: #64748b;
-
-  /* Feedback */
-  --success: #22c55e;
-  --success-foreground: #0b1f12;
-  --warning: #f59e0b;
-  --warning-foreground: #1f1505;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --info: #0ea5e9;
-  --info-foreground: #06131a;
-
-  /* Disabled states */
-  --disabled: #f1f3f7;
-  --disabled-foreground: #9aa3af;
-  --disabled-border: #e3e7ee;
-
-  /* Link */
-  --link: #2563eb;
-  --link-hover: #1d4ed8;
-  --link-visited: #7c3aed;
-
-  /* Focus Helper*/
-  --selection: #dbe7ff;
-  --ring: #7ea2ff;
-  --ring-offset: #ffffff;
-
-  /* Optional chart colors (picked to match brand vibe) */
-  --chart-1: #4f6cd8;
-  --chart-2: #f2a93b;
-  --chart-3: #9b6bde;
-  --chart-4: #4cb494;
-  --chart-5: #e25555;
-
-  /* Optional sidebar tokens */
-  --sidebar: #e9ecf5;
-  --sidebar-foreground: #0f172a;
-  --sidebar-primary: #4f6cd8;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e6eefe;
-  --sidebar-accent-foreground: #0f172a;
-  --sidebar-border: #d6d9e4;
-  --sidebar-ring: #7ea2ff;
-}
-
-/* 3) Toast theme tokens (derived from your palette) */
-:root {
-  /* Brand/info (general notices) */
-  --toast-brand-bg: var(--chart-1); /* #4f6cd8, richer than --primary */
-  --toast-brand-fg: #ffffff;
-  --toast-brand-border: var(--border);
-  --toast-brand-cta-bg: var(--popover);
-  --toast-brand-cta-fg: var(--chart-1);
-
-  /* Success (added to cart) */
-  --toast-success-bg: var(--success);
-  --toast-success-fg: var(--success-foreground);
-  --toast-success-border: var(--border);
-  --toast-success-cta-bg: var(--popover);
-  --toast-success-cta-fg: var(--success);
-
-  /* Warn (require login) */
-  --toast-warn-bg: var(--warning);
-  --toast-warn-fg: var(--warning-foreground);
-  --toast-warn-border: var(--border);
-  --toast-warn-cta-bg: var(--foreground);
-  --toast-warn-cta-fg: #ffffff;
-
-  /* Favorite (wishlist) — purple vibe */
-  --toast-fav-bg: var(--chart-3); /* #9b6bde */
-  --toast-fav-fg: #ffffff;
-  --toast-fav-border: var(--border);
-  --toast-fav-cta-bg: var(--popover);
-  --toast-fav-cta-fg: var(--chart-3);
-
-  --toast-error-bg: var(--destructive);
-  --toast-error-fg: var(--destructive-foreground);
-  --toast-error-border: var(--border);
-  --toast-error-cta-bg: var(--popover);
-  --toast-error-cta-fg: var(--destructive);
+  --radius: 0.625rem;
+  --background: oklch(0.9848 0.0054 95.1);
+  --foreground: oklch(0 0 0);
+  --card: oklch(0.9848 0.0054 95.1);
+  --card-foreground: oklch(0 0 0);
+  --popover: oklch(0.9848 0.0054 95.1);
+  --popover-foreground: oklch(0 0 0);
+  --primary: oklch(0.8494 0.1569 111.71);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.8699 0.0622 274.04);
+  --secondary-foreground: oklch(0 0 0);
+  --muted: oklch(0.95 0.02 277);
+  --muted-foreground: oklch(0.35 0.02 277);
+  --accent: oklch(0.82 0.12 310);
+  --accent-foreground: oklch(0.22 0.03 310);
+  --destructive: oklch(0.55 0.22 25);
+  --border: oklch(0.89 0.02 277);
+  --input: oklch(0.93 0.02 277);
+  --ring: oklch(0.59 0.2 277);
+  --chart-1: oklch(0.6 0.2 277);
+  --chart-2: oklch(0.62 0.18 145);
+  --chart-3: oklch(0.65 0.19 35);
+  --chart-4: oklch(0.58 0.2 210);
+  --chart-5: oklch(0.57 0.22 15);
 }
 
 @layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .hero-button {
+    @apply inline-flex items-center justify-center
+           bg-primary text-primary-foreground
+           px-6 py-2 rounded-full font-bold text-lg
+           transition-all duration-300
+           hover:bg-white hover:text-primary-foreground
+           hover:scale-105 hover:-translate-y-1
+           hover:shadow-lg hover:shadow-accent/40
+           cursor-pointer;
   }
 }
