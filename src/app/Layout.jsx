@@ -16,6 +16,7 @@ const Layout = () => {
       {/* Push content below (Topbar + Navbar height) */}
       <main className="pt-6 md:pt-[100px]">
         <ScrollRestoration />
+        {/* <div style={{ width: "1000px" }} >xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br /> xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br />xxx<br /></div> */}
         <Outlet />
       </main>
 

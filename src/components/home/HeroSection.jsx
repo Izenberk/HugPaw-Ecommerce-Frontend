@@ -1,41 +1,28 @@
 import { Link } from "react-router-dom";
 
-export default function Hero() {
+export default function HeroSection() {
   return (
-    <section className="relative w-full h-[90vh] bg-[#FAF7F2] flex items-center justify-center p-4">
-      {/* Hero Container */}
-      <div className="relative w-full h-[90vh] rounded-[32px] overflow-hidden bg-black flex">
-        {/* Background image / video */}
-        <img
-          src="/images/home/hero-background.jpg"
-          alt="Red light therapy"
-          className="absolute inset-0 w-full h-full object-cover object-[center_90%]"
-        />
-
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/20" />
-
-        {/* Content (ฝั่งซ้าย) */}
-        <div className="relative z-10 flex items-center justify-center w-1/2 h-full">
-          <div className="flex flex-col text-left max-w-md text-white">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
-              For Every Paw <br /> in the Family
-            </h1>
-            <p className="text-lg mb-6 text-gray-200">
-              Smart, simple essentials made with love <br />
-              for your four-legged family.
-            </p>
-
-            <div className="mt-6">
-              <Link to="/catalog" className="hero-button">
-                Discover All
-              </Link>
-            </div>
-          </div>
+     <section className="min-h-[90vh] p-10 pt-0 pb-0">
+      <div
+        className="w-full h-[80vh] pb-20 rounded-4xl overflow-hidden flex items-center justify-left text-center text-white"
+        style={{
+          backgroundImage: "url('/images/home/hero-background.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="relative z-10 px-40 text-left">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 font-worksans">
+            For Every Paw <br /> in the Family
+          </h1>
+          <p className="text-lg mb-6">
+            Smart, simple essentials made with love <br />
+            for your four-legged family.
+          </p>
+          <Link to="/catalog" className="hero-button">
+            Shop Now
+          </Link>
         </div>
-
-        {/* Right side (รูปภาพ) */}
-        <div className="w-1/2" />
       </div>
     </section>
   );

@@ -25,7 +25,7 @@ export default function PressMentions() {
       id: "Tech4Pets",
       logo: "TECH4PETS",
       icon: Radio,
-      quote: "Innovative solutions for pet care, blending technology with everyday needs.",
+      quote: "Innovative solutions for pet care that every pet owner should know about.",
     },
   ];
 

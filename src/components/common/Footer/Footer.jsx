@@ -2,7 +2,7 @@ import DesktopFooter from "./DesktopFooter"
 
 const Footer = () => {
     return (
-        <div className="bg-primary text-primary-foreground px-6 py-8 h-[auto] md:h-[200px]">
+        <div className="bg-gray-800 text-white px-6 py-8 h-[auto] md:h-[200px]">
             <div>
                 <DesktopFooter />
             </div>

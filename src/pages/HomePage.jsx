@@ -72,15 +72,6 @@ export default function HomePage() {
   return (
     <main>
       <HeroSection />
-
-      {/* <HeroSplit
-        title={["More Than Pets", "They’re Family"]}
-        subtitle="Unique items for your furry friends"
-        cta={{ label: "Shop Now", href: "/catalog" }}
-        imageSrc="/src/assets/images/home/pet-owner1.png"
-        imageAlt="Happy pet family"
-      /> */}
-      
       <PressMentions />
       <CategoryRow
         title="Highest Functionality for Your Four-Legged Friend"
