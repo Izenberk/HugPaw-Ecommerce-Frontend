@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -81,7 +82,6 @@ export default function CategoryRow({
                 key={it.id}
                 className="min-w-[260px] snap-start rounded-2xl text-center flex flex-col transition-shadow hover:shadow-md"
               >
-                {/* คลิกที่รูปได้ */}
                 <Link
                   to={it.href}
                   aria-label={`Open ${it.title}`}
