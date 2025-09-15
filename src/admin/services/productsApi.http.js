@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_BASE || "http://localhost:3000/api";
+const BASE = import.meta.env.VITE_API_BASE || "http://localhost:3030/api";
 
 async function http(method, path, body) {
   const res = await fetch(`${BASE}${path}`, {
@@ -9,7 +9,7 @@ async function http(method, path, body) {
   });
   if (!res.ok) {
     let msg = `HTTP ${res.status}`;
-    try { const j = await res.json(); if (j?.message) msg = j.message; } catch {}
+    try { const j = await res.json(); if (j?.message) msg = j.message; } catch {/**/}
     throw new Error(msg);
   }
   return res.status === 204 ? null : res.json();
