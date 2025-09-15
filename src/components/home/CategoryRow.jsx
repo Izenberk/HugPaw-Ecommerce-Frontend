@@ -107,7 +107,6 @@ export default function CategoryRow({
                   <p className="text-xs text-muted-foreground">{it.desc}</p>
                 </CardHeader>
 
-                {/* ยังคงปุ่มในแต่ละการ์ดฝั่งโมบายไว้ตามเดิม */}
                 <CardContent className="mt-auto pb-4">
                   <Button asChild variant="lavenderblue" size="default">
                     <Link to={it.href} aria-label={`Customize ${it.title}`}>
@@ -123,8 +122,7 @@ export default function CategoryRow({
         <div className="mt-10 md:mt-12 flex justify-center">
           <Link
             to="/catalog"
-            className="inline-flex items-center rounded-full px-6 py-4
-                         bg-[#d1d74e] text-black text-[16px] font-bold"
+            className="primary-button"
             bg-blue-600
             text-white
             font-medium

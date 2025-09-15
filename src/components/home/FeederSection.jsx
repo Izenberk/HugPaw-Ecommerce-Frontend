@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function FeederSection() {
   return (
     <section>
@@ -21,9 +23,10 @@ export default function FeederSection() {
             With programmable portions and a sleek design, it’s perfect for
             maintaining healthy eating habits — even when you're away.
           </p>
-          <button className="px-6 py-3 rounded-full bg-gray-900 text-white font-medium shadow hover:bg-gray-800 transition">
+          <Link to="/products/feeder-001" className="secondary-button">
             View Product
-          </button>
+          </Link>
+
         </div>
       </div>
     </section>

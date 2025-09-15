@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export default function CollarSection() {
   return (
     <section>
@@ -21,9 +22,9 @@ export default function CollarSection() {
             from premium materials, it keeps your pet comfortable while adding a
             stylish touch for everyday adventures.
           </p>
-          <button className="px-6 py-3 rounded-full bg-gray-900 text-white font-medium shadow hover:bg-gray-800 transition">
+          <Link to="/products/collar-001" className="secondary-button">
             View Product
-          </button>
+          </Link>
         </div>
       </div>
     </section>

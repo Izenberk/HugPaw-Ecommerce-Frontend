@@ -19,7 +19,7 @@ export default function HeroSection() {
             Smart, simple essentials made with love <br />
             for your four-legged family.
           </p>
-          <Link to="/catalog" className="hero-button">
+          <Link to="/catalog" className="primary-button">
             Shop Now
           </Link>
         </div>
