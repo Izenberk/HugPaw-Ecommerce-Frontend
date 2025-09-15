@@ -9,7 +9,7 @@ export default function Navbar() {
   const lastY = useRef(0);
 
   useEffect(() => {
-    const THRESHOLD = 500; // เลื่อนลงเกินเท่านี้ค่อยเริ่มซ่อน
+    const THRESHOLD = 300; // เลื่อนลงเกินเท่านี้ค่อยเริ่มซ่อน
 
     const onScroll = () => {
       const y = window.scrollY || 0;
@@ -50,7 +50,7 @@ export default function Navbar() {
           "mx-auto w-full max-w-6xl px-2 md:px-4 transition-all duration-300",
           !scrolled
             ? "rounded-none bg-transparent backdrop-blur-0 ring-0 shadow-none"
-            : "rounded-full bg-white supports-[backdrop-filter]:bg-white/60 backdrop-blur-md ring-1 ring-black/10 shadow-lg",
+            : "rounded-full bg-white ring-1 ring-black/10 shadow-lg",
         ].join(" ")}
       >
         {/* NAV ROW */}
@@ -92,6 +92,7 @@ export default function Navbar() {
           <div className="flex items-center gap-6">
             {/* <SearchBox className="hidden xl:block w-64" /> */}
             <UserNav />
+          <div className="w-2" />
           </div>
         </div>
       </div>
