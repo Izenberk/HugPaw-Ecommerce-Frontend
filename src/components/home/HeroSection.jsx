@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Hero() {
   return (
-    <section className="relative w-full min-h-screen bg-[#FAF7F2] flex items-center justify-center p-4">
+    <section className="relative w-full h-[90vh] bg-[#FAF7F2] flex items-center justify-center p-4">
       {/* Hero Container */}
       <div className="relative w-full h-[90vh] rounded-[32px] overflow-hidden bg-black flex">
         {/* Background image / video */}

@@ -342,7 +342,7 @@ export default function ProductCustom({ product }) {
         {/* LEFT: Gallery (desktop only) */}
         <section className="hidden lg:block lg:col-span-7">
           {product.images?.[0] && (
-            <div className="w-full overflow-hidden rounded-xl border">
+            <div className="w-full overflow-hidden rounded-xl">
               <img
                 src={product.images[0]}
                 alt={product.name}
