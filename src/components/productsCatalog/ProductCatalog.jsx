@@ -52,7 +52,7 @@ export default function ProductCatalog({
 
   return (
     <div className="space-y-6">
-      {/* Header image + arrow */}
+      {/* Header image */}
       <div className="w-full max-w-6xl mx-auto px-6 relative">
         <img
           src="/images/header/catalog-header.jpg"
