@@ -12,9 +12,9 @@ export default function ReviewGrid({
       <div className="mx-auto max-w-[1200px] px-6 md:px-8 py-12 md:py-16">
         {/* Heading + subheading */}
         <div className="mb-6 md:mb-8 flex flex-col items-center text-center gap-2">
-          <h1 className="text-2xl md:text-3xl font-semibold">{title}</h1>
+          <h1 className="title-text">{title}</h1>
           {subtitle ? (
-            <p className="text-base text-muted-foreground">{subtitle}</p>
+            <p className="subtitle-text">{subtitle}</p>
           ) : null}
         </div>
 
