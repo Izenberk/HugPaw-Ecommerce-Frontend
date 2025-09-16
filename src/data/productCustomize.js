@@ -144,7 +144,7 @@ export const SAMPLE_FEEDER = {
         required: false,
         ui: "checkbox",
         values: [
-            { value: "wifi", label: "Wi-Fi App Control", priceAdj: 200, default: true },
+            { value: "wifi", label: "Wi-Fi App Control", priceAdj: 200},
             { value: "camera", label: "1080p Camera + 2-Way Audio", priceAdj: 900 },
             { value: "voice", label: "Custom Mealtime Voice", priceAdj: 120 },
         ],
