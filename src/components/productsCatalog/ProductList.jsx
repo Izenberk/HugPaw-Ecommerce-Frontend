@@ -3,13 +3,12 @@ import { Info } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Skeleton } from "../ui/skeleton";
 import ProductCard from "./ProductCard";
-import { paths } from "@/app/paths"; // ✅ centralize route building
+import { paths } from "@/app/paths";
 
 export default function ProductList({
   products = [],
   isLoading = false,
   error = null,
-  // linkPrefix = "/products", // ❌ no longer needed; we use paths.productDetail
 }) {
   if (isLoading) return <SkeletonGrid />;
 
@@ -36,9 +35,9 @@ export default function ProductList({
             key={p.id}
             className="
           flex-1
-          sm:basis-[calc(50%-0.75rem)]   /* 2 คอลัมน์บน sm */
-          lg:basis-[calc(33.333%-1rem)] /* 3 คอลัมน์บน lg */
-          max-w-sm                        /* กันไม่ให้บานเกิน */
+          sm:basis-[calc(50%-0.75rem)] 
+          lg:basis-[calc(33.333%-1rem)] 
+          max-w-sm                        
         "
           >
             <ProductCard
