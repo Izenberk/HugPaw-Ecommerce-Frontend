@@ -39,10 +39,6 @@ export default function Guarantee() {
         ))}
       </div>
 
-      {/* มุมขวา Info icon */}
-      <div className="absolute top-4 right-4">
-        <Info className="h-5 w-5" />
-      </div>
     </section>
   );
 }
