@@ -27,7 +27,7 @@ export default function CartPage() {
   }, [setPromoCode, setAppliedCode]);
 
   return (
-    <section>
+    <section className="h-full">
       <div className="text-center py-4">
         <h1 className="text-3xl font-semibold text-onSecondary">
           Cart and Order Confirmation
