@@ -7,10 +7,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
-import { ChevronRight, CircleUserRound, LogOut, Settings } from "lucide-react";
+import { useUser } from "@/context/UserContext";
+import { ChevronRight, CircleUserRound, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useCloseOnRouteChange } from "@/hooks/useCloseOnRouteChange";
+import mockProfile from "@/assets/images/logo/brand-logo.png";
 
 function displayNameFromUser(user) {
   const name =
@@ -23,22 +25,29 @@ function displayNameFromUser(user) {
 
 const DropdownAccount = () => {
   const { isLoggedIn, user, logout } = useAuth();
+  const { user: profileUser } = useUser();
+
   const [open, setOpen] = useState(false);
   useCloseOnRouteChange(setOpen);
 
-  const [avatarSrc, setAvatarSrc] = useState(Blackcat);
+  const effectiveUser = profileUser?.id ? profileUser : user;
+
+  const [avatarSrc, setAvatarSrc] = useState(mockProfile);
   useEffect(() => {
-    if (user?.avatarUrl) {
-      const url = user.avatarUrl;
+    const url = effectiveUser?.avatarUrl;
+    if (url) {
       const bust = `${url}${url.includes("?") ? "&" : "?"}t=${Date.now()}`;
       setAvatarSrc(bust);
     } else {
-      setAvatarSrc(Blackcat);
+      setAvatarSrc(mockProfile);
     }
-  }, [user?.avatarUrl]);
+  }, [effectiveUser?.avatarUrl]);
 
-  const name = useMemo(() => displayNameFromUser(user), [user]);
-  const email = user?.email || "—";
+  const name = useMemo(
+    () => displayNameFromUser(effectiveUser),
+    [effectiveUser]
+  );
+  const email = effectiveUser?.email || "—";
 
   return (
     <div className="z-[200]">
@@ -53,12 +62,16 @@ const DropdownAccount = () => {
         <DropdownMenuContent className="z-[1000]">
           <DropdownMenuLabel>
             <div className="flex justify-between gap-6">
-              <Link to={isLoggedIn ? "/user" : "/login"} className="flex items-center gap-2">
+              <Link
+                to={isLoggedIn ? "/user" : "/login"}
+                className="flex items-center gap-2"
+              >
                 <div>
                   <img
+                    key={effectiveUser?.avatarUrl || "placeholder"}
                     src={avatarSrc}
                     onError={(e) => {
-                      e.currentTarget.src = Blackcat;
+                      e.currentTarget.src = mockProfile;
                     }}
                     alt="UserPic"
                     className="w-[90px] h-[90px] shrink-0 rounded-full object-cover border-4 border-border shadow-md"
@@ -77,30 +90,23 @@ const DropdownAccount = () => {
 
           {isLoggedIn ? (
             <>
-              <DropdownMenuItem asChild>
-                <Link to="/user" className="flex w-full items-center justify-between">
-                  <span className="inline-flex items-center gap-2">
-                    <Settings />
-                    Setting
-                  </span>
-                  <ChevronRight />
-                </Link>
-              </DropdownMenuItem>
-
               <DropdownMenuItem
                 onClick={logout}
                 className="flex w-full items-center justify-between cursor-pointer"
               >
                 <span className="inline-flex items-center gap-2">
                   <LogOut />
-                  Sign out
+                  Log out
                 </span>
                 <ChevronRight />
               </DropdownMenuItem>
             </>
           ) : (
             <DropdownMenuItem asChild>
-              <Link to="/login" className="flex w-full items-center justify-between">
+              <Link
+                to="/login"
+                className="flex w-full items-center justify-between"
+              >
                 <span>Sign in</span>
                 <ChevronRight />
               </Link>
