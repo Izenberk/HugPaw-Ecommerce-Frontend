@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import BrandLogo from "/public/HugPaw-logo.svg";
 
 const Logo = () => {
   return (
     <Link to="/" className="flex items-center gap-2">
       <img
-        src={BrandLogo}
+        src={'HugPaw-logo.svg'}
         alt="HugPaw Logo"
         className="h-7 w-7 object-contain"
       />
