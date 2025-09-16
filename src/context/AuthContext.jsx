@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const api = axios.create({
-    baseURL: "http://localhost:3030/api/v1",
+    baseURL: import.meta.env.VITE_API_BASE ?? "http://localhost:3030/api/v1",
     withCredentials: true,
     headers: { "Content-Type": "application/json" },
   });
@@ -28,6 +28,23 @@ export const AuthProvider = ({ children }) => {
       }
     };
     checkAuth();
+  }, []);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const res = await api.get("/auth/me");
+        if (alive) setUser(res.data.user);
+      } catch {
+        if (alive) setUser(null);
+      } finally {
+        if (alive) setLoading(false);
+      }
+    })();
+    return () => {
+      alive = false;
+    };
   }, []);
 
   // login
