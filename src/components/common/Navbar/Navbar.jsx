@@ -7,7 +7,7 @@ const Navbar = () => {
       <div className="hidden md:flex items-center justify-between w-full">
         <DesktopNav />
       </div>
-      <div className="sticky top-0 flex items-center justify-between w-full md:hidden bg-white text-black">
+      <div className="sticky top-0 flex items-center justify-between w-full md:hidden text-black">
         <MobileNav />
       </div>
     </div>
