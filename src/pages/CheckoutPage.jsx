@@ -81,7 +81,7 @@ export default function CheckoutPage() {
     ) {
       // alert("Please complete your contact & shipping address.");
       showToast(
-        "alert",
+        "error",
         {
           title: "Please complete your contact & shipping address.",
         },
@@ -92,7 +92,7 @@ export default function CheckoutPage() {
     if (!shipping?.id) {
       // alert("Please select a shipping option.");
       showToast(
-        "alert",
+        "error",
         {
           title: "Please select a shipping option.",
         },
@@ -103,7 +103,7 @@ export default function CheckoutPage() {
     if (!items || items.length === 0) {
       // alert("Your cart is empty.");
       showToast(
-        "alert",
+        "error",
         {
           title: "Your cart is empty.",
         },
@@ -116,7 +116,7 @@ export default function CheckoutPage() {
     if (paymentMethod === "card" && !paymentValid) {
       // alert("Please complete valid card details.");
       showToast(
-        "alert",
+        "error",
         {
           title: "Please complete valid card details.",
         },

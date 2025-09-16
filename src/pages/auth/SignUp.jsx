@@ -29,7 +29,7 @@ const Signup = () => {
     if (data.password !== data.confirmPassword) {
       // alert("Passwords do not match");
       showToast(
-        "alert",
+        "error",
         {
           title: "Passwords do not match",
         },
