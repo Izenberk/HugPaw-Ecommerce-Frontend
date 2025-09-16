@@ -36,7 +36,8 @@ export default function AdminSidebar({
           <nav className="flex flex-col gap-1">
             <NavLink to="/admin/products" className={linkClass}>
               <BoxIcon />
-              {!collapsed && <span>Products <span className="text-gray-500">(Variants & Add-ons)</span></span>}
+              {!collapsed && 
+              <span>Variants & Add-ons </span>}
             </NavLink>
             {/* Add more links here */}
           </nav>
