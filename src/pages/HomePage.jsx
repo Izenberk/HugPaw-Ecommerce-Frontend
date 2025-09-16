@@ -22,7 +22,7 @@ export default function HomePage() {
     {
       id: "water",
       title: "Water Dispenser",
-      desc: "Watering made powerful.",
+      desc: "The next generation of pet hydration",
       href: "/products/water-001",
       imageSrc: "/images/products/Automatic-Water-Dispenser.jpg",
       imageHoverSrc: "/images/products/Collage-Water-Dispenser.jpg",
@@ -30,12 +30,12 @@ export default function HomePage() {
     },
     {
       id: "food",
-      title: "Food Dispenser",
-      desc: "Mealtime, now personal.",
+      title: "Feeder",
+      desc: "Make mealtimes easy, for both of you",
       href: "/products/feeder-001",
       imageSrc: "/images/products/Automatic-Feeder.jpg",
       imageHoverSrc: "/images/products/Collage-Feeder.jpg",
-      imageAlt: "Automatic food dispenser",
+      imageAlt: "Automatic feeder",
     },
   ];
 

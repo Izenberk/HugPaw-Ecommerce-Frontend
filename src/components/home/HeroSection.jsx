@@ -27,7 +27,8 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }}
           >
-            Smart, simple essentials <br /> made with love
+            Pets aren't just guests in your home.
+            <br />They're a part of your lives.
           </motion.p>
 
           <motion.div
