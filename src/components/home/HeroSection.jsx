@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 export default function HeroSection() {
   return (
     <section className="min-h-[90vh] p-10 pt-0 pb-0">
-      
       <div className="md:hidden">
         <img
           src="/images/home/hero-background.jpg"
@@ -23,12 +22,12 @@ export default function HeroSection() {
           </motion.h1>
 
           <motion.p
-            className="text-base sm:text-lg text-gray-700 mb-5 font-poppins"
+            className="block whitespace-normal text-base sm:text-lg text-gray-700 mb-5 font-poppins"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }}
           >
-            Smart, simple essentials made with love
+            Smart, simple essentials <br /> made with love
           </motion.p>
 
           <motion.div
@@ -36,7 +35,10 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
           >
-            <Link to="/catalog" className="primary-button w-full inline-flex justify-center">
+            <Link
+              to="/catalog"
+              className="primary-button w-full inline-flex justify-center"
+            >
               Shop Now
             </Link>
           </motion.div>

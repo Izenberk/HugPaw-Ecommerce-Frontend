@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import BrandLogo from "../../assets/images/logo/brand-logo.png";
+import BrandLogo from "/public/HugPaw-logo.svg";
 
 const Logo = () => {
   return (

@@ -6,7 +6,7 @@ const Footer = () => {
             <div>
                 <DesktopFooter />
             </div>
-            <div className="md:pt-6 text-center text-sm text-primary-foreground">
+            <div className="md:pt-6 text-center text-sm text-white">
                 Copyright © HugPaw 2025
             </div>
         </div>
