@@ -21,7 +21,7 @@ export default function WaterDispenserSection() {
 
         <div className="flex justify-center order-1 md:order-2">
           <img
-            src="/images/home/review-water-dispenser.png"
+            src="/images/home/product-water-dispenser.png"
             alt="Automatic Pet Water Dispenser"
             className="object-contain h-[360px] md:h-[420px] rounded-xl overflow-hidden"
           />

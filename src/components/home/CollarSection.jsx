@@ -6,7 +6,7 @@ export default function CollarSection() {
   
         <div className="flex justify-center">
           <img
-            src="/images/home/review-collar.png"
+            src="/images/home/product-collar.png"
             alt="Modern Pet Collar"
             className="object-contain h-[360px] md:h-[420px] rounded-xl overflow-hidden"
           />

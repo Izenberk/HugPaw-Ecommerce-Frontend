@@ -7,7 +7,7 @@ export default function FeederSection() {
 
         <div className="flex justify-center order-1 md:order-1">
           <img
-            src="/images/home/review-feeder.png"
+            src="/images/home/product-feeder.png"
             alt="Automatic Pet Feeder"
             className="object-contain h-[360px] md:h-[420px] rounded-xl overflow-hidden"
           />
