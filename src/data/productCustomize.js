@@ -219,7 +219,7 @@ export const SAMPLE_WATER_DISPENSER = {
         required: false,
         ui: "checkbox",
         values: [
-            { value: "quiet", label: "Ultra-Quiet Pump", priceAdj: 120, default: true },
+            { value: "quiet", label: "Ultra-Quiet Pump", priceAdj: 120 },
             { value: "uvc", label: "UV-C Sterilization", priceAdj: 420 },
             { value: "lowlevel", label: "Low-Water Alert", priceAdj: 150 },
         ],
