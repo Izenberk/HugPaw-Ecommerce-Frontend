@@ -9,7 +9,7 @@ import { ChevronDown } from "lucide-react";
 export default function ProductCatalog({
   initialProducts = PRODUCTS_MOCK,
   fetcher = getProducts,
-  defaultParams = { search: "", category: null, sort: "relevance" },
+  defaultParams = { search: "", category: null, sort: null },
 }) {
   const [products, setProducts] = useState(initialProducts ?? []); // wait to replace with fetcher
   const [isLoading, setIsLoading] = useState(!initialProducts);
