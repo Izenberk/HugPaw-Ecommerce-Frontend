@@ -1,59 +1,56 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import Logo from "@/components/common/Logo";
 import UserNav from "@/components/common/Navbar/UserNav";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false); // <- ใหม่
+  const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
 
-  useEffect(() => {
-    const THRESHOLD = 300; // เลื่อนลงเกินเท่านี้ค่อยเริ่มซ่อน
+  const { scrollY } = useScroll();
 
-    const onScroll = () => {
-      const y = window.scrollY || 0;
-      setScrolled(y > 10);
+  useMotionValueEvent(scrollY, "change", (y) => {
 
-      // ถ้าเลื่อนลงและเกิน threshold -> ซ่อน
-      if (y > lastY.current && y > THRESHOLD) {
-        setHidden(true);
-      } else {
-        // เลื่อนขึ้น หรืออยู่ใกล้บนสุด -> โชว์
-        if (y < lastY.current || y < 10) setHidden(false);
-      }
-      lastY.current = y;
-    };
+    const THRESHOLD = 200;
+    const diff = y - lastY.current;
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    setScrolled(y > 10);
+
+    if (y > THRESHOLD && diff > 0) {
+      // เลื่อนลงเกิน threshold → ซ่อน
+      setHidden(true);
+    } else if (diff < 0 && y < THRESHOLD) {
+      // เลื่อนขึ้น → โชว์กลับมา
+      setHidden(false);
+    }
+
+    lastY.current = y;
+  });
 
   return (
-    <div
+    <motion.div
+      initial={false}
+      animate={hidden ? { y: "-100%", opacity: 0 } : { y: 0, opacity: 1 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
       className={[
         "fixed inset-x-0 z-40",
-        // ขยับตำแหน่งใต้ Topbar เหมือนเดิม
         scrolled ? "top-2" : "top-[32px] md:top-[40px]",
-        // ซ่อน/โชว์ด้วยแอนิเมชัน
-        "transition-[top,transform,opacity] duration-300 will-change-transform",
-        hidden ? "-translate-y-[120%] opacity-0 pointer-events-none" : "translate-y-0 opacity-100",
       ].join(" ")}
     >
-      {/* safe area (iOS notch) + spacing */}
+      {/* safe area */}
       <div className="pointer-events-none h-2 md:h-4 pt-[env(safe-area-inset-top)]" />
 
-      {/* PILL CONTAINER */}
+      {/* container */}
       <div
         className={[
-          "mx-auto w-full max-w-6xl px-2 md:px-4 transition-all duration-300",
+          "mx-auto w-full max-w-6xl px-2 md:px-4",
           !scrolled
             ? "rounded-none bg-transparent backdrop-blur-0 ring-0 shadow-none"
             : "rounded-full bg-white ring-1 ring-black/10 shadow-lg",
         ].join(" ")}
       >
-        {/* NAV ROW */}
         <div
           className={[
             "flex items-center gap-6 transition-all duration-300",
@@ -65,21 +62,10 @@ export default function Navbar() {
             <Link to="/" aria-label="Home" className="inline-flex items-center">
               <Logo className="block h-8 w-auto align-middle" />
             </Link>
-
             <nav aria-label="Primary" className="hidden md:block self-center">
               <ul className="flex items-center gap-6">
                 <li>
-                  <Link
-                    to="/catalog"
-                    className="
-                      relative inline-flex items-center leading-none
-                      after:content-[''] after:absolute after:left-0 after:-bottom-1
-                      after:h-[2px] after:w-0 after:bg-current after:transition-[width] after:duration-300
-                      hover:after:w-full
-                    "
-                  >
-                    Products
-                  </Link>
+                  <Link to="/catalog">Products</Link>
                 </li>
               </ul>
             </nav>
@@ -90,12 +76,11 @@ export default function Navbar() {
 
           {/* RIGHT */}
           <div className="flex items-center gap-6">
-            {/* <SearchBox className="hidden xl:block w-64" /> */}
             <UserNav />
-          <div className="w-2" />
+            <div className="w-2" />
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
