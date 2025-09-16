@@ -8,6 +8,7 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { showToast } from "@/lib/toast";
 
 const Signup = () => {
   const methods = useForm({
@@ -26,7 +27,14 @@ const Signup = () => {
 
   const onSubmit = (data) => {
     if (data.password !== data.confirmPassword) {
-      alert("Passwords do not match");
+      // alert("Passwords do not match");
+      showToast(
+        "alert",
+        {
+          title: "Passwords do not match",
+        },
+        { duration: 2000 }
+      );
       return;
     }
     console.log("Signup data:", data);

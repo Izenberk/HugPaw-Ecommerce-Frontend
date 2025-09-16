@@ -12,7 +12,6 @@ import { appendOrder } from "@/lib/orderStorage";
 import ReceiptModal from "@/components/checkout/ReceiptModal";
 import { computeCartTotals } from "@/lib/cartTotals";
 import { showToast } from "@/lib/toast";
-import { useNavigate } from "react-router-dom";
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
@@ -85,7 +84,6 @@ export default function CheckoutPage() {
         "alert",
         {
           title: "Please complete your contact & shipping address.",
-          onAction: () => navigate("/login"),
         },
         { duration: 2000 }
       );
@@ -97,9 +95,8 @@ export default function CheckoutPage() {
         "alert",
         {
           title: "Please select a shipping option.",
-          onAction: () => navigate("/login"),
         },
-        { duration: 2000 }
+        { duration: 2000 }  
       );
       return;
     }
@@ -109,7 +106,6 @@ export default function CheckoutPage() {
         "alert",
         {
           title: "Your cart is empty.",
-          onAction: () => navigate("/login"),
         },
         { duration: 2000 }
       );
@@ -123,7 +119,6 @@ export default function CheckoutPage() {
         "alert",
         {
           title: "Please complete valid card details.",
-          onAction: () => navigate("/login"),
         },
         { duration: 2000 }
       );
