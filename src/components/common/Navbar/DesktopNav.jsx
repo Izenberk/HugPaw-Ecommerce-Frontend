@@ -35,7 +35,7 @@ export default function Navbar() {
       animate={hidden ? { y: "-100%", opacity: 0 } : { y: 0, opacity: 1 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className={[
-        "fixed inset-x-0 z-40",
+        "fixed inset-x-0 z-9999",
         scrolled ? "top-2" : "top-[32px] md:top-[40px]",
       ].join(" ")}
     >
