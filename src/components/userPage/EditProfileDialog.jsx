@@ -41,7 +41,7 @@ export function EditProfileDialog({ open, onOpenChange, user, onSave }) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
         {/* p-0 to let us control layout; max-h uses dynamic viewport units for mobile */}
-        <DialogContent className="sm:max-w-[560px] p-0">
+        <DialogContent className="sm:max-w-[560px] p-0 z-[1000]">
             {/* Column layout: header (fixed) + scroll area (flex-1) + footer (fixed) */}
             <div className="flex max-h-[85dvh] flex-col">
             <DialogHeader className="p-6 pb-2">
