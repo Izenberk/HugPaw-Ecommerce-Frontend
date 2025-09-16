@@ -1,12 +1,12 @@
+import HeroSection from "@/components/home/HeroSection";
+import PressMentions from "@/components/home/PressMentions";
 import CategoryRow from "@/components/home/CategoryRow";
 import CollarSection from "@/components/home/CollarSection";
 import FeederSection from "@/components/home/FeederSection";
-import Guarantees from "@/components/home/Guarantee";
-import HeroSplit from "@/components/home/HeroSplit";
-import PressMentions from "@/components/home/PressMentions";
-import ReviewGrid from "@/components/home/ReviewGrid";
 import WaterDispenserSection from "@/components/home/WaterDispenserSection";
-import HeroSection from "@/components/home/HeroSection";
+import ReviewGrid from "@/components/home/ReviewGrid";
+import PromoStrip from "@/components/home/PromoStrip";
+import Guarantees from "@/components/home/Guarantee";
 
 export default function HomePage() {
   const categories = [
@@ -73,25 +73,18 @@ export default function HomePage() {
     <main>
       <HeroSection />
       <PressMentions />
-      <CategoryRow
-        items={categories}
-      />
+      <CategoryRow items={categories} />
       <CollarSection />
       <WaterDispenserSection />
       <FeederSection />
-      
+
       <ReviewGrid
         title="Review"
         subtitle="Check out what our HugPaw Community has to say"
         items={reviews}
       />
+      <PromoStrip />
       <Guarantees />
-      {/* <PromoStrip
-        badge="Coming Soon"
-        title="Exciting deals are on the way!"
-        subtitle="We’re preparing something special for you. Stay tuned for the exclusive offers."
-        cta={{ label: "Explore Products", href: "/catalog" }}
-      /> */}
     </main>
   );
 }
