@@ -77,12 +77,7 @@ export default function HomePage() {
       <CollarSection />
       <WaterDispenserSection />
       <FeederSection />
-
-      <ReviewGrid
-        title="Review"
-        subtitle="Check out what our HugPaw Community has to say"
-        items={reviews}
-      />
+      <ReviewGrid items={reviews} />
       <PromoStrip />
       <Guarantees />
     </main>
