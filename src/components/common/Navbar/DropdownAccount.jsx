@@ -51,16 +51,16 @@ const DropdownAccount = () => {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <Settings />
             Setting
             <div className="absolute right-1/30 -translate-x-1/2">
               <ChevronRight />
             </div>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuItem onClick={logout}>
             <LogOut />
-            Sign out
+            Log out
             <div className="absolute right-1/30 -translate-x-1/2">
               <ChevronRight />
             </div>

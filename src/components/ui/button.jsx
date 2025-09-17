@@ -14,23 +14,24 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+          "border bg-background shadow-xs hover:bg-primary hover:text-primary-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+          "hover:bg-muted-primary hover:text-muted-primary-foreground dark:hover:bg-primary/50",
         link: "text-primary underline-offset-4 hover:underline",
-        black: "bg-black text-white hover:bg-black/90",
+        black: "bg-gray-800 text-white hover:bg-gray-600 hover:text-white hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-white/20",
         blueorange:
           "bg-primary text-black hover:bg-gradient-to-r hover:from-[#e6eefe] hover:to-[#ffedcb]",
         purplegradient:
           "bg-gradient-to-r from-[#D8B4FE] to-[#818CF8] text-white hover:from-[#C084FC] hover:to-[#7C3AED]",
         lavenderblue:
-          "border text-white bg-[#818CF8] hover:bg-gradient-to-r hover:from-[#818CF8] hover:to-[#D8B4FE]",
+          "text-white bg-[#818CF8] hover:bg-gradient-to-r hover:from-[#818CF8] hover:to-[#D8B4FE]",
         mutedblue:
           "border text-white bg-[#7A91BF] hover:bg-gradient-to-r hover:from-[#7A91BF] hover:to-[#324C80]",
-      },
-
+        gradientblue:"inline-flex items-center rounded-full px-5 py-2 bg-[#818CF8] text-white font-medium leading-none transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
+    },
+      
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",

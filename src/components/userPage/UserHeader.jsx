@@ -40,15 +40,15 @@ function initials(name = "", email = "") {
         <div className="flex flex-col gap-4 rounded-2xl border border-border bg-elevated/50 p-4 md:flex-row md:items-center md:justify-between">
             {/* Left: Identity */}
             <div className="flex items-center gap-4">
-            <div className="relative">
+            {/* <div className=""> */}
                 {/* Bigger avatar: 100x100 */}
-                <Avatar className="h-[100px] w-[100px] ring-1 ring-border">
-                <AvatarImage src={avatarUrl} alt={displayUsername} />
+                <Avatar className="z-100 h-[100px] w-[100px] ring-1 ring-border">
+                <AvatarImage className='' src={avatarUrl} alt={displayUsername} />
                 <AvatarFallback className="bg-surface text-foreground/80">
                     {initials(displayUsername, user?.email)}
                 </AvatarFallback>
                 </Avatar>
-            </div>
+            {/* </div> */}
 
             {/* Username + Email + Address */}
             <div className="min-w-0">

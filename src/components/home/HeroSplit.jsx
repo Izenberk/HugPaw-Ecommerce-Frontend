@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 export default function HeroSplit({
-  title, 
+  title,
   subtitle,
-  cta, 
+  cta,
   imageSrc,
   imageAlt,
 }) {
@@ -25,7 +25,7 @@ export default function HeroSplit({
 
   return (
     <section
-      className="bg-gradient-to-r from-[#fbfbfb] via-[#e6eefe] to-[#ffedcb] animate-gradient-xy flex items-center pt-20"
+      className="flex items-center"
     >
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -50,17 +50,17 @@ export default function HeroSplit({
             ) : null}
             {cta?.href && cta?.label ? (
               <div className="mt-6">
-                <Button
-                  asChild
-                  size="lg"
-                  variant="lavenderblue"
-                >
-                  <Link to={cta.href}>{cta.label}</Link>
-                </Button>
+                <Link
+              to="/catalog"
+              className="inline-flex items-center rounded-full px-5 py-2
+                         bg-blue-600 text-white font-medium transition-all duration-300
+                         hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
+            >
+              Discover Now
+            </Link>
               </div>
             ) : null}
           </div>
-          
 
           {/* DESKTOP image  */}
           <div className="hidden lg:block px-6 py-10">

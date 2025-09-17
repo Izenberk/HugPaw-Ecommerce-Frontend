@@ -80,21 +80,21 @@ const MobileNav = () => {
 
                   <DropdownMenuSeparator />
 
-                  <DropdownMenuItem asChild onSelect={() => setOpen(false)}>
+                  {/* <DropdownMenuItem asChild onSelect={() => setOpen(false)}>
                     <Link to="/contact" className="flex gap-3 items-center hover:text-gray-500">
                       <MessageSquareText /> Contact
                       <div className="absolute right-4"><ChevronRight /></div>
                     </Link>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
 
-                  <DropdownMenuItem asChild onSelect={() => setOpen(false)}>
+                  {/* <DropdownMenuItem asChild onSelect={() => setOpen(false)}>
                     <Link to="/setting" className="flex gap-3 items-center hover:text-gray-500">
                       <Settings /> Setting
                       <div className="absolute right-4"><ChevronRight /></div>
                     </Link>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
 
-                  <DropdownMenuSeparator />
+                  {/* <DropdownMenuSeparator /> */}
 
                   {/* Use button + navigate helper if not a <Link> */}
                   <DropdownMenuItem
@@ -143,12 +143,12 @@ const MobileNav = () => {
 
                   <DropdownMenuSeparator />
 
-                  <DropdownMenuItem asChild onSelect={() => setOpen(false)}>
+                  {/* <DropdownMenuItem asChild onSelect={() => setOpen(false)}>
                     <Link to="/contact" className="flex gap-3 items-center hover:text-gray-500">
                       <MessageSquareText /> Contact
                       <div className="absolute right-4"><ChevronRight /></div>
                     </Link>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
                 </>
               )}
             </DropdownMenuContent>

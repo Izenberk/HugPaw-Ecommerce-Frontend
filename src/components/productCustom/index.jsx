@@ -1,6 +1,12 @@
 import { useFavorites } from "@/lib/favorites";
 import { formatTHB } from "@/lib/formatters";
-import { calcPrice, getDefaultConfig, normalizeConfig, toCartItem, validateConfig } from "@/lib/productOptions";
+import {
+  calcPrice,
+  getDefaultConfig,
+  normalizeConfig,
+  toCartItem,
+  validateConfig,
+} from "@/lib/productOptions";
 import { assertProductShape } from "@/lib/productSchemas";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -27,6 +33,8 @@ const toNum = (x) => {
 };
 
 export default function ProductCustom({ product }) {
+  const addToCartToast = useAddToCartToast();
+  const { items = [] } = useCart?.() ?? { items: [] };
   const addToCartToast = useAddToCartToast();
   const { items = [] } = useCart?.() ?? { items: [] };
 
@@ -153,6 +161,7 @@ export default function ProductCustom({ product }) {
   }, [currentVariant, inCartForVariant]);
 
   const LOW_STOCK_THRESHOLD = 5;
+  const LOW_STOCK_THRESHOLD = 5;
 
   // -------- DYNAMIC ADD-ON GROUP DETECTION --------
   const featureGroup = useMemo(() => {
@@ -209,6 +218,10 @@ export default function ProductCustom({ product }) {
     return Array.isArray(raw) ? raw : [];
   }, [cfg, featureGroup]);
 
+  const getFeatureMeta = useCallback(
+    (val) => featureGroup?.values?.find((v) => v.value === val) || null,
+    [featureGroup]
+  );
   const getFeatureMeta = useCallback(
     (val) => featureGroup?.values?.find((v) => v.value === val) || null,
     [featureGroup]
@@ -343,14 +356,20 @@ export default function ProductCustom({ product }) {
     const attrs = variant?.attrs || {};
     const parts = Object.keys(attrs)
       .map((key) => {
+    const parts = Object.keys(attrs)
+      .map((key) => {
         const group = ogs.find((g) => g.key === key);
         const value = cfg?.[key] ?? attrs[key];
-        const label = group?.values?.find((v) => v.value === value)?.label ?? String(value);
+        const label =
+          group?.values?.find((v) => v.value === value)?.label ?? String(value);
         return label;
+      })
+      .filter(Boolean);
       })
       .filter(Boolean);
 
     return parts.length ? `${name} (${parts.join(", ")})` : name;
+  }
   }
 
   const handleAddToCart = async () => {
@@ -409,6 +428,7 @@ export default function ProductCustom({ product }) {
     }
 
     const maxAddable = Math.min(parentRemaining, maxByComponents);
+    const maxAddable = Math.min(parentRemaining, maxByComponents);
 
     if (maxAddable <= 0) {
       const variantLabel = describeVariant(product, variant, cfg);
@@ -437,6 +457,7 @@ export default function ProductCustom({ product }) {
     };
 
     addToCartToast(adapted);
+    addToCartToast(adapted);
 
     if (addQty < incomingQty) {
       const hit = maxAddable === parentRemaining ? "collar variant stock" : "feature stock";
@@ -444,6 +465,8 @@ export default function ProductCustom({ product }) {
     }
   };
 
+  const { addFavorite } = useFavorites();
+  const addFavWithToast = useAddToFavoriteToast({ onAdd: addFavorite });
   const { addFavorite } = useFavorites();
   const addFavWithToast = useAddToFavoriteToast({ onAdd: addFavorite });
 
@@ -559,6 +582,12 @@ function Group({ group, value, error, onPick, isAvailableVisual }) {
             group.type === "single"
               ? value === v.value
               : Array.isArray(value) && value.includes(v.value);
+      <div className="flex flex-wrap gap-2">
+        {group.values.map((v) => {
+          const active =
+            group.type === "single"
+              ? value === v.value
+              : Array.isArray(value) && value.includes(v.value);
 
           const available = isAvailableVisual ? isAvailableVisual(v.value) : true;
 
@@ -590,6 +619,9 @@ function Group({ group, value, error, onPick, isAvailableVisual }) {
         })}
       </div>
 
+      {group.help && <p className={helpCls}>{group.help}</p>}
+    </div>
+  );
       {group.help && <p className={helpCls}>{group.help}</p>}
     </div>
   );

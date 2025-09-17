@@ -5,12 +5,13 @@ import CheckoutShippingOptions from "@/components/checkout/CheckoutShippingOptio
 import CheckoutOrderReview from "@/components/checkout/CheckoutOrderReview";
 import CheckoutPaymentMethod from "@/components/checkout/CheckoutPaymentMethod";
 import CheckoutSummary from "@/components/checkout/CheckoutSummary";
-import { useCart } from "@/context/CartContext";        // adjust name/path if needed
-import { formatTHB } from "@/lib/formatters";            // used inside children too
+import { useCart } from "@/context/CartContext"; // adjust name/path if needed
+import { formatTHB } from "@/lib/formatters"; // used inside children too
 import { useUser } from "@/context/UserContext";
 import { appendOrder } from "@/lib/orderStorage";
 import ReceiptModal from "@/components/checkout/ReceiptModal";
 import { computeCartTotals } from "@/lib/cartTotals";
+import { showToast } from "@/lib/toast";
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
@@ -25,7 +26,6 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [paymentValid, setPaymentValid] = useState(false);
-
 
   // Prefill from user profile (runs once when user loads)
   useEffect(() => {
@@ -44,7 +44,12 @@ export default function CheckoutPage() {
   }, [user]);
 
   // 2) Shipping selection
-  const [shipping, setShipping] = useState({ id: "standard", label: "Standard", eta: "2–4 days", fee: 0 });
+  const [shipping, setShipping] = useState({
+    id: "standard",
+    label: "Standard",
+    eta: "2–4 days",
+    fee: 0,
+  });
 
   // 3) Purchase time (set by mock payment)
   const [purchaseTime, setPurchaseTime] = useState(null);
@@ -74,22 +79,49 @@ export default function CheckoutPage() {
       !userInfo?.postal ||
       !userInfo?.country
     ) {
-      alert("Please complete your contact & shipping address.");
+      // alert("Please complete your contact & shipping address.");
+      showToast(
+        "error",
+        {
+          title: "Please complete your contact & shipping address.",
+        },
+        { duration: 2000 }
+      );
       return;
     }
     if (!shipping?.id) {
-      alert("Please select a shipping option.");
+      // alert("Please select a shipping option.");
+      showToast(
+        "error",
+        {
+          title: "Please select a shipping option.",
+        },
+        { duration: 2000 }  
+      );
       return;
     }
     if (!items || items.length === 0) {
-      alert("Your cart is empty.");
+      // alert("Your cart is empty.");
+      showToast(
+        "error",
+        {
+          title: "Your cart is empty.",
+        },
+        { duration: 2000 }
+      );
       return;
     }
 
-
     // 1) Payment validation
     if (paymentMethod === "card" && !paymentValid) {
-      alert("Please complete valid card details.");
+      // alert("Please complete valid card details.");
+      showToast(
+        "error",
+        {
+          title: "Please complete valid card details.",
+        },
+        { duration: 2000 }
+      );
       return;
     }
 
@@ -100,7 +132,7 @@ export default function CheckoutPage() {
 
     // 3) Authoritative totals (same as CheckoutSummary)
     const totals = computeCartTotals(items, {
-      appliedCode,              // promo: "happyhugpaw"
+      appliedCode, // promo: "happyhugpaw"
       shippingMethod: shipping, // radio-selected method
       includeShipping: true,
       taxRate: 0,
@@ -128,7 +160,7 @@ export default function CheckoutPage() {
     const orderId = `ord_${Date.now()}`;
     const order = {
       id: orderId,
-      status: "paid",           // mock: treat as paid
+      status: "paid", // mock: treat as paid
       placedAt: ts,
       user: {
         fullName: userInfo.fullName,
@@ -167,7 +199,7 @@ export default function CheckoutPage() {
         // snapshot the exact figures the UI showed
         subtotal: subCalc,
         discount: baseDiscount,
-        promoDiscount,        // keep promo separate for transparency
+        promoDiscount, // keep promo separate for transparency
         shippingFee,
         tax: taxCalc,
         total,
@@ -199,16 +231,19 @@ export default function CheckoutPage() {
     paymentValid,
     paymentDetails,
     setPurchaseTime,
-    clearCart
+    clearCart,
   ]);
 
   return (
     <section className="min-h-screen">
       <header className="py-6 md:py-10">
         <div className="container mx-auto px-4">
-          <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">Checkout</h1>
+          <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">
+            Checkout
+          </h1>
           <p className="text-muted-foreground mt-1">
-            Review details, pick shipping, then pay. Subtotal: {formatTHB(subtotal)}
+            Review details, pick shipping, then pay. Subtotal:{" "}
+            {formatTHB(subtotal)}
           </p>
         </div>
       </header>
@@ -231,7 +266,7 @@ export default function CheckoutPage() {
           {/* RIGHT: 5) summary */}
           <aside className="lg:col-span-5">
             <CheckoutSummary
-              shippingMethod={shipping}              // ⟵ key change
+              shippingMethod={shipping} // ⟵ key change
               onConfirmPay={handleConfirmPay}
               disabled={!canConfirm}
               onBackToCart={() => navigate("/cart")}

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 const DesktopFooter = () => {
     return (
         <div className="max-w-6xl mx-auto hidden md:grid grid-cols-5 gap-6">
-            <div className="hover:text-white hover:cursor-pointer">
+            <div className="hover:cursor-pointer">
                 <Logo />
             </div>
             <div>

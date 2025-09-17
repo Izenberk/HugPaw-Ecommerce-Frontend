@@ -1,18 +1,23 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
-export default function CategoryRow({ title, subtitle, items }) {
+export default function CategoryRow({
+  items,
+  ctaHref = "/catalog",
+  ctaLabel = "Discover All Products",
+}) {
   return (
-    <section className="">
+    <section>
       <div className="mx-auto max-w-[1200px] px-6 md:px-8 py-12 md:py-16">
         {/* Heading */}
-        <div className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-3 text-center md:text-left">
-          <h2 className="text-2xl md:text-3xl font-semibold">{title}</h2>
-          {subtitle ? (
-            <p className="text-base text-muted-foreground">{subtitle}</p>
-          ) : null}
+        <div className="flex flex-col items-center text-center gap-2 mb-6 md:mb-8">
+          <h2 className="title-text mb-2">Why HugPaw?</h2>
+          <p className="subtitle-text max-w-2xl">
+            Highest Functionality for Your Four-Legged Friend
+          </p>
         </div>
 
         {/* ≥ sm : grid */}
@@ -20,37 +25,51 @@ export default function CategoryRow({ title, subtitle, items }) {
           {items.map((it) => (
             <Card
               key={it.id}
-              className="rounded-2xl text-center h-full flex flex-col transition-shadow hover:shadow-md"
+              className="group rounded-2xl text-center h-full flex flex-col transition-shadow hover:shadow-md"
             >
-              {/* lock aspect + contain image */}
-              <div className="w-full aspect-[4/3] grid place-items-center p-4">
-                <img
-                  src={it.imageSrc}
-                  alt={it.imageAlt ?? it.title}
-                  className="max-h-full object-contain"
-                  loading="lazy"
-                />
-              </div>
+              {/* คลิกที่รูปได้ */}
+              <Link
+                to={it.href}
+                aria-label={`Open ${it.title}`}
+                className="block w-full aspect-[4/3] relative rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                {/* กรอบคงที่ + padding */}
+                <div className="absolute inset-0 p-4">
+                  {/* base + hover วางซ้อนกันเต็มกรอบ */}
+                  <img
+                    src={it.imageSrc}
+                    alt={it.imageAlt ?? it.title}
+                    width={800}
+                    height={600} // กัน CLS ตาม aspect 4:3
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300 opacity-100 group-hover:opacity-0 group-focus-within:opacity-0 pointer-events-none"
+                    loading="lazy"
+                  />
+                  {it.imageHoverSrc && (
+                    <img
+                      src={it.imageHoverSrc}
+                      alt={it.imageAlt ?? it.title}
+                      width={800}
+                      height={600}
+                      decoding="async"
+                      className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 pointer-events-none"
+                      loading="lazy"
+                    />
+                  )}
+                </div>
+              </Link>
 
               <CardHeader className="pt-0">
                 <CardTitle className="text-lg font-semibold">
-                  {it.title}
+                  <Link
+                    to={it.href}
+                    className="hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md"
+                  >
+                    {it.title}
+                  </Link>
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">{it.desc}</p>
               </CardHeader>
-
-              {/* push CTA to bottom so all cards equal height */}
-              <CardContent className="mt-auto pb-5">
-                <Button
-                  asChild
-                  size={"lg"}
-                  variant={"lavenderblue"}
-                >
-                  <Link to={it.href} aria-label={`Customize ${it.title}`}>
-                    Let’s Customize
-                  </Link>
-                </Button>
-              </CardContent>
             </Card>
           ))}
         </div>
@@ -63,22 +82,33 @@ export default function CategoryRow({ title, subtitle, items }) {
                 key={it.id}
                 className="min-w-[260px] snap-start rounded-2xl text-center flex flex-col transition-shadow hover:shadow-md"
               >
-                <div className="w-full aspect-[4/3] grid place-items-center p-4">
+                <Link
+                  to={it.href}
+                  aria-label={`Open ${it.title}`}
+                  className="block w-full aspect-[4/3] grid place-items-center p-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                >
                   <img
                     src={it.imageSrc}
                     alt={it.imageAlt ?? it.title}
                     className="max-h-full object-contain"
                     loading="lazy"
                   />
-                </div>
+                </Link>
 
                 <CardHeader className="pt-0">
-                  <CardTitle className="text-base">{it.title}</CardTitle>
+                  <CardTitle className="text-base">
+                    <Link
+                      to={it.href}
+                      className="hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md"
+                    >
+                      {it.title}
+                    </Link>
+                  </CardTitle>
                   <p className="text-xs text-muted-foreground">{it.desc}</p>
                 </CardHeader>
 
                 <CardContent className="mt-auto pb-4">
-                  <Button asChild variant={"lavenderblue"} size={"default"}>
+                  <Button asChild variant="lavenderblue" size="default">
                     <Link to={it.href} aria-label={`Customize ${it.title}`}>
                       Let’s Customize
                     </Link>
@@ -87,6 +117,20 @@ export default function CategoryRow({ title, subtitle, items }) {
               </Card>
             ))}
           </div>
+        </div>
+
+        <div className="mt-10 md:mt-12 flex justify-center">
+          <Link
+            to="/catalog"
+            className="primary-button"
+            bg-blue-600
+            text-white
+            font-medium
+            transition-all
+            duration-300
+          >
+            Discover All Products
+          </Link>
         </div>
       </div>
     </section>
