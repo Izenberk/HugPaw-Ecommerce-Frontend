@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useAuth } from "./AuthContext.jsx";
 
-const API_BASE =
-  import.meta.env.VITE_API_BASE ?? "http://localhost:3030/api/v1";
+const API_BASE = (import.meta.env.VITE_API_BASE ?? "http://localhost:3030/api/v1").replace(/\/$/, "");
+
 
 const UserCtx = createContext(null);
 
@@ -124,18 +124,43 @@ async function uploadAvatarToServer(file) {
   return data.url;
 }
 
+async function getJSON(pathOrUrl, init = {}) {
+  const url = /^https?:\/\//.test(pathOrUrl) ? pathOrUrl : `${API_BASE}${pathOrUrl}`;
+  const res = await fetch(url, {
+    credentials: "include",
+    headers: { Accept: "application/json", ...(init.headers || {}) },
+    ...init,
+  });
+  // พยายาม parse เสมอ เผื่อ backend ส่ง body error มา
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const msg = data?.message || `HTTP ${res.status}`;
+    throw new Error(msg);
+  }
+  return data;
+}
+
 export function UserProvider({ children }) {
   const { user: authUser } = useAuth();
   const [user, setUser] = useState(DEFAULT_USER);
   const [loading, setLoading] = useState(false);
 
+
   const refreshUser = async () => {
-    if (!authUser?._id && !authUser?.id) return;
+    const id = authUser?._id || authUser?.id;
+    if (!id) return;
+
     setLoading(true);
     try {
-      // แนะนำทำ endpoint /users/me ฝั่ง backend (คืน user เต็ม)
-      const data = await getJSON("/users/me");
-      const merged = serverToClient(data.user || {});
+      // ลอง /users/me ก่อน ถ้าไม่มีให้ fallback เป็น /users/:id
+      let data;
+      try {
+        data = await getJSON("/users/me");
+      } catch {
+        data = await getJSON(`/users/${id}`);
+      }
+
+      const merged = serverToClient(data?.user || authUser || {});
       setUser((prev) => ({ ...prev, ...merged }));
       return merged;
     } finally {
@@ -183,16 +208,16 @@ export function UserProvider({ children }) {
     return { success: true };
   };
 
-  const value = useMemo(
-    () => ({
-      user,
-      setUser,
-      updateUser,
-      updateAddress,
-      refreshUser,
-    }),
-    [user, loading]
-  );
+  const value = useMemo(() => ({
+    user,
+    loading,
+    setUser,
+    updateUser,
+    updateAddress,
+    refreshUser,
+    saveProfile,
+  }), [user, loading]);
+
 
   return <UserCtx.Provider value={value}>{children}</UserCtx.Provider>;
 }

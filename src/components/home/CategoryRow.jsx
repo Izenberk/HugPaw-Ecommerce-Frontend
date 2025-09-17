@@ -122,12 +122,12 @@ export default function CategoryRow({
         <div className="mt-10 md:mt-12 flex justify-center">
           <Link
             to="/catalog"
-            className="primary-button"
+            className="primary-button
             bg-blue-600
             text-white
             font-medium
             transition-all
-            duration-300
+            duration-300"
           >
             Discover All Products
           </Link>
