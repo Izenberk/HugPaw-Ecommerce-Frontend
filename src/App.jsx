@@ -7,15 +7,15 @@ import { UserProvider } from "./context/UserContext";
 
 function App() {
   return (
-    <CartProvider>
-      <TooltipProvider delayDuration={200}>
-        <AuthProvider>
-          <UserProvider>
+    <TooltipProvider delayDuration={200}>
+      <AuthProvider>
+        <UserProvider>
+          <CartProvider>
             <RouterProvider router={router} />
-          </UserProvider>
-        </AuthProvider>
-      </TooltipProvider>
-    </CartProvider>
+          </CartProvider>
+        </UserProvider>
+      </AuthProvider>
+    </TooltipProvider>
   );
 }
 

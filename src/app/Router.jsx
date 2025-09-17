@@ -14,7 +14,8 @@ import CheckoutPage from "@/pages/CheckoutPage.jsx";
 import ResetPassword from "@/pages/auth/ResetPassword.jsx";
 import VerificationForm from "@/pages/auth/VerificationForm";
 import ForgotPassword from "@/pages/auth/ForgetPassword";
-import AdminRoute from "./AdminRoute"; //ฝากคุณกรเอาไปครอบ Element ของ Admin หน่อยยย
+import Admin from "@/pages/test/admin.jsx";
+import AdminRoute from "./AdminRoute";
 import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
@@ -80,6 +81,14 @@ export const router = createBrowserRouter([
       {
         path: "resetpassword",
         element: <ResetPassword />,
+      },
+      {
+        path: "admin",
+        element: (
+          <AdminRoute>
+            <Admin />
+          </AdminRoute>
+        ),
       },
     ],
   },

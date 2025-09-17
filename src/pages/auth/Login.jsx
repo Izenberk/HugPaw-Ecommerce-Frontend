@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { useUser } from "@/context/UserContext.jsx";
 // import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google"; เก็บไว้ทำในอนาคต
 
 const schema = z.object({
@@ -25,18 +26,42 @@ const Login = () => {
     defaultValues: { email: "", password: "" },
   });
 
-  const { login } = useAuth();
+  const { login, user } = useAuth();
+  const { refreshUser } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
   const onSubmit = async (values) => {
     const result = await login(values.email, values.password);
+
     if (!result.success) {
       methods.setError("root", { message: result.message });
       return;
     }
-    navigate(from, { replace: true });
+
+    await refreshUser();
+
+    let role = result.user?.role;
+
+    if (!role) {
+      try {
+        const me = await fetch(
+          (import.meta.env.VITE_API_BASE ?? "http://localhost:3030/api/v1") +
+            "/auth/me",
+          { credentials: "include" }
+        ).then((r) => r.json());
+        role = me?.user?.role;
+      } catch {}
+    }
+
+    const r = String(role || "user").toLowerCase();
+
+    if (r === "admin") {
+      navigate("/admin", { replace: true });
+    } else {
+      navigate(from || "/", { replace: true });
+    }
   };
 
   return (

@@ -10,7 +10,7 @@ const DEFAULT_USER = {
   avatarUrl: "",
   username: "",
   email: "",
-  role: "Customer",
+  role: "",
   address: {
     line1: "",
     line2: "",
@@ -36,6 +36,8 @@ function serverToClient(u = {}) {
     lastName: u?.lastName || "",
     email: u?.email || "",
     role: u?.role || "Customer",
+    userCart: Array.isArray(u?.userCart) ? u.userCart : [],
+    favoriteCart: Array.isArray(u?.favoriteCart) ? u.favoriteCart : [],
     address: primary
       ? {
           line1: primary.addressLine1 || "",
@@ -125,10 +127,30 @@ async function uploadAvatarToServer(file) {
 export function UserProvider({ children }) {
   const { user: authUser } = useAuth();
   const [user, setUser] = useState(DEFAULT_USER);
+  const [loading, setLoading] = useState(false);
+
+  const refreshUser = async () => {
+    if (!authUser?._id && !authUser?.id) return;
+    setLoading(true);
+    try {
+      // แนะนำทำ endpoint /users/me ฝั่ง backend (คืน user เต็ม)
+      const data = await getJSON("/users/me");
+      const merged = serverToClient(data.user || {});
+      setUser((prev) => ({ ...prev, ...merged }));
+      return merged;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (authUser) setUser(serverToClient(authUser));
-  }, [authUser]);
+    if (authUser) {
+      setUser(serverToClient(authUser));
+      refreshUser().catch(() => {});
+    } else {
+      setUser(DEFAULT_USER);
+    }
+  }, [authUser?.id, authUser?._id]);
 
   const updateUser = (patch) => setUser((prev) => ({ ...prev, ...patch }));
 
@@ -152,7 +174,6 @@ export function UserProvider({ children }) {
     }
 
     const payload = clientPatchToServer(user, nextUser);
-    console.log("[PUT] /users/%s payload:", user.id, payload);
 
     const res = await putUser(user.id, payload);
 
@@ -163,8 +184,14 @@ export function UserProvider({ children }) {
   };
 
   const value = useMemo(
-    () => ({ user, setUser, updateUser, updateAddress, saveProfile }),
-    [user]
+    () => ({
+      user,
+      setUser,
+      updateUser,
+      updateAddress,
+      refreshUser,
+    }),
+    [user, loading]
   );
 
   return <UserCtx.Provider value={value}>{children}</UserCtx.Provider>;

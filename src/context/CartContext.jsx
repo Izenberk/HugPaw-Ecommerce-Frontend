@@ -1,6 +1,8 @@
 // /src/context/CartContext.jsx
 import { useEffect } from "react";
 import { createContext, useContext, useMemo, useState } from "react";
+import { useUser } from "@/context/UserContext.jsx";
+
 const CartCtx = createContext(null);
 
 // helpers: numeric + stable stringify for config
@@ -16,6 +18,7 @@ const resolveUnitPrice = (src) => {
 };
 
 export function CartProvider({ children }) {
+  const { user } = useUser();
   const [items, setItems] = useState(() => {
     try {
       const saved = localStorage.getItem("cartItems");
@@ -65,6 +68,27 @@ export function CartProvider({ children }) {
     a.productId === b.productId &&
     stableKey(a.config || {}) === stableKey(b.config || {});
 
+  const addMany = (list = []) =>
+    setItems((prev) => {
+      const out = [...prev];
+      for (const incoming of list) {
+        const item = {
+          ...incoming,
+          quantity: Math.max(1, num(incoming.quantity, 1)),
+          unitPrice: resolveUnitPrice(incoming),
+          config: incoming.config ?? {},
+        };
+        const idx = out.findIndex((it) => sameVariant(it, item));
+        if (idx < 0) out.unshift(item);
+        else
+          out[idx] = {
+            ...out[idx],
+            quantity: num(out[idx].quantity, 1) + item.quantity,
+          };
+      }
+      return out;
+    });
+
   const addItem = (incoming) =>
     setItems((prev) => {
       // normalize the incoming payload
@@ -85,6 +109,30 @@ export function CartProvider({ children }) {
       );
     });
 
+  const importFromProfile = () => {
+    const base = Array.isArray(user?.userCart) ? user.userCart : [];
+    const favs = Array.isArray(user?.favoriteCart)
+      ? user.favoriteCart.map((f) => ({
+          productId: f.productId,
+          quantity: 1,
+          unitPrice: 0,
+          config: f.config || {},
+        }))
+      : [];
+    addMany([...base, ...favs]);
+  };
+
+  useEffect(() => {
+    if (
+      user?.id &&
+      items.length === 0 &&
+      (Array.isArray(user.userCart) || Array.isArray(user.favoriteCart))
+    ) {
+      importFromProfile();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
+
   const updateQty = (target, nextQty) => {
     setItems((prev) =>
       prev
@@ -104,7 +152,8 @@ export function CartProvider({ children }) {
   const subtotal = useMemo(
     () =>
       items.reduce(
-        (sum, it) => sum + num(it.unitPrice, 0) * Math.max(1, num(it.quantity, 1)),
+        (sum, it) =>
+          sum + num(it.unitPrice, 0) * Math.max(1, num(it.quantity, 1)),
         0
       ),
     [items]
@@ -131,6 +180,8 @@ export function CartProvider({ children }) {
     () => ({
       items,
       addItem,
+      addMany,
+      importFromProfile,
       updateQty,
       increment,
       decrement,
@@ -149,7 +200,6 @@ export function CartProvider({ children }) {
   return <CartCtx.Provider value={value}>{children}</CartCtx.Provider>;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export function useCart() {
   const ctx = useContext(CartCtx);
   if (!ctx) throw new Error("useCart must be used within CartProvider");

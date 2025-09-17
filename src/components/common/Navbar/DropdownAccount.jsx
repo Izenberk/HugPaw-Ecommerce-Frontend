@@ -9,7 +9,7 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import { useUser } from "@/context/UserContext";
 import { ChevronRight, CircleUserRound, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useCloseOnRouteChange } from "@/hooks/useCloseOnRouteChange";
 import mockProfile from "@/assets/images/logo/brand-logo.png";
@@ -26,6 +26,7 @@ function displayNameFromUser(user) {
 const DropdownAccount = () => {
   const { isLoggedIn, user, logout } = useAuth();
   const { user: profileUser } = useUser();
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   useCloseOnRouteChange(setOpen);
@@ -33,6 +34,16 @@ const DropdownAccount = () => {
   const effectiveUser = profileUser?.id ? profileUser : user;
 
   const [avatarSrc, setAvatarSrc] = useState(mockProfile);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } finally {
+      setOpen(false);
+      setTimeout(() => navigate("/", { replace: true }), 0);
+    }
+  };
+
   useEffect(() => {
     const url = effectiveUser?.avatarUrl;
     if (url) {
@@ -91,7 +102,10 @@ const DropdownAccount = () => {
           {isLoggedIn ? (
             <>
               <DropdownMenuItem
-                onClick={logout}
+                onSelect={(e) => {
+                  e.preventDefault();
+                  handleLogout();
+                }}
                 className="flex w-full items-center justify-between cursor-pointer"
               >
                 <span className="inline-flex items-center gap-2">

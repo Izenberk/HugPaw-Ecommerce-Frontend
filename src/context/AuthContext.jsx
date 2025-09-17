@@ -30,29 +30,12 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  useEffect(() => {
-    let alive = true;
-    (async () => {
-      try {
-        const res = await api.get("/auth/me");
-        if (alive) setUser(res.data.user);
-      } catch {
-        if (alive) setUser(null);
-      } finally {
-        if (alive) setLoading(false);
-      }
-    })();
-    return () => {
-      alive = false;
-    };
-  }, []);
-
   // login
   const login = async (email, password) => {
     try {
       const res = await api.post("/auth/login", { email, password });
       setUser(res.data.user);
-      return { success: true };
+      return { success: true, user: res.data.user };
     } catch (err) {
       return {
         success: false,
