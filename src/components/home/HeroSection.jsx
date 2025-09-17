@@ -3,17 +3,17 @@ import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
-    <section className="min-h-[90vh] p-10 pt-0 pb-0">
+    <section className="min-h-[90vh] sm:p-10 pt-0 pb-0">
       <div className="md:hidden">
         <img
           src="/images/home/hero-background.jpg"
           alt="Hero"
-          className="w-full h-64 sm:h-80 object-cover rounded-[24px]"
+          className="w-full h-100 sm:h-80 object-cover object-[70%_40%]"
         />
 
         <div className="mt-6 px-4 flex flex-col items-center text-center">
           <motion.h1
-            className="text-3xl sm:text-4xl font-bold mb-3 font-worksans"
+            className="text-4xl sm:text-4xl font-bold m-6 font-worksans"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -22,7 +22,7 @@ export default function HeroSection() {
           </motion.h1>
 
           <motion.p
-            className="block whitespace-normal text-base sm:text-lg text-gray-700 mb-5 font-poppins"
+            className="block whitespace-normal text-base sm:text-lg text-gray-700 mb-6 font-poppins"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }}
@@ -38,7 +38,7 @@ export default function HeroSection() {
           >
             <Link
               to="/catalog"
-              className="primary-button w-full inline-flex justify-center"
+              className="primary-button"
             >
               Shop Now
             </Link>
