@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { useScroll, useMotionValueEvent } from "framer-motion";
 import Logo from "@/components/common/Logo";
 import UserNav from "@/components/common/Navbar/UserNav";
 
@@ -59,9 +59,9 @@ export default function Navbar() {
         >
           {/* LEFT */}
           <div className="flex items-center gap-6">
-            <Link to="/" aria-label="Home" className="inline-flex items-center">
+            {/* <Link to="/" aria-label="Home" className="inline-flex items-center"> */}
               <Logo className="block h-8 w-auto align-middle" />
-            </Link>
+            {/* </Link> */}
             <nav aria-label="Primary" className="hidden md:block self-center">
               <ul className="flex items-center gap-6">
                 <li>
