@@ -73,48 +73,50 @@ export default function VerificationForm({
     inputRefs.current[last]?.focus();
   };
   return (
-    <div className="min-h-[60vh] flex items-center justify-center p-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader className="text-center">
-          <CardTitle>Verify OTP</CardTitle>
-          <CardDescription>Fill your OTP</CardDescription>
-        </CardHeader>
+    <div className="min-h-screen">
+      <div className="flex items-center justify-center p-4">
+        <Card className="w-full max-w-sm">
+          <CardHeader className="text-center">
+            <CardTitle>Verify OTP</CardTitle>
+            <CardDescription>Fill your OTP</CardDescription>
+          </CardHeader>
 
-        <CardContent>
-          <label className="sr-only" htmlFor="otp-group">
-            OTP
-          </label>
-          <div
-            id="otp-group"
-            className="flex justify-center items-center gap-3"
-            aria-label="OTP input group"
-          >
-            {Array.from({ length }).map((_, i) => (
-              <input
-                key={i}
-                ref={(el) => (inputRefs.current[i] = el)}
-                value={values[i]}
-                onChange={(e) => handleChange(i, e)}
-                onKeyDown={(e) => handleKeyDown(i, e)}
-                onPaste={(e) => handlePaste(i, e)}
-                inputMode={onlyNumber ? "numeric" : "text"}
-                maxLength={1}
-                className="w-12 h-12 text-center text-xl"
-                autoComplete="one-time-code"
-                placeholder="•"
-                aria-label={`OTP digit ${i + 1}`}
-              />
-            ))}
-          </div>
-        </CardContent>
+          <CardContent>
+            <label className="sr-only" htmlFor="otp-group">
+              OTP
+            </label>
+            <div
+              id="otp-group"
+              className="flex justify-center items-center gap-3"
+              aria-label="OTP input group"
+            >
+              {Array.from({ length }).map((_, i) => (
+                <input
+                  key={i}
+                  ref={(el) => (inputRefs.current[i] = el)}
+                  value={values[i]}
+                  onChange={(e) => handleChange(i, e)}
+                  onKeyDown={(e) => handleKeyDown(i, e)}
+                  onPaste={(e) => handlePaste(i, e)}
+                  inputMode={onlyNumber ? "numeric" : "text"}
+                  maxLength={1}
+                  className="w-12 h-12 text-center text-xl"
+                  autoComplete="one-time-code"
+                  placeholder="•"
+                  aria-label={`OTP digit ${i + 1}`}
+                />
+              ))}
+            </div>
+          </CardContent>
 
-        <CardFooter className="flex gap-2 justify-center">
-          <Button disabled={values.join("").length < length}>
-            <Link to="/resetpassword">Verify</Link>
-          </Button>
-          <Button>Resend</Button>
-        </CardFooter>
-      </Card>
+          <CardFooter className="flex gap-2 justify-center">
+            <Button disabled={values.join("").length < length}>
+              <Link to="/resetpassword">Verify</Link>
+            </Button>
+            <Button>Resend</Button>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 }
