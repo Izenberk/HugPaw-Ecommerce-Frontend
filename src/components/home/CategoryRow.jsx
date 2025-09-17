@@ -15,7 +15,7 @@ export default function CategoryRow({
         <div className="flex flex-col items-center text-center gap-2 mb-6 md:mb-8">
           <h2 className="title-text mb-2">Meet our products</h2>
           <p className="subtitle-text max-w-2xl">
-            Hugpaw is dedicated to making thoughtful products <br />that keep pets healthy and families worry-free
+            HugPaw is dedicated to making thoughtful products <br />that keep pets healthy and families worry-free
           </p>
         </div>
 
