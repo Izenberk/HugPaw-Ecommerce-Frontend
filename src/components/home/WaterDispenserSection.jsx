@@ -9,7 +9,7 @@ export default function WaterDispenserSection() {
           <img
             src="/images/home/product-water-dispenser.png"
             alt="Automatic Pet Water Dispenser"
-            className="object-contain h-[300px] md:h-[420px] rounded-xl overflow-hidden"
+            className="object-contain w-full md:w-[420px] rounded-xl overflow-hidden"
           />
         </div>
 
