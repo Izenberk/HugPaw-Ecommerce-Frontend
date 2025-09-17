@@ -2,7 +2,7 @@ import { useFavorites } from "@/lib/favorites";
 import { formatTHB } from "@/lib/formatters";
 import { calcPrice, getDefaultConfig, normalizeConfig, toCartItem, validateConfig } from "@/lib/productOptions";
 import { assertProductShape } from "@/lib/productSchemas";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 import useRequireLogin from "@/hooks/useRequireLogin";
@@ -15,6 +15,16 @@ import useInventoryApi from "@/hooks/useInventoryApi";
 
 const makeVariantKey = (cfg = {}, keys = []) =>
   JSON.stringify(keys.map((k) => [k, cfg?.[k] ?? null]));
+
+// parse numbers from "฿300", "300.00 THB", etc.
+const toNum = (x) => {
+  if (typeof x === "number" && Number.isFinite(x)) return x;
+  if (typeof x === "string") {
+    const n = parseFloat(x.replace(/[^0-9.\-]/g, ""));
+    return Number.isFinite(n) ? n : 0;
+  }
+  return 0;
+};
 
 export default function ProductCustom({ product }) {
   const addToCartToast = useAddToCartToast();
@@ -35,11 +45,6 @@ export default function ProductCustom({ product }) {
   const { ok, errors } = useMemo(
     () => validateConfig(product, cfg),
     [product, cfg]
-  );
-
-  const price = useMemo(
-    () => resolvedVariant?.price ?? calcPrice(product, cfg),
-    [resolvedVariant, product, cfg]
   );
 
   // Favorites preset merge
@@ -107,16 +112,6 @@ export default function ProductCustom({ product }) {
     fetchAvailability(singlesFromKeys(next, forAvailKeys)).catch(console.error);
   };
 
-  const toggleMulti = async (groupKey, value) => {
-    const cur = new Set(cfg[groupKey] || []);
-    cur.has(value) ? cur.delete(value) : cur.add(value);
-    const next = normalizeConfig(product, { ...cfg, [groupKey]: Array.from(cur) });
-    setCfg(next);
-
-    // Features don't constrain variant availability; still refresh hints with touched singles
-    fetchAvailability(singlesFromKeys(next, touchedSingles)).catch(console.error);
-  };
-
   // Resolve exact variant when singles are filled
   useEffect(() => {
     const allFilled = requiredSingles.every((k) => cfg[k]);
@@ -150,7 +145,8 @@ export default function ProductCustom({ product }) {
   const currentVariant = resolvedVariant;
   const currentStock = useMemo(() => {
     if (!currentVariant) return null;
-    const raw = currentVariant.availableQty ?? currentVariant.stock;
+    // prefer availableQty, fallback to stock, then stockAmount
+    const raw = currentVariant.availableQty ?? currentVariant.stock ?? currentVariant.stockAmount;
     const n = Number(raw);
     if (!Number.isFinite(n)) return null;
     return Math.max(0, n - inCartForVariant);
@@ -158,55 +154,121 @@ export default function ProductCustom({ product }) {
 
   const LOW_STOCK_THRESHOLD = 5;
 
-  // Features (add-ons) inventory
-  const featureGroup = useMemo(
-    () => (product.optionGroups || []).find((g) => g.key === "features"),
-    [product.optionGroups]
-  );
+  // -------- DYNAMIC ADD-ON GROUP DETECTION --------
+  const featureGroup = useMemo(() => {
+    const groups = Array.isArray(product.optionGroups) ? product.optionGroups : [];
+    const byKey = groups.find((g) => g.key === "features");
+    if (byKey) return byKey;
 
+    // Heuristics: multi-select and looks like add-ons/features
+    const guess = groups.find((g) => {
+      if (g?.type !== "multi") return false;
+      const label = String(g?.label || g?.key || "").toLowerCase();
+      return (
+        label.includes("feature") ||
+        label.includes("add-on") ||
+        label.includes("addon") ||
+        label.includes("module")
+      );
+    });
+    return guess || null;
+  }, [product.optionGroups]);
+
+  // -------- Inventory API & controlled fetch --------
   const { inventoryMap, checkInventory } = useInventoryApi();
 
-  useEffect(() => {
-    const skus = (featureGroup?.values || []).map((v) => v.sku).filter(Boolean);
-    if (skus.length) checkInventory(skus).catch(console.error);
-  }, [featureGroup, checkInventory]);
+  // Track in-flight requests and prevent re-fetching the same SKU
+  const requestedSkusRef = useRef(new Set());
+  const [inflightRequests, setInflightRequests] = useState(0);
+  const pricingLoading = inflightRequests > 0;
 
-  const selectedFeatures = useMemo(
-    () => (Array.isArray(cfg.features) ? cfg.features : []),
-    [cfg.features]
-  );
+  const fetchSkuPricesIfNeeded = useCallback(async (skus) => {
+    if (!Array.isArray(skus) || skus.length === 0) return;
+
+    const toRequest = skus.filter((sku) => !requestedSkusRef.current.has(sku));
+    if (toRequest.length === 0) return;
+
+    // mark as requested to avoid loops even if API returns no price
+    toRequest.forEach((sku) => requestedSkusRef.current.add(sku));
+
+    try {
+      setInflightRequests((n) => n + 1);
+      await checkInventory(toRequest);
+    } catch (e) {
+      console.warn("checkInventory failed for", toRequest, e);
+    } finally {
+      setInflightRequests((n) => Math.max(0, n - 1));
+    }
+  }, [checkInventory]);
+
+  // Selected features (by detected key)
+  const selectedFeatures = useMemo(() => {
+    const key = featureGroup?.key;
+    if (!key) return [];
+    const raw = cfg[key];
+    return Array.isArray(raw) ? raw : [];
+  }, [cfg, featureGroup]);
 
   const getFeatureMeta = useCallback(
     (val) => featureGroup?.values?.find((v) => v.value === val) || null,
     [featureGroup]
   );
 
-  const inCartQtyForFeature = useCallback(
-    (value) =>
-      items.reduce((sum, it) => {
-        const has = Array.isArray(it?.config?.features) && it.config.features.includes(value);
-        return sum + (has ? (it.quantity || 0) : 0);
-      }, 0),
-    [items]
-  );
+  // Initial fetch for all add-on SKUs (once)
+  useEffect(() => {
+    const skus = (featureGroup?.values || []).map((v) => v.sku).filter(Boolean);
+    if (skus.length) fetchSkuPricesIfNeeded(skus);
+  }, [featureGroup, fetchSkuPricesIfNeeded]);
 
-  const featureRemaining = useCallback(
-    (val) => {
-      const meta = getFeatureMeta(val);
+  // On selection change, fetch any newly selected SKUs not requested yet
+  useEffect(() => {
+    const need = selectedFeatures
+      .map(getFeatureMeta)
+      .map((m) => m?.sku)
+      .filter(Boolean);
+    if (need.length) fetchSkuPricesIfNeeded(need);
+  }, [selectedFeatures, getFeatureMeta, fetchSkuPricesIfNeeded]);
+
+  // ---- Multi-select toggle (features) + availability refresh ----
+  const toggleMulti = async (groupKey, value) => {
+    const cur = new Set(cfg[groupKey] || []);
+    cur.has(value) ? cur.delete(value) : cur.add(value);
+    const next = normalizeConfig(product, { ...cfg, [groupKey]: Array.from(cur) });
+    setCfg(next);
+
+    // Features don't constrain variant availability; still refresh hints with touched singles
+    fetchAvailability(singlesFromKeys(next, touchedSingles)).catch(console.error);
+
+    // Opportunistically fetch price by SKU if this is the add-on group
+    if (groupKey === featureGroup?.key) {
+      const meta = getFeatureMeta(value);
       const sku = meta?.sku;
-      const rec = sku ? inventoryMap[sku] : null;
-      const stock = Number(rec?.stock);
-      if (!Number.isFinite(stock)) return Infinity; // unknown → allow
-      const used = inCartQtyForFeature(val);
-      return Math.max(0, stock - used);
-    },
-    [getFeatureMeta, inventoryMap, inCartQtyForFeature]
-  );
+      if (sku) fetchSkuPricesIfNeeded([sku]);
+    }
+  };
 
-  // Visual hint for options (but NOT disabling)
+  // Visual availability & OOS
+  const inCartQtyForFeature = useCallback((value) => {
+    return items.reduce((sum, it) => {
+      const has = Array.isArray(it?.config?.features) && it.config.features.includes(value);
+      return sum + (has ? (it.quantity || 0) : 0);
+    }, 0);
+  }, [items]);
+
+  const featureRemaining = useCallback((val) => {
+    const meta = getFeatureMeta(val);
+    const sku = meta?.sku;
+    const rec = sku ? inventoryMap[sku] : null;
+    const stockRaw = rec?.stock ?? rec?.stockAmount;
+    const stock = Number(stockRaw);
+    if (!Number.isFinite(stock)) return Infinity;
+    const used = inCartQtyForFeature(val);
+    return Math.max(0, stock - used);
+  }, [getFeatureMeta, inventoryMap, inCartQtyForFeature]);
+
   const isOptionVisuallyAvailable = useCallback(
     (groupKey, candidate) => {
-      if (groupKey === "features") return featureRemaining(candidate) > 0;
+      if (groupKey === featureGroup?.key) return featureRemaining(candidate) > 0;
       const groupAvail = avail?.[groupKey];
       if (Array.isArray(groupAvail)) {
         const row = groupAvail.find((r) => r.value === candidate);
@@ -214,20 +276,64 @@ export default function ProductCustom({ product }) {
       }
       return true;
     },
-    [avail, featureRemaining]
+    [avail, featureGroup?.key, featureRemaining]
   );
 
-  // Feature out-of-stock list (for status + disabling Add to Cart)
   const featureOOS = useMemo(
     () => selectedFeatures.filter((f) => featureRemaining(f) === 0),
     [selectedFeatures, featureRemaining]
+  );
+
+  // --- Price readers ---
+  const getFeaturePrice = useCallback((val) => {
+    const meta = getFeatureMeta(val);
+    if (!meta) return 0;
+
+    // 1) price on option value
+    let raw =
+      meta.unitPrice ??
+      meta.price ??
+      meta.priceDelta ??
+      meta.delta ??
+      meta.addonPrice ??
+      meta.adjust;
+
+    // 2) fallback: inventory price (if present)
+    if ((raw == null || raw === "") && meta.sku) {
+      const rec = inventoryMap?.[meta.sku];
+      raw = rec?.unitPrice ?? rec?.price ?? raw;
+    }
+    return toNum(raw ?? 0);
+  }, [getFeatureMeta, inventoryMap]);
+
+  // --- Price computation ---
+  // Base price prefers unitPrice to match your sample DB
+  const basePrice = useMemo(() => {
+    const raw =
+      resolvedVariant?.unitPrice ??
+      resolvedVariant?.price ??
+      product.unitPrice ??
+      product.basePrice ??
+      product.price ??
+      calcPrice(product, normalizeConfig(product, cfg));
+    return toNum(raw ?? 0);
+  }, [resolvedVariant, product, cfg]);
+
+  const featuresPrice = useMemo(
+    () => selectedFeatures.reduce((sum, val) => sum + getFeaturePrice(val), 0),
+    [selectedFeatures, getFeaturePrice]
+  );
+
+  const displayPrice = useMemo(
+    () => basePrice + featuresPrice,
+    [basePrice, featuresPrice]
   );
 
   // Add to Cart enablement rule
   const canAddToCart =
     ok &&
     !!resolvedVariant &&
-    (currentStock === null || currentStock > 0) && // null => unknown, allow; 0 => block
+    (currentStock === null || currentStock > 0) &&
     featureOOS.length === 0;
 
   // Pretty-print variant
@@ -273,7 +379,8 @@ export default function ProductCustom({ product }) {
     const incomingQty = 1;
     const variant = resolvedVariant;
 
-    const parentRaw = variant?.availableQty ?? variant?.stock;
+    // driver stock for the variant (prefer availableQty, then stock, then stockAmount)
+    const parentRaw = variant?.availableQty ?? variant?.stock ?? variant?.stockAmount;
     const parentNum = Number(parentRaw);
     const parentStock = Number.isFinite(parentNum) ? parentNum : null;
     const parentRemaining = parentStock == null ? Infinity : Math.max(0, Number(parentStock) - inCartForVariant);
@@ -290,7 +397,7 @@ export default function ProductCustom({ product }) {
     for (const featVal of selectedFeatures) {
       const meta = getFeatureMeta(featVal);
       const rec = meta?.sku ? inventoryMap[meta.sku] : null;
-      const compNum = Number(rec?.stock);
+      const compNum = Number(rec?.stock ?? rec?.stockAmount);
       if (!Number.isFinite(compNum)) continue; // unknown → skip as unlimited
 
       const alreadyUsing = inCartQtyForFeature(featVal);
@@ -321,7 +428,8 @@ export default function ProductCustom({ product }) {
     const adapted = {
       ...item,
       quantity: addQty,
-      unitPrice: item.unitPrice ?? item.price ?? price,
+      // Prefer existing unitPrice from item; else computed displayPrice
+      unitPrice: item.unitPrice ?? item.price ?? displayPrice,
       name: product.name ?? item.name,
       imageUrl: product.images?.[0] ?? item.imageUrl,
       config: cfg,
@@ -345,7 +453,7 @@ export default function ProductCustom({ product }) {
       productId: product.id,
       name: product.name,
       imageUrl: product.images?.[0],
-      price: price ?? product.basePrice ?? product.price ?? 0,
+      price: displayPrice, // show chosen config price
       config: cfg,
       tags: product.tags ?? [],
     });
@@ -376,7 +484,8 @@ export default function ProductCustom({ product }) {
           {/* Price + Stock */}
           <div className="flex items-baseline justify-between">
             <div className="text-2xl font-bold">
-              {formatTHB(price)}
+              {formatTHB(displayPrice)}
+              {pricingLoading && <span className="ml-2 text-xs text-muted-foreground">pricing…</span>}
               {!ok && <span className="ml-2 text-xs text-red-500">• complete required</span>}
             </div>
 
@@ -396,14 +505,15 @@ export default function ProductCustom({ product }) {
           {/* Options */}
           <section aria-label="Product options" className="space-y-5">
             {(product.optionGroups || []).map((g) => (
-            <Group
+              <Group
                 key={g.key}
                 group={g}
                 value={cfg[g.key]}
                 error={errors?.[g.key]}
                 onPick={(val) => (g.type === "single" ? setSingle(g.key, val) : toggleMulti(g.key, val))}
+                // keep prop for compatibility; Group handles it optionally
                 isAvailableVisual={(candidate) => isOptionVisuallyAvailable(g.key, candidate)}
-            />
+              />
             ))}
           </section>
 
@@ -429,7 +539,7 @@ export default function ProductCustom({ product }) {
   );
 }
 
-function Group({ group, value, error, onPick }) {
+function Group({ group, value, error, onPick, isAvailableVisual }) {
   const labelCls = "text-sm font-medium";
   const helpCls = "text-xs text-muted-foreground";
 
@@ -450,10 +560,16 @@ function Group({ group, value, error, onPick }) {
               ? value === v.value
               : Array.isArray(value) && value.includes(v.value);
 
+          const available = isAvailableVisual ? isAvailableVisual(v.value) : true;
+
           // Consistent solid border & hover for all states; chips always clickable
           const base =
             "px-3 py-1.5 rounded-lg border transition hover:cursor-pointer hover:bg-muted";
-          const cls = active ? `${base} bg-black text-white` : base;
+          const cls = [
+            base,
+            active ? "bg-black text-white" : "",
+            !available ? "opacity-60" : ""
+          ].join(" ").trim();
 
           return (
             <button
@@ -479,14 +595,13 @@ function Group({ group, value, error, onPick }) {
   );
 }
 
-
 function ReadMore({ text, initialLines = 3 }) {
   const [open, setOpen] = useState(false);
   const cls = open ? "" : `line-clamp-${initialLines}`;
   return (
     <div>
       <p className={`text-sm text-muted-foreground ${cls}`}>{text}</p>
-      {text.length > 120 && (
+      {text?.length > 120 && (
         <button
           onClick={() => setOpen((v) => !v)}
           className="mt-1 text-xs underline hover:cursor-pointer hover:opacity-70"
@@ -571,4 +686,3 @@ function StockStatus({
     </div>
   );
 }
-
