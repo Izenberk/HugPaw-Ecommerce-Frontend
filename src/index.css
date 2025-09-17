@@ -139,7 +139,7 @@
 }
 
 @layer components {
-    .hero-button {
+  .hero-button {
     @apply inline-flex items-center justify-center
            bg-lime-200 text-gray-900
            px-16 py-4 rounded-full font-bold text-xl
@@ -166,11 +166,37 @@
            hover:scale-105 hover:-translate-y-1
            hover:shadow-lg hover:shadow-white/20;
   }
-   .title-text {
+  .title-text {
     @apply text-4xl font-bold text-gray-900;
   }
   .subtitle-text {
     @apply text-xl text-gray-700;
   }
-}
+  .text-glow-hover {
+    transition: all 0.3s ease;
+  }
 
+  .text-glow-hover:hover {
+    color: #84cc16; /* lime-600 */
+    text-shadow: 0 0 6px rgba(132, 204, 22, 0.8),
+      0 0 12px rgba(132, 204, 22, 0.6);
+  }
+  .nav-link {
+    @apply relative text-black;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.25rem; /* เท่ากับ -bottom-1 */
+    height: 2px; /* เท่ากับ h-[2px] */
+    width: 0;
+    background-color: black;
+    transition: all 0.3s;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+    background-color: rgb(132 204 22); /* lime-600 */
+  }
+}
