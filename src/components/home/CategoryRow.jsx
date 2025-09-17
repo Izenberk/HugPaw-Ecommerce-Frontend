@@ -106,7 +106,7 @@ export default function CategoryRow({
                 </CardHeader>
 
                 <CardContent className="mt-auto pb-4">
-                  <Button asChild variant="lavenderblue" size="default">
+                  <Button asChild variant="black" size="default">
                     <Link to={it.href} aria-label={`Customize ${it.title}`}>
                       Let’s Customize
                     </Link>
