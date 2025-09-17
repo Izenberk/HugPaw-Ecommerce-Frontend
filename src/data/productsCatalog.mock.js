@@ -13,7 +13,7 @@ export const PRODUCTS_MOCK = [
         category: "Accessories",
         tags: ["customizable", "GPS", "engraving", "waterproof"],
         description:
-        "More than just a collar—it's their identity. Customize color, size, and engrave their name. Add GPS and app connectivity for extra peace of mind.",
+        "More than just a collar—it's their identity. Customize color and size. Add GPS and other features for extra peace of mind.",
     },
     {
         id: "water-001",
