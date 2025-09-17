@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
-    <section className="min-h-[90vh] sm:p-10 pt-0 pb-0">
+    <section className="min-h-[90vh] sm:px-10 ">
+      {/* Mobile View */}
       <div className="md:hidden">
         <img
           src="/images/home/hero-background.jpg"
@@ -28,7 +29,8 @@ export default function HeroSection() {
             transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }}
           >
             Pets aren't just guests in your home.
-            <br />They're a part of your lives.
+            <br />
+            They're a part of your lives.
           </motion.p>
 
           <motion.div
@@ -36,27 +38,25 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
           >
-            <Link
-              to="/catalog"
-              className="primary-button"
-            >
+            <Link to="/catalog" className="primary-button">
               Shop Now
             </Link>
           </motion.div>
         </div>
       </div>
 
+      {/* Desktop View */}
       <div
-        className="hidden md:flex w-full h-[80vh] pb-20 rounded-4xl overflow-hidden items-center justify-left text-center text-white"
+        className="hidden md:flex w-full h-[80vh] pb-20 pt-0 rounded-4xl overflow-hidden items-center justify-left text-center text-white"
         style={{
           backgroundImage: "url('/images/home/hero-background.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="relative z-10 px-40 text-left">
+        <div className="relative z-10 px-35  text-left">
           <motion.h1
-            className="text-4xl md:text-6xl font-bold mb-6 font-worksans"
+            className="text-xl lg:text-8xl font-bold mb-6 font-worksans"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 3, ease: "easeOut" }}
@@ -65,12 +65,14 @@ export default function HeroSection() {
           </motion.h1>
 
           <motion.p
-            className="text-lg md:text-2xl mb-6 max-w-2xl drop-shadow-md text-gray-200 font-poppins"
+            className="text-lg lg:text-2xl max-w-2xl mb-2 drop-shadow-md text-gray-200 font-poppins"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 3, ease: "easeOut" }}
           >
-            Smart, simple essentials made with love <br />
+            Pets aren't just guests in your home.
+            <span className="block mb-2" />
+            They're a part of your lives.
           </motion.p>
 
           <motion.div
@@ -78,7 +80,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 3, ease: "easeOut" }}
           >
-            <Link to="/catalog" className="primary-button">
+            <Link to="/catalog" className="hero-button mt-12">
               Shop Now
             </Link>
           </motion.div>
