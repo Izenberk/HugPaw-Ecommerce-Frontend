@@ -17,6 +17,7 @@ export default function useInventoryApi() {
       // try exact, upper, lower — but we store as UPPERCASE anyway
       return map[sku] ?? map[kU] ?? map[norm(sku).toLowerCase()];
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [map]
   );
 
@@ -97,6 +98,7 @@ export default function useInventoryApi() {
       }
       return out;
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [API_BASE, getInv]
   );
 
