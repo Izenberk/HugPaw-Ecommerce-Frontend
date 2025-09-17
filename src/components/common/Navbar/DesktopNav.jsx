@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+// eslint-disable-next-line no-unused-vars
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import Logo from "@/components/common/Logo";
 import UserNav from "@/components/common/Navbar/UserNav";

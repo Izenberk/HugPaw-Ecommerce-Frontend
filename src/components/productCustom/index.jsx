@@ -239,6 +239,7 @@ export default function ProductCustom({ product }) {
         setInflightRequests((n) => Math.max(0, n - 1));
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [checkInventory, inventoryMap]
   );
 
