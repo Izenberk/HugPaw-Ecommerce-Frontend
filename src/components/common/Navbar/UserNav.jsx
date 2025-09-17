@@ -15,22 +15,22 @@ export default function UserNav() {
     <div>
       {isLoggedIn ? (
         <ul className="flex items-center gap-6">
-          <li className="flex items-center hover:text-gray-500">
-            <Link to="/user">
+          <li className="flex items-center">
+            <Link to="/user" className="nav-link font-bold text-2xl">
               <Heart />
             </Link>
           </li>
-          <li className="flex items-center hover:text-gray-500">
-            <Link to="/cart">
+          <li className="flex items-center">
+            <Link to="/cart" className="nav-link font-bold text-2xl">
               {!cartCount > 0 ? (
                 <ul>
-                  <li>
+                  <li className="nav-link font-bold text-2xl">
                     <ShoppingCart />
                   </li>
                 </ul>
               ) : (
                 <ul className="relative">
-                  <li>
+                  <li className="nav-link font-bold text-2xl">
                     <ShoppingCart />
                   </li>
                   <span className="absolute -right-4 -top-2.5 bg-red-500 text-white text-xs font-bold rounded-full px-1.5">
@@ -44,7 +44,7 @@ export default function UserNav() {
         </ul>
       ) : (
         <ul className="flex items-center gap-4 text-primary-foreground ">
-          <li className="flex items-center hover: text-gray-500 ">
+          <li className="flex items-center nav-link font-bold text-xl">
             <Link
               to="/cart"
               onClick={stopIfLoggedOut}
@@ -57,10 +57,10 @@ export default function UserNav() {
               </ul>
             </Link>
           </li>
-          <li className="hover:text-gray-500">
-            <Link to="/login">Login</Link>
+          <li className="nav-link font-bold text-xl">
+            <Link to="/login">Log In</Link>
           </li>
-          <li className="hover:text-gray-500">
+          <li className="nav-link font-bold text-xl">
             <Link to="/signup">Sign Up</Link>
           </li>
         </ul>
