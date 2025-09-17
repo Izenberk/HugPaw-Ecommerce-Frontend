@@ -31,15 +31,7 @@ export default function ProductList({
         const p = normalizeProduct(raw);
         if (!p.id) return null;
         return (
-          <div
-            key={p.id}
-            className="
-          flex-1
-          sm:basis-[calc(50%-0.75rem)] 
-          lg:basis-[calc(33.333%-1rem)] 
-          max-w-sm                        
-        "
-          >
+          <div key={p.id} className="max-w-sm">
             <ProductCard
               id={p.id}
               name={p.name}
