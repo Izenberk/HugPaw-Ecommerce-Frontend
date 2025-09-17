@@ -18,9 +18,9 @@ function ProductCustomWithCart() {
 
     return (
         <ProductCustom
-        product={product}
-        onAddToCart={(item) => addItem(item)}
-        onAddToFavorite={(fav) => addFavorite(fav)}
+            product={product}
+            onAddToCart={(item) => addItem(item)}
+            onAddToFavorite={(fav) => addFavorite(fav)}
         />
     );
 }
