@@ -56,7 +56,7 @@ export default function HeroSection() {
       >
         <div className="relative z-10 px-35  text-left">
           <motion.h1
-            className="text-xl lg:text-8xl font-bold mb-6 font-worksans"
+            className="text-xl lg:text-7xl font-bold mb-6 font-worksans"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 3, ease: "easeOut" }}

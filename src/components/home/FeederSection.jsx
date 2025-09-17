@@ -17,9 +17,9 @@ export default function FeederSection() {
           <h1 className="title-text mb-4">
             Smart Feeding Made Easy
           </h1>
-          <h2 className="subtitle-text font-bold mb-2">MealMate</h2>
+          <h2 className="subtitle-text font-bold mb-2">HugPaw Smart Feeder</h2>
           <p className="subtitle-text mb-6">
-            The MealMate automatic feeder ensures your pet never misses a meal.
+            The HugPaw Smart Feeder ensures your pet never misses a meal.
             With programmable portions and a sleek design, it’s perfect for
             maintaining healthy eating habits — even when you're away.
           </p>

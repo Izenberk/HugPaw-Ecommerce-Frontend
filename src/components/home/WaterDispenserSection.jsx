@@ -15,9 +15,9 @@ export default function WaterDispenserSection() {
 
         <div className="order-2 md:order-1">
           <h1 className="title-text mb-4">Fresh Water Anytime</h1>
-          <h2 className="subtitle-text font-bold mb-2">AquaFlow</h2>
+          <h2 className="subtitle-text font-bold mb-2">HugPaw Water Dispenser</h2>
           <p className="subtitle-text mb-6">
-            Keep your pet hydrated with the AquaFlow automatic water dispenser.
+            Keep your pet hydrated with the HugPaw Water Dispenser.
             Designed with smart filtration and continuous circulation, it
             ensures fresh and clean water all day long. Perfect for busy pet
             owners.
