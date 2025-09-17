@@ -164,12 +164,22 @@ const MobileNav = () => {
         <div className="absolute right-1/15 -translate-x-1/2">
           <Link to="/cart" className="hover:text-gray-500">
             <ul className="relative">
-              <li>
-                <ShoppingCart />
-              </li>
-              <span className="absolute -right-4 -top-2.5 bg-red-500 text-white text-xs font-bold rounded-full px-1.5">
-                {cartCount}
-              </span>
+              {!cartCount > 0 ? (
+                <ul>
+                  <li>
+                    <ShoppingCart />
+                  </li>
+                </ul>
+              ) : (
+                <ul className="relative">
+                  <li>
+                    <ShoppingCart />
+                  </li>
+                  <span className="absolute -right-4 -top-2.5 bg-red-500 text-white text-xs font-bold rounded-full px-1.5">
+                    {cartCount}
+                  </span>
+                </ul>
+              )}
             </ul>
           </Link>
         </div>
