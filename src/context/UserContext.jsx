@@ -145,6 +145,14 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(DEFAULT_USER);
   const [loading, setLoading] = useState(false);
 
+  const getJSON = (key, fallback = null) => {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch {
+      return fallback;
+    }
+  };
 
   const refreshUser = async () => {
     const id = authUser?._id || authUser?.id;
@@ -152,15 +160,8 @@ export function UserProvider({ children }) {
 
     setLoading(true);
     try {
-      // ลอง /users/me ก่อน ถ้าไม่มีให้ fallback เป็น /users/:id
-      let data;
-      try {
-        data = await getJSON("/users/me");
-      } catch {
-        data = await getJSON(`/users/${id}`);
-      }
-
-      const merged = serverToClient(data?.user || authUser || {});
+      const data = await getJSON("/users/me");
+      const merged = serverToClient(data.user || {});
       setUser((prev) => ({ ...prev, ...merged }));
       return merged;
     } finally {
@@ -208,16 +209,17 @@ export function UserProvider({ children }) {
     return { success: true };
   };
 
-  const value = useMemo(() => ({
-    user,
-    loading,
-    setUser,
-    updateUser,
-    updateAddress,
-    refreshUser,
-    saveProfile,
-  }), [user, loading]);
-
+  const value = useMemo(
+    () => ({
+      user,
+      setUser,
+      updateUser,
+      updateAddress,
+      refreshUser,
+      saveProfile,
+    }),
+    [user, loading]
+  );
 
   return <UserCtx.Provider value={value}>{children}</UserCtx.Provider>;
 }
