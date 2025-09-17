@@ -5,18 +5,17 @@ import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { UserProvider } from "./context/UserContext";
 
-
 function App() {
   return (
-    <UserProvider>
-      <CartProvider>
-        <TooltipProvider delayDuration={200}>
-          <AuthProvider>
+    <TooltipProvider delayDuration={200}>
+      <AuthProvider>
+        <UserProvider>
+          <CartProvider>
             <RouterProvider router={router} />
-          </AuthProvider>
-        </TooltipProvider>
-      </CartProvider>
-    </UserProvider>
+          </CartProvider>
+        </UserProvider>
+      </AuthProvider>
+    </TooltipProvider>
   );
 }
 

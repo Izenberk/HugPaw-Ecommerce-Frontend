@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormField,
@@ -8,23 +10,58 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Fingerprint } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
-import { useAuth } from "../../context/AuthContext";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx";
+import { useUser } from "@/context/UserContext.jsx";
+// import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google"; เก็บไว้ทำในอนาคต
+
+const schema = z.object({
+  email: z.string().email("Not valid email"),
+  password: z.string().min(6, "Password must more than 6 character"),
+});
 
 const Login = () => {
   const methods = useForm({
-    defaultValues: { username: "", password: "" },
+    resolver: zodResolver(schema),
+    defaultValues: { email: "", password: "" },
   });
 
-  const { login } = useAuth();
+  const { login, user } = useAuth();
+  const { refreshUser } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
-  const onSubmit = (data) => {
-    console.log("Login data:", data); // mock login
-    login();
-    navigate("/");
+  const onSubmit = async (values) => {
+    const result = await login(values.email, values.password);
+
+    if (!result.success) {
+      methods.setError("root", { message: result.message });
+      return;
+    }
+
+    await refreshUser();
+
+    let role = result.user?.role;
+
+    if (!role) {
+      try {
+        const me = await fetch(
+          (import.meta.env.VITE_API_BASE ?? "http://localhost:3030/api/v1") +
+            "/auth/me",
+          { credentials: "include" }
+        ).then((r) => r.json());
+        role = me?.user?.role;
+      } catch {}
+    }
+
+    const r = String(role || "user").toLowerCase();
+
+    if (r === "admin") {
+      navigate("/admin", { replace: true });
+    } else {
+      navigate(from || "/", { replace: true });
+    }
   };
 
   return (
@@ -36,15 +73,16 @@ const Login = () => {
       <Form {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
-            name="username"
+            name="email"
             control={methods.control}
-            rules={{ required: "Username or email is required" }}
+            rules={{ required: "Email is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username / Email</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <input
                     {...field}
+                    type="email"
                     placeholder="Enter your username or email"
                     className="w-full border rounded-full p-2 text-center"
                   />
@@ -74,6 +112,10 @@ const Login = () => {
             )}
           />
 
+          {methods.formState.errors.root && (
+            <p>{methods.formState.errors.root.message}</p>
+          )}
+
           <div className="text-sm text-right">
             <Link
               to="/forgotpassword"
@@ -85,13 +127,13 @@ const Login = () => {
 
           <button
             type="submit"
+            disabled={methods.formState.isSubmitting}
             className="w-full bg-blue-700 text-white py-2 rounded-full active:scale-95 active:bg-blue-600 transition transform"
           >
-            Login
+            {methods.formState.isSubmitting ? "Signing in..." : "Login"}
           </button>
 
-
-            <GoogleOAuthProvider
+          {/* <GoogleOAuthProvider
               clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
             >
               <GoogleLogin
@@ -104,7 +146,7 @@ const Login = () => {
                   console.log("Login Failed");
                 }}
               />
-            </GoogleOAuthProvider>
+            </GoogleOAuthProvider> */}
         </form>
       </Form>
     </div>
