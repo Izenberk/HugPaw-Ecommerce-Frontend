@@ -3,7 +3,7 @@ import logo from "@/assets/images/logo/brand-logo.png";
 
 const Logo = () => {
   return (
-    <div className="flex">
+    <Link to="/" aria-label="Home" className="inline-flex items-center">
       <img
         src={logo}
         alt="HugPaw Logo"
@@ -12,7 +12,7 @@ const Logo = () => {
       <span className="text-onPrimary font-bold text-xl hover:text-gray-500">
         HugPaw
       </span>
-    </div>
+    </Link>
   );
 };
 

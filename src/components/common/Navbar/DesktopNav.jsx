@@ -60,9 +60,7 @@ export default function Navbar() {
         >
           {/* LEFT */}
           <div className="flex items-center gap-6">
-            <Link to="/" aria-label="Home" className="inline-flex items-center">
               <Logo className="block h-8 w-auto align-middle" />
-            </Link>
             <nav aria-label="Primary" className="hidden md:block self-center">
               <ul className="flex items-center gap-6">
                 <li>
