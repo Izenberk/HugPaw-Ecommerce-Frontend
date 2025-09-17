@@ -81,14 +81,14 @@ export const router = createBrowserRouter([
         path: "resetpassword",
         element: <ResetPassword />,
       },
-      {
-        path: "admin",
-        element: (
-          <AdminRoute>
-            <Admin />
-          </AdminRoute>
-        ),
-      },
+      // {
+      //   path: "admin",
+      //   element: (
+      //     <AdminRoute>
+      //       <Admin />
+      //     </AdminRoute>
+      //   ),
+      // },
     ],
   },
 ]);

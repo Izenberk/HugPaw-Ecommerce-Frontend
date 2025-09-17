@@ -129,11 +129,19 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(DEFAULT_USER);
   const [loading, setLoading] = useState(false);
 
+  const getJSON = (key, fallback = null) => {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch {
+      return fallback;
+    }
+  };
+
   const refreshUser = async () => {
     if (!authUser?._id && !authUser?.id) return;
     setLoading(true);
     try {
-      // แนะนำทำ endpoint /users/me ฝั่ง backend (คืน user เต็ม)
       const data = await getJSON("/users/me");
       const merged = serverToClient(data.user || {});
       setUser((prev) => ({ ...prev, ...merged }));
@@ -190,6 +198,7 @@ export function UserProvider({ children }) {
       updateUser,
       updateAddress,
       refreshUser,
+      saveProfile,
     }),
     [user, loading]
   );
