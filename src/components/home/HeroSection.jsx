@@ -38,7 +38,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
           >
-            <Link to="/catalog" className="primary-button">
+            <Link to="/catalog" className="primary-button m-4">
               Shop Now
             </Link>
           </motion.div>
