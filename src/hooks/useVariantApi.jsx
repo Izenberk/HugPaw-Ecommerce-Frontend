@@ -7,7 +7,7 @@ export default function useVariantApi(anchorSku) {
     // Prefer env var; fallback to your dev backend port
     const API_BASE =
       (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_BASE) ||
-      "http://localhost:3030";
+      "http://localhost:3030/api/v1";
     // All endpoints below assume your Express mounts product routes under /api
 
   const variantKeyFrom = useCallback((sel, keys) => {
@@ -17,7 +17,7 @@ export default function useVariantApi(anchorSku) {
 
   const fetchAvailability = useCallback(async (selections) => {
     const sku = encodeURIComponent(anchorSku);
-    const res = await fetch(`${API_BASE}/api/variants/${sku}/availability`, {
+    const res = await fetch(`${API_BASE}/variants/${sku}/availability`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ selections })
@@ -37,7 +37,7 @@ export default function useVariantApi(anchorSku) {
       .filter(([,v]) => v != null && v !== "")
     );
 
-    const res = await fetch(`${API_BASE}/api/variants/${encodeURIComponent(anchorSku)}/resolve`, {
+    const res = await fetch(`${API_BASE}/variants/${encodeURIComponent(anchorSku)}/resolve`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ selections: singlesOnly })   // must include { Color: "Blue", Size: "M" }

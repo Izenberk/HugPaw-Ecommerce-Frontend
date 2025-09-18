@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -14,9 +13,9 @@ export default function CategoryRow({
       <div className="mx-auto max-w-[1200px] px-6 md:px-8 py-12 md:py-16">
         {/* Heading */}
         <div className="flex flex-col items-center text-center gap-2 mb-6 md:mb-8">
-          <h2 className="title-text mb-2">Why HugPaw?</h2>
+          <h2 className="title-text mb-2">Meet our products</h2>
           <p className="subtitle-text max-w-2xl">
-            Highest Functionality for Your Four-Legged Friend
+            HugPaw is dedicated to making thoughtful products <br />that keep pets healthy and families worry-free
           </p>
         </div>
 
@@ -27,20 +26,19 @@ export default function CategoryRow({
               key={it.id}
               className="group rounded-2xl text-center h-full flex flex-col transition-shadow hover:shadow-md"
             >
-              {/* คลิกที่รูปได้ */}
               <Link
                 to={it.href}
                 aria-label={`Open ${it.title}`}
                 className="block w-full aspect-[4/3] relative rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                {/* กรอบคงที่ + padding */}
+
                 <div className="absolute inset-0 p-4">
-                  {/* base + hover วางซ้อนกันเต็มกรอบ */}
+
                   <img
                     src={it.imageSrc}
                     alt={it.imageAlt ?? it.title}
                     width={800}
-                    height={600} // กัน CLS ตาม aspect 4:3
+                    height={600} 
                     decoding="async"
                     className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300 opacity-100 group-hover:opacity-0 group-focus-within:opacity-0 pointer-events-none"
                     loading="lazy"
@@ -108,7 +106,7 @@ export default function CategoryRow({
                 </CardHeader>
 
                 <CardContent className="mt-auto pb-4">
-                  <Button asChild variant="lavenderblue" size="default">
+                  <Button asChild variant="black" size="default">
                     <Link to={it.href} aria-label={`Customize ${it.title}`}>
                       Let’s Customize
                     </Link>
@@ -129,7 +127,7 @@ export default function CategoryRow({
             transition-all
             duration-300"
           >
-            Discover All Products
+            Find your pet's best match
           </Link>
         </div>
       </div>

@@ -45,27 +45,27 @@ export default function HomePage() {
       name: "Anna",
       stars: 5,
       quote:
-        "I loved how easy it was to design Bella’s collar. The engraving is perfect, and the color matches her personality so well!",
+        "I loved how easy it was to design Bella’s collar. It's stylish and the color matches her personality so well!",
       imageSrc: "/images/home/review-collar.png",
-      imageAlt: "Automatic food dispenser",
+      imageAlt: "Dog wearing a red collar",
     },
     {
       id: "r2",
-      name: "Mark",
-      stars: 4,
-      quote:
-        "The automatic feeder has been a lifesaver. I customized the color to match my kitchen, and Milo loves the consistent meal times!",
-      imageSrc: "/images/home/review-feeder.png",
-      imageAlt: "Automatic food dispenser",
-    },
-    {
-      id: "r3",
       name: "Sophie",
       stars: 5,
       quote:
-        "Coco’s new water fountain is not only cute but super quiet. I added her name to the side—she drinks more water now too!",
+        "Coco’s new water fountain is not only cute but super quiet. It's the perfect for her. She drinks more water now too!",
       imageSrc: "/images/home/review-water-dispenser.png",
-      imageAlt: "Automatic water dispenser",
+      imageAlt: "Cat next to a water dispenser",
+    },
+    {
+      id: "r3",
+      name: "Mark",
+      stars: 4,
+      quote:
+        "The automatic feeder has been a lifesaver. I customized the color to match my kitchen. I love the consistent meal times!",
+      imageSrc: "/images/home/review-feeder.png",
+      imageAlt: "Three cats using automatic food dispensers",
     },
   ];
 

@@ -3,19 +3,15 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Star } from "lucide-react";
 
 export default function ReviewGrid({
-  title = "Review",
-  subtitle = "Check out what our HugPaw Community has to say",
+  title = "Check out what our HugPaw community has to say",
   items = [],
 }) {
   return (
     <section>
       <div className="mx-auto max-w-[1200px] px-6 md:px-8 py-12 md:py-16">
-        {/* Heading + subheading */}
+        {/* Heading */}
         <div className="mb-6 md:mb-8 flex flex-col items-center text-center gap-2">
           <h1 className="title-text">{title}</h1>
-          {subtitle ? (
-            <p className="subtitle-text">{subtitle}</p>
-          ) : null}
         </div>
 
         {/* Cards */}

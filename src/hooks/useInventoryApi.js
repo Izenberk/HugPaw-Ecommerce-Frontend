@@ -57,7 +57,7 @@ export default function useInventoryApi() {
       const uniq = Array.from(new Set(skus.filter(Boolean).map(norm)));
       if (!uniq.length) return {};
 
-      const res = await fetch(`${API_BASE}/api/inventory/availability`, {
+      const res = await fetch(`${API_BASE}/inventory/availability`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ skus: uniq }),

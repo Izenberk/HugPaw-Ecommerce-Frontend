@@ -64,9 +64,9 @@ const DropdownAccount = () => {
     <div className="z-[200]">
       <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
         <div className="flex items-center gap-2">
-          <DropdownMenuTrigger className="flex items-center gap-2 hover:text-gray-500">
+          <DropdownMenuTrigger className="flex items-center gap-2 nav-link font-bold text-xl">
             <CircleUserRound />
-            <span>Account</span>
+            <span className="nav-link font-bold text-xl">Account</span>
           </DropdownMenuTrigger>
         </div>
 

@@ -13,7 +13,6 @@ export default function Navbar() {
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (y) => {
-
     const THRESHOLD = 200;
     const diff = y - lastY.current;
 
@@ -64,7 +63,9 @@ export default function Navbar() {
             <nav aria-label="Primary" className="hidden md:block self-center">
               <ul className="flex items-center gap-6">
                 <li>
-                  <Link to="/catalog">Products</Link>
+                  <Link to="/catalog" className="nav-link text-xl font-bold">
+                    Products
+                  </Link>
                 </li>
               </ul>
             </nav>

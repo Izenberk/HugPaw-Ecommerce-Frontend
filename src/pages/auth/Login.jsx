@@ -52,7 +52,7 @@ const Login = () => {
           { credentials: "include" }
         ).then((r) => r.json());
         role = me?.user?.role;
-      } catch {}
+      } catch {/**/}
     }
 
     const r = String(role || "user").toLowerCase();
