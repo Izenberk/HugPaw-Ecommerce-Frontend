@@ -33,34 +33,38 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/";
 
   const onSubmit = async (values) => {
-    const result = await login(values.email, values.password);
+    try {
+      const result = await login(values.email, values.password);
 
-    if (!result.success) {
-      methods.setError("root", { message: result.message });
-      return;
-    }
+      if (!result?.success) {
+        methods.setError("root", { message: result?.message || "Login failed" });
+        return;
+      }
 
-    await refreshUser();
+      // ⚠️ Don't block navigation on this; do it fire-and-forget
+      refreshUser().catch((e) => console.debug("[refreshUser] ignored error:", e));
 
-    let role = result.user?.role;
+      // Determine role without blocking UX
+      let role = result.user?.role;
 
-    if (!role) {
-      try {
-        const me = await fetch(
-          (import.meta.env.VITE_API_BASE ?? "http://localhost:3030/api/v1") +
-            "/auth/me",
-          { credentials: "include" }
-        ).then((r) => r.json());
-        role = me?.user?.role;
-      } catch {/**/}
-    }
+      // Fallback: try /auth/me but don't block if it fails
+      if (!role) {
+        try {
+          const me = await fetch(
+            (import.meta.env.VITE_API_BASE ?? "http://localhost:3030/api/v1") + "/auth/me",
+            { credentials: "include" }
+          ).then((r) => (r.ok ? r.json() : null));
+          role = me?.user?.role;
+        } catch {
+          // ignore
+        }
+      }
 
-    const r = String(role || "user").toLowerCase();
-
-    if (r === "admin") {
-      navigate("/admin", { replace: true });
-    } else {
-      navigate(from || "/", { replace: true });
+      const r = String(role || "user").toLowerCase();
+      navigate(r === "admin" ? "/admin" : (from || "/"), { replace: true });
+    } catch (err) {
+      console.error("[login] error:", err);
+      methods.setError("root", { message: "Unexpected error. Please retry." });
     }
   };
 
