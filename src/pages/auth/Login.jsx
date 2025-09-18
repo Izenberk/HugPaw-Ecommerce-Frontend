@@ -52,7 +52,7 @@ const Login = () => {
           { credentials: "include" }
         ).then((r) => r.json());
         role = me?.user?.role;
-      } catch {}
+      } catch {/**/}
     }
 
     const r = String(role || "user").toLowerCase();
@@ -65,11 +65,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="max-w-sm mx-auto my-10 p-6 rounded-xl shadow-md">
-        <h2 className="text-2xl font-bold mb-4 flex justify-center items-center gap-2 py-3">
-          Login to HugPaw
-        </h2>
+    <div className="max-w-sm mx-auto my-10 p-6 rounded-xl shadow-md">
+      <h2 className="text-2xl font-bold mb-4 flex justify-center items-center gap-2 py-3">
+        Login to HugPaw
+      </h2>
 
       <Form {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
@@ -117,14 +116,14 @@ const Login = () => {
             <p>{methods.formState.errors.root.message}</p>
           )}
 
-            <div className="text-sm text-right">
-              <Link
-                to="/forgotpassword"
-                className="text-blue-500 text-[16px] font-semibold hover:underline flex justify-end mx-5"
-              >
-                Forgot password?
-              </Link>
-            </div>
+          <div className="text-sm text-right">
+            <Link
+              to="/forgotpassword"
+              className="text-blue-500 text-[16px] font-semibold hover:underline flex justify-end mx-5"
+            >
+              Forgot password?
+            </Link>
+          </div>
 
           <button
             type="submit"
