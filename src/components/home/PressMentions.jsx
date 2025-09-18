@@ -1,13 +1,13 @@
 import Marquee from "react-fast-marquee";
-import { PawPrint, Newspaper, Tv, Radio } from "lucide-react"; // 👈 import icons
+import { PawPrint, Newspaper, Tv, Radio } from "lucide-react"; 
 
 export default function PressMentions() {
   const pressItems = [
     {
       id: "Pet-Lover",
       logo: "PET-LOVER",
-      icon: PawPrint, // 👈 ใส่ icon component
-      quote: "A must-have brand for owners who truly care about their furry friends.",
+      icon: PawPrint, 
+      quote: "A must-have brand for owners who truly care about their pets.",
     },
     {
       id: "Modern Living",
@@ -19,7 +19,7 @@ export default function PressMentions() {
       id: "sundaytimes",
       logo: "THE SUNDAY TIMES",
       icon: Newspaper,
-      quote: "I was less inclined to doomscroll and felt more productive.",
+      quote: "Reliable products that make pet care easier and more efficient.",
     },
     {
       id: "Tech4Pets",
@@ -30,7 +30,7 @@ export default function PressMentions() {
   ];
 
   return (
-    <section className="bg-lime-100 w-full py-8 sm:py-6">
+    <section className="bg-lime-200 w-full py-8 sm:py-6">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <Marquee
           pauseOnHover

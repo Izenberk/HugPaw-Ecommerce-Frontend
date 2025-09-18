@@ -22,50 +22,55 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="max-w-sm mx-auto my-15 p-6 border rounded-lg shadow">
-      <h2 className="text-2xl font-bold m-2 text-center">Forgot Password</h2>
-      <p className="text-sm text-gray-600 text-center m-4">
-        Enter your email to receive password reset instructions.
-      </p>
+    <div className="min-h-screen">
+      <div className="max-w-sm mx-auto my-15 p-6 border rounded-lg shadow">
+        <h2 className="text-2xl font-bold m-2 text-center">Forgot Password</h2>
+        <p className="text-sm text-gray-600 text-center m-4">
+          Enter your email to receive password reset instructions.
+        </p>
 
-      <Form {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
-          {/* Email */}
-          <FormField
-            name="email"
-            control={methods.control}
-            rules={{
-              required: "Email is required",
-              pattern: { value: /^\S+@\S+$/i, message: "Invalid email format" },
-            }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <input
-                    {...field}
-                    placeholder="Enter your email"
-                    className="w-full border rounded-full p-2"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <Form {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
+            {/* Email */}
+            <FormField
+              name="email"
+              control={methods.control}
+              rules={{
+                required: "Email is required",
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: "Invalid email format",
+                },
+              }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <input
+                      {...field}
+                      placeholder="Enter your email"
+                      className="w-full border rounded-full p-2"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <button
-            type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full"
-          >
-            <Link to="/verification">Send Reset Link</Link>
-          </button>
-        </form>
-      </Form>
+            <button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full"
+            >
+              <Link to="/verification">Send Reset Link</Link>
+            </button>
+          </form>
+        </Form>
 
-      <div className="text-sm text-center mt-4">
-        <Link href="/login" className="text-blue-500 hover:underline">
-          Back to Login
-        </Link>
+        <div className="text-sm text-center mt-4">
+          <Link href="/login" className="text-blue-500 hover:underline">
+            Back to Login
+          </Link>
+        </div>
       </div>
     </div>
   );

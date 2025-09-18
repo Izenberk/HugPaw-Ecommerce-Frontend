@@ -16,9 +16,9 @@ export default function CollarSection() {
           <h1 className="title-text mb-4">
             Style Meets Comfort
           </h1>
-          <h2 className="subtitle-text font-bold mb-2">Pawfect Collar</h2>
+          <h2 className="subtitle-text font-bold mb-2">HugPaw Smart Collar</h2>
           <p className="subtitle-text mb-6">
-            The Pawfect Collar combines durability with modern design. Crafted
+            The HugPaw Smart Collar combines durability with modern design. Crafted
             from premium materials, it keeps your pet comfortable while adding a
             stylish touch for everyday adventures.
           </p>

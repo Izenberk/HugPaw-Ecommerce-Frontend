@@ -16,13 +16,13 @@ const UserPage = () => {
     }
   };
 
-  return (
-    <div className="px-4 py-6 lg:px-16">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 lg:gap-6">
-        {/* Header — on lg, start at col 2 to align with the panel */}
-        <div className="order-1 lg:col-start-2 lg:col-span-3">
-          <UserHeader user={user} onSave={handleSave} />
-        </div>
+    return (
+        <div className="min-h-screen px-4 py-6 lg:px-16">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 lg:gap-6">
+                {/* Header — on lg, start at col 2 to align with the panel */}
+                <div className="order-1 lg:col-start-2 lg:col-span-3">
+                <UserHeader user={user} onSave={handleSave} />
+                </div>
 
         {/* Sidebar tabs */}
         <aside className="order-2 lg:order-2 lg:col-span-1">
